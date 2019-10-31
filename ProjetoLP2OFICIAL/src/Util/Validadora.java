@@ -45,4 +45,10 @@ public class Validadora {
 			throw new IllegalArgumentException(mensagem);
 		}
 	}
+
+    public static void validaAtividadeChecaOpçoesNivelderisco(String valor, String msg){
+        if (!valor.equals("BAIXO") && !valor.equals("MEDIO") && !valor.equals("ALTO")){
+            throw new IllegalArgumentException(msg);
+        }
+    }
 }
