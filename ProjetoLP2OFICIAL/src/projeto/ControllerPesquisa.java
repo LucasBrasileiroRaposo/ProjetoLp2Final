@@ -27,7 +27,7 @@ public class ControllerPesquisa {
      */
 
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
-        Validadora.validaEntradaDescricao(descricao);
+        Validadora.verificaValorNullVazio(descricao, "Descricao nao pode ser nula ou vazia.");
         Validadora.validaEntradaCampo(campoDeInteresse);
         Pesquisa pesquisa = new Pesquisa(descricao, campoDeInteresse);
         String codigo = geraCodigo(campoDeInteresse.substring(0, 3), 1);
@@ -45,7 +45,7 @@ public class ControllerPesquisa {
      */
     public void encerraPesquisa(String codigo, String motivo) {
         if (this.pesquisas.containsKey(codigo)) {
-            Validadora.validaMotivo(motivo);
+            Validadora.verificaValorNullVazio(motivo, "Motivo nao pode ser nulo ou vazio.");
             if (pesquisas.get(codigo).getStatus() == true) {
                 pesquisas.get(codigo).setStatus();
             } else {
@@ -84,7 +84,7 @@ public class ControllerPesquisa {
     public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo) {
         if (this.pesquisas.containsKey(codigo)) {
             if (conteudoASerAlterado.equals("DESCRICAO")) {
-                Validadora.validaEntradaDescricao(novoConteudo);
+                Validadora.verificaValorNullVazio(novoConteudo, "Descricao nao pode ser nula ou vazia.");
                 if (verificaSeAtiva(codigo)) {
                     pesquisas.get(codigo).setDescricao(novoConteudo);
                 } else {
@@ -131,7 +131,7 @@ public class ControllerPesquisa {
      * @return retorna um boolean true ou false
      */
     public boolean verificaSeAtiva(String codigo) {
-        Validadora.verificaCodigo(codigo);
+        Validadora.verificaValorNullVazio(codigo, "Codigo nao pode ser nulo ou vazio.");
         if (!this.pesquisas.containsKey(codigo)) {
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
         } else {

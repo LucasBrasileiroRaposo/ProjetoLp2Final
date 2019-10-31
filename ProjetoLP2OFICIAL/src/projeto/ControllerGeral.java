@@ -2,9 +2,14 @@ package projeto;
 
 public class ControllerGeral {
     private ControllerPesquisa cp;
+    private ControllerObjetivos controllerObjetivos;
+    private ControllerProblemas controllerProblemas;
 
     public ControllerGeral(){
         this.cp = new ControllerPesquisa();
+        this.controllerObjetivos = new ControllerObjetivos();
+        this.controllerProblemas = new ControllerProblemas();
+        
     }
 
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
@@ -31,5 +36,30 @@ public class ControllerGeral {
     }
 
 
-
+    /**
+     *  PARTE DE KAIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO/////////////////////////////////
+     * 
+     * 
+     */
+    
+    public String cadastraProblema(String descricao, int viabilidade) {
+		return this.controllerProblemas.cadastraProblema(descricao, viabilidade);
+	}
+	
+	public String cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade) {
+		return this.controllerObjetivos.cadastraObjetivo(tipo, descricao, aderencia,viabilidade);
+	}
+	
+	public void apagarProblema(String codigo) {
+		this.controllerProblemas.apagarProblema(codigo);
+	}
+	public void apagarObjetivo(String codigo) {
+		this.controllerObjetivos.apagarObjetivo(codigo);
+	}
+	public String exibeProblema(String codigo) {
+		return this.controllerProblemas.exibeProblema(codigo);
+	}
+	public String exibeObjetivo(String codigo) {
+		return this.controllerObjetivos.exibeObjetivo(codigo);
+	}
 }

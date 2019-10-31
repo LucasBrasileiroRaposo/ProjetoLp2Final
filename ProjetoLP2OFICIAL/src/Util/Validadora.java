@@ -1,13 +1,13 @@
 package Util;
 
 public class Validadora {
-
-    public static void validaEntradaDescricao(String descricao) {
-        if (descricao == null || descricao.equals("")) {
-            throw new IllegalArgumentException("Descricao nao pode ser nula ou vazia.");
-        }
-    }
-
+	
+	public static void verificaValorNullVazio(String valor, String mensagem) {
+		if (valor == null ||  valor.trim().equals("")) {
+			throw new IllegalArgumentException(mensagem);
+		}
+	}
+  
     public static void validaEntradaCampo(String campoDeInteresse) {
         if (campoDeInteresse == null || campoDeInteresse.trim().equals("")) {
             throw new NullPointerException("Formato do campo de interesse invalido.");
@@ -19,19 +19,7 @@ public class Validadora {
 
     }
 
-    public static void validaMotivo(String motivo) {
-        if (motivo == null || motivo.trim().equals("")) {
-            throw new NullPointerException("Motivo nao pode ser nulo ou vazio.");
-        }
-
-    }
-
-    public static void verificaCodigo(String codigo) {
-        if (codigo == null || codigo.trim().equals("")){
-            throw new NullPointerException("Codigo nao pode ser nulo ou vazio.");
-        }
-    }
-
+  
 
     private static boolean verificaTopico(String camposDeInteresse) {
         String[] topicos = camposDeInteresse.split(",");
@@ -51,4 +39,10 @@ public class Validadora {
 
         return retorno;
     }
+    
+    public static void verificaViabilidade_Aderencia(int valor, String mensagem) {
+		if ( (valor < 1) || (valor > 5)) {
+			throw new IllegalArgumentException(mensagem);
+		}
+	}
 }
