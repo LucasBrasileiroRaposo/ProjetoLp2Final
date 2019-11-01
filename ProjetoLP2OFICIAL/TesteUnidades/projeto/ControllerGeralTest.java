@@ -13,6 +13,264 @@ class ControllerGeralTest {
         this.controllerGeral = new ControllerGeral();
     }
 
+    /** Testes US1
+     */
+    @Test
+    void cadastraPesquisa() {
+        assertEquals("COM1", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, saude"));
+        assertEquals("COM2", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao maritima", "computacao, maritima"));
+        try {
+            this.controllerGeral.cadastraPesquisa("  ", "Computaçao");
+            fail("Descricao nao pode ser nula ou vazia.");
+        } catch (NullPointerException e) {
+
+        }
+        try {
+            this.controllerGeral.cadastraPesquisa("", "Computacao");
+            fail("Descricao nao pode ser nula ou vazia.");
+        } catch (NullPointerException e) {
+
+        }
+        try {
+            this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", " ");
+            fail("Formato do campo de interesse invalido.");
+        } catch (NullPointerException e) {
+
+        }
+        try {
+            this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "");
+            fail("Formato do campo de interesse invalido.");
+        } catch (NullPointerException e) {
+
+        }
+        try {
+            this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "spaodksapodasposapodas asodksapodkaspodkaspdokaspodk aspdokaspodksapodksapok aspodksapodksapokdsapokdsopakdpoaskodpáspldpasldosdfpoksdpfosdkpfosdkpfosdkpfosdkfopdfogkdfpoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo ");
+            fail("Formato do campo de interesse invalido.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, , saude");
+            fail("Formato do campo de interesse invalido.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, ,sa");
+            fail("Formato do campo de interesse invalido.");
+        } catch (IllegalArgumentException e) {
+        }
+
+    }
+
+
+    @Test
+    void encerraPesquisa() {
+        assertEquals("COM1", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, saude"));
+        assertEquals("COM2", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao maritima", "computacao, maritima"));
+        this.controllerGeral.encerraPesquisa("COM1", "Qualque um");
+        assertFalse(this.controllerGeral.pesquisaEhAtiva("COM1"));
+
+        try {
+            this.controllerGeral.encerraPesquisa("", "Qualquer um");
+            fail("Pesquisa desativada.");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            this.controllerGeral.encerraPesquisa("      ", "Qualquer um");
+            fail("Pesquisa desativada.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.encerraPesquisa("COM2", "    ");
+            fail("Motivo nao pode ser nulo ou vazio.");
+        } catch (NullPointerException e) {
+        }
+        try {
+            this.controllerGeral.encerraPesquisa("COM2", "");
+            fail("Motivo nao pode ser nulo ou vazio.");
+        } catch (NullPointerException e) {
+
+        }
+        try {
+            this.controllerGeral.encerraPesquisa("COM1", "Qualquer um");
+            fail("Pesquisa desativada.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.encerraPesquisa("COM3", "Qualquer um");
+            fail("Pesquisa não encontrada.");
+        } catch (IllegalArgumentException e) {
+        }
+
+    }
+
+
+    @Test
+    void ativaPesquisa() {
+        assertEquals("COM1", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, saude"));
+        assertEquals("COM2", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao maritima", "computacao, maritima"));
+        this.controllerGeral.encerraPesquisa("COM1", "Qualque um");
+        try {
+            this.controllerGeral.ativaPesquisa("COM3");
+            fail("Pesquisa nao encontrada.");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            this.controllerGeral.ativaPesquisa("COM2");
+            fail("Pesquisa ja ativada.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.ativaPesquisa("   ");
+            fail("Pesquisa nao encontrada.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.ativaPesquisa("");
+            fail("Pesquisa nao encontrada.");
+        } catch (IllegalArgumentException e) {
+
+        }
+    }
+
+    @Test
+    void alteraPesquisa() {
+        assertEquals("COM1", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, saude"));
+        assertEquals("COM2", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao maritima", "computacao, maritima"));
+        try {
+            this.controllerGeral.alteraPesquisa("   ", "descricao", "qualquer uma");
+            fail("Pesquisa nao encontrada.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("", "descricao", "qualquer uma");
+            fail("Pesquisa nao encontrada.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM3", "descricao", "qualquer uma");
+            fail("Pesquisa nao encontrada.");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "   ", "qualquer uma");
+            fail("Formato do campo de interesse invalido.");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "", "qualquer uma");
+            fail("Formato do campo de interesse invalido.");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "Pesquisadores", "qualquer uma");
+            fail("Nao e possivel alterar esse valor de pesquisa.");
+        } catch (IllegalArgumentException e) {
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "DESCRICAO", "");
+            fail("Descricao nao pode ser nula ou vazia.");
+        } catch (NullPointerException e) {
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "DESCRICAO", "    ");
+            fail("Descricao nao pode ser nula ou vazia.");
+        } catch (NullPointerException e) {
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "CAMPO", "    ");
+            fail("Formato do campo de interesse invalido.");
+        } catch (NullPointerException e) {
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "CAMPO", "");
+            fail("Formato do campo de interesse invalido.");
+        } catch (NullPointerException e) {
+
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "CAMPO", "spaodksapodasposapooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiidas asodksapodkaspodkaspdokaspodk aspdokaspodksapodksapok aspodksapodksapokdsapokdsopakdpoaskodpáspldpasldosdfpoksdpfosdkpfosdkpfosdkpfosdkfopdfogkdfpoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+            fail("Formato do campo de interesse invalido.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.alteraPesquisa("COM1", "CAMPO", "Computacao, ,saude");
+            fail("Formato do campo de interesse invalido.");
+        } catch (IllegalArgumentException e) {
+
+        }
+
+    }
+
+    @Test
+    void exibePesquisa() {
+        assertEquals("COM1", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, saude"));
+        assertEquals("COM2", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao maritima", "computacao, maritima"));
+
+        try {
+            this.controllerGeral.exibePesquisa("COM3");
+            fail("Pesquisa nao econtrada.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.exibePesquisa("     ");
+            fail("Codigo nao pode ser nulo ou vazio.");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            this.controllerGeral.exibePesquisa("");
+            fail("Codigo nao pode ser nulo ou vazio.");
+        } catch (IllegalArgumentException e) {
+
+        }
+
+    }
+
+    @Test
+    void verificaSeAtiva() {
+        assertEquals("COM1", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, saude"));
+        assertEquals("COM2", this.controllerGeral.cadastraPesquisa("pesquisa sobre computacao maritima", "computacao, maritima"));
+
+        try {
+            this.controllerGeral.pesquisaEhAtiva("");
+            fail("Codigo nao pode ser nulo ou vazio.");
+        } catch (NullPointerException e) {
+        }
+        try {
+            this.controllerGeral.pesquisaEhAtiva("   ");
+            fail("Codigo nao pode ser nulo ou vazio.");
+        } catch (NullPointerException e) {
+
+        }
+        try {
+            this.controllerGeral.pesquisaEhAtiva("COM3");
+            fail("Pesquisa nao encontrada.");
+        } catch (IllegalArgumentException e) {
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /** TESTES US4
+     */
     @Test
     void cadastraAtividade() {
         assertEquals("A1", this.controllerGeral.cadastraAtividade("Fazer testes JUnit","ALTO","Precisa testar tudo"));
