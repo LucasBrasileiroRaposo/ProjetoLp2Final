@@ -92,15 +92,12 @@ public class ControllerPesquisa {
                 }
 
             } else if (conteudoASerAlterado.equals("CAMPO")) {
-                if (novoConteudo == null || novoConteudo.trim().equals("")) {
-                    throw new NullPointerException("Formato do campo de interesse invalido.");
-                } else {
+                Validadora.validaEntradaCampo(novoConteudo);
                     if (verificaSeAtiva(codigo)) {
                         pesquisas.get(codigo).setCampoInteresse(novoConteudo);
                     } else {
                         throw new IllegalArgumentException("Pesquisa desativada.");
                     }
-                }
             } else {
                 throw new IllegalArgumentException("Nao e possivel alterar esse valor de pesquisa.");
             }

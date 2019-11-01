@@ -4,7 +4,7 @@ public class Validadora {
 	
 	public static void verificaValorNullVazio(String valor, String mensagem) {
 		if (valor == null ||  valor.trim().equals("")) {
-			throw new IllegalArgumentException(mensagem);
+			throw new NullPointerException(mensagem);
 		}
 	}
   
