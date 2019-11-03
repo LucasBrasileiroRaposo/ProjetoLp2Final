@@ -9,12 +9,15 @@ public class ControllerGeral {
     private ControllerProblemas controllerProblemas;
 
     private ControllerAtividade controleAtividade;
+	
+    private ControllerPesquisadores controllerPesquisadores;
 
     public ControllerGeral(){
         this.cp = new ControllerPesquisa();
         this.controllerObjetivos = new ControllerObjetivos();
         this.controllerProblemas = new ControllerProblemas();
         this.controleAtividade = new ControllerAtividade();
+	this.controllerPesquisadores = new ControllerPesquisadores();
         
     }
 
@@ -82,10 +85,55 @@ public class ControllerGeral {
 
 
     /**
-     *  PARTE DE KAIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO/////////////////////////////////
-     * 
-     * 
+     * Cadastra Pesquisador
+     * @param nome nome do pesquisador
+     * @param funcao função do pesquisador
+     * @param biografia biografia do pesquisador
+     * @param email email do pesquisador
+     * @param fotoURL link da foto do pesquisador
      */
+    public void cadastraPesquisador(String nome, String funcao, String biografia, String email, String fotoURL){
+        ControllerPesquisadores.cadastraPesquisador(nome,funcao,biografia,email,fotoURL);
+    }
+    /**
+     * Altera um determinado dado por um novo valor
+     * @param email email do pesquisador
+     * @param atributo atributo do pesquisador
+     * @param novoValor novo valor a ser inserido
+     */
+    public void alteraPesquisador(String email, String atributo, String novoValor){
+        ControllerPesquisadores.alteraPesquisador(email,atributo,novoValor);
+    }
+    /**
+     * Desativa um pesquisador
+     * @param email email de um pesquisador
+     */
+    public void desativaPesquisador(String email){
+        ControllerPesquisadores.desativaPesquisador(email);
+    }
+    /**
+     * Ativa um pesquisador
+     * @param email email do pesquisador
+     */
+    public void ativaPesquisador(String email){
+        ControllerPesquisadores.ativaPesquisador(email);
+    }
+    /**
+     * Exibe um determinado pesquisador apartir de um email
+     * @param email email do pesquisador
+     * @return retorna se o pesquisador está Ativado ou Desativado
+     */
+    public String exibePesquisador(String email){
+       return ControllerPesquisadores.exibePesquisador(email);
+    }
+    /**
+     * Verifica se o pesquisador é Ativo
+     * @param email email do pesquisador
+     * @return retorna True se o pesquisador é ativo e False se não.
+     */
+    public boolean pesquisadorEhAtivo(String email){
+        return ControllerPesquisadores.pesquisadorEhAtivo(email);
+    }
 
     /**
      * cadastra um problema no mapa de problemas e incrementa uma unidade no contador de problemas
