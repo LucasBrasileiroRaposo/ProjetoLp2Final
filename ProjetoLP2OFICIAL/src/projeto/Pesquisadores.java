@@ -1,3 +1,4 @@
+package projeto;
 public  class Pesquisadores {
     private String nome;
     private String funcao;
