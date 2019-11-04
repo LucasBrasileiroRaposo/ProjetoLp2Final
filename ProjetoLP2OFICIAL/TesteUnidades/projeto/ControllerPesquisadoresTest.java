@@ -8,8 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class ControllerPesquisadoresTest {
     Pesquisadores p1,p2,p3;
     ControllerPesquisadores cp;
+    
     @BeforeEach
     void CriaPesquisador() {
+    	
         p1 = new Pesquisadores("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto1.com");
         p2 = new Pesquisadores("Kaio", "Externo", "Externo pesquisador", "kaio@hotmail.com", "http://www.foto2.com");
         p3 = new Pesquisadores("Gaudencio", "Professor", "Professor pesquisador", "gaudencio@hotmail.com", "http://www.foto3.com");
@@ -33,6 +35,7 @@ class ControllerPesquisadoresTest {
 
     @Test
     void alteraPesquisador() {
+    	
         cp.alteraPesquisador("tey@hotmail.com","NOME","TEY");
         assertEquals(cp.exibePesquisador("tey@hotmail.com"),"TEY (Estudante) - Estudante pesquisador - tey@hotmail.com - http://www.foto1.com");
         cp.alteraPesquisador("frodo@hotmail.com","BIOGRAFIA","Externo pesquisador novato");
@@ -46,6 +49,7 @@ class ControllerPesquisadoresTest {
     @Test
     void desativaPesquisador() {
         cp.desativaPesquisador("ain@hotmail.com");
+        
         try{
             cp.desativaPesquisador("ain@hotmail.com");
             fail("Pesquisador inativo.");
@@ -61,6 +65,7 @@ class ControllerPesquisadoresTest {
 
     @Test
     void ativaPesquisador() {
+    	
         try {
             cp.ativaPesquisador("ain@hotmail.com");
             fail("Pesquisador ja ativado.");
@@ -75,6 +80,7 @@ class ControllerPesquisadoresTest {
 
     @Test
     void exibePesquisador() {
+    	
         assertEquals(cp.exibePesquisador("tey@hotmail.com"),"Tey (Estudante) - Estudante pesquisador - tey@hotmail.com - http://www.foto1.com");
         assertEquals(cp.exibePesquisador("frodo@hotmail.com"),"Frodo (Externo) - Externo pesquisador - frodo@hotmail.com - http://www.foto2.com");
         assertNotEquals(cp.exibePesquisador("ain@hotmail.com"),"ain (Externo) - Externo pesquisador - ain@hotmail.com - http://www.foto3.com");
@@ -82,6 +88,7 @@ class ControllerPesquisadoresTest {
 
     @Test
     void pesquisadorEhAtivo() {
+    	
         assertTrue(cp.pesquisadorEhAtivo("tey@hotmail.com"));
         cp.desativaPesquisador("tey@hotmail.com");
         assertFalse(cp.pesquisadorEhAtivo("tey@hotmail.com"));
