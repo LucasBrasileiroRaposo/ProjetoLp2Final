@@ -2,7 +2,7 @@ package projeto;
 
 public class ControllerGeral {
 
-    private ControllerPesquisa cp;
+    private ControllerPesquisa controllerPesquisa;
 
     private ControllerObjetivos controllerObjetivos;
 
@@ -13,7 +13,7 @@ public class ControllerGeral {
     private ControllerPesquisadores controllerPesquisadores;
 
     public ControllerGeral(){
-        this.cp = new ControllerPesquisa();
+        this.controllerPesquisa = new ControllerPesquisa();
         this.controllerObjetivos = new ControllerObjetivos();
         this.controllerProblemas = new ControllerProblemas();
         this.controleAtividade = new ControllerAtividade();
@@ -30,7 +30,7 @@ public class ControllerGeral {
      * @return codigo de identificacao de uma pesquisa
      */
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
-        return cp.cadastraPesquisa(descricao, campoDeInteresse);
+        return controllerPesquisa.associaProblema(problema).cadastraPesquisa(descricao, campoDeInteresse);
     }
 
     /**
@@ -40,7 +40,7 @@ public class ControllerGeral {
      * @param motivo motivo de encerramento de uma pesquisa
      */
     public void encerraPesquisa(String codigo, String motivo) {
-        cp.encerraPesquisa(codigo, motivo);
+        controllerPesquisa.associaProblema(problema).encerraPesquisa(codigo, motivo);
     }
 
     /**
@@ -49,7 +49,7 @@ public class ControllerGeral {
      * @param codigo codigo identificador de uma pesquisa
      */
     public void ativaPesquisa(String codigo) {
-        cp.ativaPesquisa(codigo);
+        controllerPesquisa.associaProblema(problema).ativaPesquisa(codigo);
     }
 
     /**
@@ -60,7 +60,7 @@ public class ControllerGeral {
      * @param novoConteudo         novo conteudo a ser inseirdo na pesquisa
      */
     public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo) {
-        cp.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
+        controllerPesquisa.associaProblema(problema).alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
 
     /**
@@ -70,7 +70,7 @@ public class ControllerGeral {
      * @return toString de uma pesquisa
      */
     public String exibePesquisa(String codigo) {
-        return cp.exibePesquisa(codigo);
+        return controllerPesquisa.associaProblema(problema).exibePesquisa(codigo);
     }
 
     /**
@@ -80,7 +80,7 @@ public class ControllerGeral {
      * @return retorna um boolean true ou false
      */
     public boolean pesquisaEhAtiva(String codigo) {
-        return cp.verificaSeAtiva(codigo);
+        return controllerPesquisa.associaProblema(problema).verificaSeAtiva(codigo);
     }
 
 
@@ -258,4 +258,15 @@ public class ControllerGeral {
     public int contaItensRealizados(String codigo){
         return this.controleAtividade.contaItensRealizados(codigo);
     }
+
+	public boolean associaProblema(String idPesquisa, String idProblema) {
+		
+		Problema problema = this.controllerProblemas.pegaProblema(idProblema);
+		return this.controllerPesquisa.associaProblema(idPesquisa, problema);
+	}
+
+	public boolean desassociaProblema(String idPesquisa, String idProblema) {
+		
+		return false;
+	}
 }

@@ -7,7 +7,8 @@ public class Facade {
     private ControllerGeral controllerGeral;
 
     public static void main(String[] args){
-        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_3.txt","TestesAceitacao/use_case_4.txt"};
+        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt" ,
+        		"TestesAceitacao/use_case_3.txt","TestesAceitacao/use_case_4.txt"};
         EasyAccept.main(args);
     }
 
@@ -116,6 +117,21 @@ public class Facade {
 
     public int contaItensRealizados(String codigo){
         return this.controllerGeral.contaItensRealizados(codigo);
+    }
+    
+    /**
+     * Parte 5.
+     */
+    
+    public boolean associaProblema(String idPesquisa, String idProblema) {
+    	
+    	return this.controllerGeral.associaProblema(idPesquisa, idProblema);
+    	
+    }
+    
+    public boolean desassociaProblema(String idPesquisa, String idProblema) {
+    
+    	return this.controllerGeral.desassociaProblema(idPesquisa, idProblema);
     }
             
 }

@@ -30,6 +30,7 @@ public class Problema {
 			this.descricao = descricao;
 			this.viabilidade = viabilidade;
 		}
+		
 
 		/**
 		 * Representacao em String dos dados do Problema.
@@ -39,6 +40,8 @@ public class Problema {
 		public String toString() {
 			return this.codigo +" - " + this.descricao + " - " + this.viabilidade;
 		}
+		
+		
 		
 		
 	}

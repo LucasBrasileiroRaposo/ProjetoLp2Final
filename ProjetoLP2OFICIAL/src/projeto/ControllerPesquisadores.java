@@ -21,7 +21,9 @@ public class ControllerPesquisadores {
      * @param biografia biografia do pesquisador
      * @param email email do pesquisador
      * @param foto fotoURL do pesquisador
+     * 
      */
+    
     public void cadastraPesquisador(String nome, String funcao, String biografia, String email, String foto) {
         Validadora.verificaValorNullVazio(nome, "Campo nome nao pode ser nulo ou vazio.");
         Validadora.verificaValorNullVazio(funcao, "Campo funcao nao pode ser nulo ou vazio.");

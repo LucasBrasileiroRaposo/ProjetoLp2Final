@@ -31,6 +31,7 @@ import Util.Validadora;
 			this.contaProblemas = 1;
 			
 		}
+		
 		/**
 		 * Metodo privado que vefifica se existe um objeto Problema no mapa de problemas.
 		 * @param codigo codigo identificador do Mapa
@@ -48,7 +49,7 @@ import Util.Validadora;
 		 * @param codigo codigo identificador do Mapa.
 		 * @return um Objeto Problema
 		 */
-		private Problema pegaProblema(String codigo) {
+		public Problema pegaProblema(String codigo) {
 			return this.mapaProblemas.get(codigo);
 		}
 		/**

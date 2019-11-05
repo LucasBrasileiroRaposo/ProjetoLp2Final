@@ -1,12 +1,21 @@
 package projeto;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 /**
  * Método responsável por representar um objeto pesquisa
  */
 
-public class Pesquisa {private String descricao;
+public class Pesquisa {
+	
+	private String descricao;
     private String campoInteresse;
     private boolean status;
+    private ArrayList listaProblema;
+    private ArrayList listaObjetivos;
+    
+    
 
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -18,7 +27,10 @@ public class Pesquisa {private String descricao;
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
+        this.listaProblema = new ArrayList<Problema>();
+        this.listaObjetivos= new ArrayList();
     }
+    
 
 
     /**
@@ -78,4 +90,12 @@ public class Pesquisa {private String descricao;
     public String toString() {
         return " - " + this.descricao + " - " + campoInteresse;
     }
+
+
+
+	public boolean associaProblema(Problema problema) {
+		
+		this.listaProblema.add(problema)
+;		return true;
+	}
 }

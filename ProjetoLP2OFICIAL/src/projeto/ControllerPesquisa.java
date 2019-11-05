@@ -16,6 +16,7 @@ public class ControllerPesquisa {
     public ControllerPesquisa() {
         this.pesquisas = new HashMap<>();
     }
+    
 
     /**
      * Método responsável por cadastrar uma nova pesquisa e gerar seu código de
@@ -157,6 +158,13 @@ public class ControllerPesquisa {
         }
         return codigoFinal;
     }
+
+
+	public boolean associaProblema(String codigo, Problema problema) {
+			
+		Pesquisa pesquisa = this.pesquisas.get(codigo);
+		return pesquisa.associaProblema(problema);
+	}
 
     /**
      * Método auxiliar para verificar as excecões de uma topico de uma pesquisa
