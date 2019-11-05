@@ -205,6 +205,22 @@ public class ControllerGeral {
     public String cadastraAtividade(String Descricao, String nivelRisco, String descricaoRisco){
         return this.controleAtividade.cadastraAtividade(Descricao, nivelRisco, descricaoRisco);
     }
+    
+    public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
+    	if(this.cp.pesquisaExiste(codigoPesquisa) == true) {
+    		if(this.cp.verificaSeAtiva(codigoPesquisa)) {
+    			this.cp.get
+    		}
+    		else {
+    			throw new NullPointerException("Pesquisa ja desativada");
+    			return false;
+    		}
+    	}
+    	else {
+    	throw new NullPointerException("Pesquisa nao encontrada.");
+    		return false;
+    }
+    }
 
     /**
      * Quando chamado, esse metodo recebe como parametro o codigo identificador da atividade, e se tudo ocorrer como esperado

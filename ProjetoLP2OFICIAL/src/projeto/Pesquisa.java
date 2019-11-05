@@ -4,10 +4,11 @@ package projeto;
  * Método responsável por representar um objeto pesquisa
  */
 
-public class Pesquisa {private String descricao;
+public class Pesquisa {
+	private String descricao;
     private String campoInteresse;
     private boolean status;
-
+ 
     /**
      * Método responsável por criar um novo objeto pesquisa
      * @param descricao descricao de uma pesquisa

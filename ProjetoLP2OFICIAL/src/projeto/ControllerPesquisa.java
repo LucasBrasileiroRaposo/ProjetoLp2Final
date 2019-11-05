@@ -55,8 +55,17 @@ public class ControllerPesquisa {
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
         }
     }
+    public boolean pesquisaExiste(String codigoPesquisa) {
+    	return this.pesquisas.containsKey(codigoPesquisa);
+    }
 
-    /**
+    public Pesquisa retornaPesquisa(String codigoPesquisa) {
+    	if(pesquisaExiste(codigoPesquisa) == true) {
+    		return this.pesquisas.get(codigoPesquisa);
+    	}
+    }
+
+	/**
      * Método responsável por alterar o status de uma pesquisa
      *
      * @param codigo codigo identificador de uma pesquisa
