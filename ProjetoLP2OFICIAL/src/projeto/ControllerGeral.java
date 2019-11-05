@@ -1,5 +1,7 @@
 package projeto;
 
+import projeto.pesquisadores.ControllerPesquisador;
+
 public class ControllerGeral {
 
     private ControllerPesquisa cp;
@@ -10,14 +12,14 @@ public class ControllerGeral {
 
     private ControllerAtividade controleAtividade;
 	
-    private ControllerPesquisadores controllerPesquisadores;
+    private ControllerPesquisador controllerPesquisadores;
 
     public ControllerGeral(){
         this.cp = new ControllerPesquisa();
         this.controllerObjetivos = new ControllerObjetivos();
         this.controllerProblemas = new ControllerProblemas();
         this.controleAtividade = new ControllerAtividade();
-        this.controllerPesquisadores = new ControllerPesquisadores();
+        this.controllerPesquisadores = new ControllerPesquisador();
         
     }
 

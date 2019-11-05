@@ -7,7 +7,7 @@ public class Facade {
     private ControllerGeral controllerGeral;
 
     public static void main(String[] args){
-        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_3.txt","TestesAceitacao/use_case_4.txt"};
+        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt","TestesAceitacao/use_case_4.txt","TestesAceitacao/use_case_6.txt"};
         EasyAccept.main(args);
     }
 
@@ -117,5 +117,23 @@ public class Facade {
     public int contaItensRealizados(String codigo){
         return this.controllerGeral.contaItensRealizados(codigo);
     }
-            
+
+    /**Parte 5
+     */
+
+    /** Parte 6
+     */
+
+    public boolean associaPesquisador(String idPesquisa, String emailPesquisador){
+        return false;
+    }
+
+    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){return false;}
+
+    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){}
+    public void cadastraEspecialidadeAluno(String email, int semestre, double IEA){}
+    public String listaPesquisadores(String tipo){return "";}
+
+
+
 }
