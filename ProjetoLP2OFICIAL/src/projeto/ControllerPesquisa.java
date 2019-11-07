@@ -6,7 +6,7 @@ package projeto;
 import Util.Validadora;
 import java.util.HashMap;
 
-public class ControllerPesquisa {
+public class ControllerPesquisa implements Busca{
     /**
      * pesquisas Mapa responsável por associar um objeto pesquisa ao seu código
      * gerado
@@ -26,14 +26,12 @@ public class ControllerPesquisa {
      * @return codigo de identificacao de uma pesquisa
      */
 
-    public String cadastraPesquisa(String descricao, String campoDeInteresse) {
+    public void cadastraPesquisa(String descricao, String campoDeInteresse) {
         Validadora.verificaValorNullVazio(descricao, "Descricao nao pode ser nula ou vazia.");
         Validadora.validaEntradaCampo(campoDeInteresse);
         Pesquisa pesquisa = new Pesquisa(descricao, campoDeInteresse);
-        String codigo = geraCodigo(campoDeInteresse.substring(0, 3), 1);
-        this.pesquisas.put(codigo, pesquisa);
-
-        return codigo;
+        pesquisa.setCodigo(geraCodigo(campoDeInteresse.substring(0,3),1));
+        this.pesquisas.put(pesquisa.getCodigo(), pesquisa);
 
     }
 
@@ -158,11 +156,25 @@ public class ControllerPesquisa {
         return codigoFinal;
     }
 
-    /**
-     * Método auxiliar para verificar as excecões de uma topico de uma pesquisa
-     *
-     * @param camposDeInteresse campo de interesse de uma pesquisa
-     * @return um boolean true ou false
-     */
-
+    @Override
+    public String buscaSubString(String palavra){
+        String descricaoValida = "";
+        for(Pesquisa p : this.pesquisas.values()){
+        if(p.getDescricao().contains(palavra)) {
+            descricaoValida += p.getCodigo() +": "+p.getDescricao() + " | ";
+            }
+        if(p.getCampoInteresse().contains(palavra)){
+            descricaoValida += p.getCodigo() + ": "+p.getCampoInteresse()+ " | ";
+            }
+        }
+        return descricaoValida;
+    }
+    @Override
+    public int contaResultadosBusca(String termo, String descricao){
+        int contador = 0;
+        for(String s: descricao.split(" | ")){
+            contador +=1;
+        }
+        return contador;
+    }
 }

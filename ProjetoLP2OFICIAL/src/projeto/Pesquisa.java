@@ -4,9 +4,11 @@ package projeto;
  * Método responsável por representar um objeto pesquisa
  */
 
-public class Pesquisa {private String descricao;
+public class Pesquisa {
+    private String descricao;
     private String campoInteresse;
     private boolean status;
+    private String codigo;
 
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -18,6 +20,7 @@ public class Pesquisa {private String descricao;
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
+        this.codigo = "";
     }
 
 
@@ -69,6 +72,14 @@ public class Pesquisa {private String descricao;
 
     public void setStatus() {
         this.status = false;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     /**

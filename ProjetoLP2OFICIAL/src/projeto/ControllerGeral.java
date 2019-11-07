@@ -10,14 +10,14 @@ public class ControllerGeral {
 
     private ControllerAtividade controleAtividade;
 	
-    private ControllerPesquisadores controllerPesquisadores;
+    private ControllerPesquisador controllerPesquisador;
 
     public ControllerGeral(){
         this.cp = new ControllerPesquisa();
         this.controllerObjetivos = new ControllerObjetivos();
         this.controllerProblemas = new ControllerProblemas();
         this.controleAtividade = new ControllerAtividade();
-        this.controllerPesquisadores = new ControllerPesquisadores();
+        this.controllerPesquisador = new ControllerPesquisador();
         
     }
 
@@ -29,8 +29,8 @@ public class ControllerGeral {
      * @param campoDeInteresse campo de interesse de uma pesquisa
      * @return codigo de identificacao de uma pesquisa
      */
-    public String cadastraPesquisa(String descricao, String campoDeInteresse) {
-        return cp.cadastraPesquisa(descricao, campoDeInteresse);
+    public void cadastraPesquisa(String descricao, String campoDeInteresse) {
+        cp.cadastraPesquisa(descricao, campoDeInteresse);
     }
 
     /**
@@ -93,7 +93,7 @@ public class ControllerGeral {
      * @param fotoURL link da foto do pesquisador
      */
     public void cadastraPesquisador(String nome, String funcao, String biografia, String email, String fotoURL){
-        this.controllerPesquisadores.cadastraPesquisador(nome,funcao,biografia,email,fotoURL);
+        this.controllerPesquisador.cadastraPesquisador(nome,funcao,biografia,email,fotoURL);
     }
     /**
      * Altera um determinado dado por um novo valor
@@ -102,21 +102,21 @@ public class ControllerGeral {
      * @param novoValor novo valor a ser inserido
      */
     public void alteraPesquisador(String email, String atributo, String novoValor){
-        this.controllerPesquisadores.alteraPesquisador(email,atributo,novoValor);
+        this.controllerPesquisador.alteraPesquisador(email,atributo,novoValor);
     }
     /**
      * Desativa um pesquisador
      * @param email email de um pesquisador
      */
     public void desativaPesquisador(String email){
-        this.controllerPesquisadores.desativaPesquisador(email);
+        this.controllerPesquisador.desativaPesquisador(email);
     }
     /**
      * Ativa um pesquisador
      * @param email email do pesquisador
      */
     public void ativaPesquisador(String email){
-        this.controllerPesquisadores.ativaPesquisador(email);
+        this.controllerPesquisador.ativaPesquisador(email);
     }
     /**
      * Exibe um determinado pesquisador apartir de um email
@@ -124,7 +124,7 @@ public class ControllerGeral {
      * @return retorna se o pesquisador está Ativado ou Desativado
      */
     public String exibePesquisador(String email){
-       return this.controllerPesquisadores.exibePesquisador(email);
+       return this.controllerPesquisador.exibePesquisador(email);
     }
     /**
      * Verifica se o pesquisador é Ativo
@@ -132,7 +132,7 @@ public class ControllerGeral {
      * @return retorna True se o pesquisador é ativo e False se não.
      */
     public boolean pesquisadorEhAtivo(String email){
-        return this.controllerPesquisadores.pesquisadorEhAtivo(email);
+        return this.controllerPesquisador.pesquisadorEhAtivo(email);
     }
 
     /**

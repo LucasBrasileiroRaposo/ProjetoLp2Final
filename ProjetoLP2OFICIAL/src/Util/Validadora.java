@@ -72,12 +72,12 @@ public class Validadora {
             }
     }
         public static void verificaPesquisador(boolean valor,String msg){
-        if(valor == false){
+        if(!valor){
             throw new NullPointerException(msg);
         }
     }
     public static void verificaPesquisadorAtivo(boolean valor, String msg){
-        if(valor == true){
+        if(valor){
             throw new IllegalArgumentException(msg);
         }
     }
@@ -88,6 +88,11 @@ public class Validadora {
 		}
 		
 	}
+    public static void validaAtividadeChecaOpçoesNivelderisco(String valor, String msg){
+        if (!valor.equals("BAIXO") && !valor.equals("MEDIO") && !valor.equals("ALTO")){
+            throw new IllegalArgumentException(msg);
+        }
+    }
 
 }
 
