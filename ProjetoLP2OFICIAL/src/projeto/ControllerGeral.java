@@ -1,5 +1,7 @@
 package projeto;
 
+import Util.Validadora;
+
 public class ControllerGeral {
 
     private ControllerPesquisa controllerPesquisa;
@@ -30,7 +32,7 @@ public class ControllerGeral {
      * @return codigo de identificacao de uma pesquisa
      */
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
-        return controllerPesquisa.associaProblema(problema).cadastraPesquisa(descricao, campoDeInteresse);
+        return controllerPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
     }
 
     /**
@@ -40,7 +42,7 @@ public class ControllerGeral {
      * @param motivo motivo de encerramento de uma pesquisa
      */
     public void encerraPesquisa(String codigo, String motivo) {
-        controllerPesquisa.associaProblema(problema).encerraPesquisa(codigo, motivo);
+        controllerPesquisa.encerraPesquisa(codigo, motivo);
     }
 
     /**
@@ -49,7 +51,7 @@ public class ControllerGeral {
      * @param codigo codigo identificador de uma pesquisa
      */
     public void ativaPesquisa(String codigo) {
-        controllerPesquisa.associaProblema(problema).ativaPesquisa(codigo);
+        controllerPesquisa.ativaPesquisa(codigo);
     }
 
     /**
@@ -60,7 +62,7 @@ public class ControllerGeral {
      * @param novoConteudo         novo conteudo a ser inseirdo na pesquisa
      */
     public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo) {
-        controllerPesquisa.associaProblema(problema).alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
+        controllerPesquisa.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
 
     /**
@@ -70,7 +72,7 @@ public class ControllerGeral {
      * @return toString de uma pesquisa
      */
     public String exibePesquisa(String codigo) {
-        return controllerPesquisa.associaProblema(problema).exibePesquisa(codigo);
+        return controllerPesquisa.exibePesquisa(codigo);
     }
 
     /**
@@ -80,7 +82,7 @@ public class ControllerGeral {
      * @return retorna um boolean true ou false
      */
     public boolean pesquisaEhAtiva(String codigo) {
-        return controllerPesquisa.associaProblema(problema).verificaSeAtiva(codigo);
+        return controllerPesquisa.verificaSeAtiva(codigo);
     }
 
 
@@ -261,12 +263,19 @@ public class ControllerGeral {
 
 	public boolean associaProblema(String idPesquisa, String idProblema) {
 		
+		Validadora.verificaValorNullVazio(idPesquisa, "Campo idPesquisa nao pode ser nulo ou vazio.");
+		Validadora.verificaValorNullVazio(idProblema, "Campo idProblema nao pode ser nulo ou vazio.");
+		
 		Problema problema = this.controllerProblemas.pegaProblema(idProblema);
 		return this.controllerPesquisa.associaProblema(idPesquisa, problema);
 	}
 
 	public boolean desassociaProblema(String idPesquisa, String idProblema) {
 		
-		return false;
+		Validadora.verificaValorNullVazio(idPesquisa, "Campo idPesquisa nao pode ser nulo ou vazio.");
+		Validadora.verificaValorNullVazio(idProblema, "Campo idProblema nao pode ser nulo ou vazio.");
+		
+		Problema problema = this.controllerProblemas.pegaProblema(idProblema);
+		return this.controllerPesquisa.desassociaProblema(idPesquisa, problema);
 	}
 }

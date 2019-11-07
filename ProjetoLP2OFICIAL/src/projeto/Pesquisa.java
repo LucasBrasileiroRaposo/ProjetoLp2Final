@@ -12,8 +12,8 @@ public class Pesquisa {
 	private String descricao;
     private String campoInteresse;
     private boolean status;
-    private ArrayList listaProblema;
-    private ArrayList listaObjetivos;
+    private ArrayList<Problema> listaProblema;
+    private ArrayList<Objetivo> listaObjetivos;
     
     
 
@@ -28,7 +28,7 @@ public class Pesquisa {
         this.descricao = descricao;
         this.status = true;
         this.listaProblema = new ArrayList<Problema>();
-        this.listaObjetivos= new ArrayList();
+        this.listaObjetivos= new ArrayList<Objetivo>();
     }
     
 
@@ -95,7 +95,25 @@ public class Pesquisa {
 
 	public boolean associaProblema(Problema problema) {
 		
-		this.listaProblema.add(problema)
-;		return true;
+		if (this.listaProblema.size() == 0) {
+			this.listaProblema.add(problema);
+			return true;
+		} else if (this.listaProblema.contains(problema)){
+			return false;
+			
+		}
+		
+		throw new IllegalArgumentException("Pesquisa ja associada a um problema.");
+	}
+
+
+
+	public boolean desassociaProblema(Problema problema) {
+		
+		if (this.listaProblema.contains(problema)) {
+			this.listaProblema.remove(problema);
+			return true;
+		}
+		return false;
 	}
 }

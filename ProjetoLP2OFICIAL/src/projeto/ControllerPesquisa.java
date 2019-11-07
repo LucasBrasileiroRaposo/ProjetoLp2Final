@@ -166,6 +166,14 @@ public class ControllerPesquisa {
 		return pesquisa.associaProblema(problema);
 	}
 
+
+	public boolean desassociaProblema(String codigo, Problema problema) {
+		
+		
+		Pesquisa pesquisa = this.pesquisas.get(codigo);
+		return pesquisa.desassociaProblema(problema);
+	}
+
     /**
      * Método auxiliar para verificar as excecões de uma topico de uma pesquisa
      *
