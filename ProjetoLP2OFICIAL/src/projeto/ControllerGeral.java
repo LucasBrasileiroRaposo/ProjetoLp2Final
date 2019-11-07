@@ -1,5 +1,7 @@
 package projeto;
 
+import Util.Validadora;
+
 public class ControllerGeral {
 
 	private ControllerPesquisa cp;
@@ -228,10 +230,13 @@ public class ControllerGeral {
 	}
 
 	public void associaAtividade(String codigoPesquisa, String codigoAtividade) {
+		Validadora.verificaValorNullVazio(codigoPesquisa, "Campo codigoPesquisa nao pode ser nulo ou vazio.");
+		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
     	if(this.controleAtividade.atividadeExiste(codigoAtividade) == true) {
     		if(this.cp.pesquisaExiste(codigoPesquisa) == true) {
     		if(this.cp.verificaSeAtiva(codigoPesquisa)) {
-    			
+    			Atividade atividade = this.controleAtividade.retornaAtividade(codigoAtividade);
+    			this.cp.adicionaAtividade(codigoAtividade, atividade);
   
     		}
     		else {
@@ -252,7 +257,7 @@ public class ControllerGeral {
     	if(this.controleAtividade.atividadeExiste(codigoAtividade) == true) {
     		if(this.cp.pesquisaExiste(codigoPesquisa) == true) {
     		if(this.cp.verificaSeAtiva(codigoPesquisa)) {
-    			
+    			this.cp.removeAtividade(codigoAtividade);
   
     		}
     		else {

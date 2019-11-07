@@ -36,6 +36,14 @@ public class ControllerPesquisa {
         return codigo;
 
     }
+    
+    public void adicionaAtividade(String codigo, Atividade atividade) {
+    		Pesquisa.cadastraAtividade(codigo,atividade);
+    }
+    
+    public void removeAtividade(String codigo) {
+    		Pesquisa.removeAtividade(codigo);
+    }
 
     /**
      * Método responsável por alterar o status de uma pesquisa

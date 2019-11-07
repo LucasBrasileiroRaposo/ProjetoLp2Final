@@ -11,7 +11,7 @@ public class Pesquisa {
 	private String descricao;
     private String campoInteresse;
     private boolean status;
-    private Map<String, Atividade> atividadesDaPesquisa;
+    private static Map<String, Atividade> atividadesDaPesquisa;
  
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -25,7 +25,14 @@ public class Pesquisa {
         this.status = true;
         this.atividadesDaPesquisa = new HashMap<>();
     }
-
+    
+    public static void cadastraAtividade(String codigo, Atividade atividade) {
+    	 atividadesDaPesquisa.put(codigo, atividade);
+    }
+    
+    public static void removeAtividade(String codigo) {
+    	atividadesDaPesquisa.remove(codigo);
+    }
 
     /**
      * Método responsável por retornar uma descricao

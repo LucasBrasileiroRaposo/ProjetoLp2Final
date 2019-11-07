@@ -1,0 +1,15 @@
+
+#Ativando FER1
+#ASSOCIANDO 
+
+#associando atividades
+expect "true" associaAtividade codigoPesquisa="COM1" codigoAtividade="A1"
+expectError "Campo codigoPesquisa nao pode ser nulo ou vazio." associaAtividade codigoPesquisa="" codigoAtividade="A2"
+expectError "Campo codigoAtividade nao pode ser nulo ou vazio." associaAtividade codigoPesquisa="COM1" codigoAtividade=""
+expectError "Pesquisa nao encontrada." associaAtividade codigoPesquisa="GOT8" codigoAtividade="A2"
+expectError "Pesquisa desativada." associaAtividade codigoPesquisa="PSI1" codigoAtividade="A2"
+expectError "Atividade nao encontrada" associaAtividade codigoPesquisa="COM1" codigoAtividade="A69"
+expect "false" associaAtividade codigoPesquisa="COM1" codigoAtividade="A1"
+
+
+
