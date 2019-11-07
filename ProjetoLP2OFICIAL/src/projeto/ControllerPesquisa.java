@@ -4,6 +4,8 @@ package projeto;
  * Classe responsável por por manipular e fazer as operações sobre o objeto Pesquisa
  */
 import Util.Validadora;
+import projeto.pesquisadores.Pesquisador;
+
 import java.util.HashMap;
 
 public class ControllerPesquisa {
@@ -158,11 +160,17 @@ public class ControllerPesquisa {
         return codigoFinal;
     }
 
-    /**
-     * Método auxiliar para verificar as excecões de uma topico de uma pesquisa
-     *
-     * @param camposDeInteresse campo de interesse de uma pesquisa
-     * @return um boolean true ou false
-     */
 
+
+
+    public boolean associaPesquisador(String idPesquisa, Pesquisador pesquisador){
+        if (!this.pesquisas.containsKey(idPesquisa)){
+            throw new IllegalArgumentException("Pesquisa nao encontrada.");
+        }else {
+            if(!this.pesquisas.get(idPesquisa).getStatus()){
+                throw new IllegalArgumentException("Pesquisa desativada.");
+            }else{
+                return this.pesquisas.get(idPesquisa).associaPesquisador(pesquisador);}
+        }
+    }
 }

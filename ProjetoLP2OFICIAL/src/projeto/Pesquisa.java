@@ -1,5 +1,9 @@
 package projeto;
 
+import projeto.pesquisadores.Pesquisador;
+
+import java.util.HashSet;
+
 /**
  * Método responsável por representar um objeto pesquisa
  */
@@ -7,6 +11,7 @@ package projeto;
 public class Pesquisa {private String descricao;
     private String campoInteresse;
     private boolean status;
+    private HashSet<Pesquisador> pesquisadoresDaPesquisa;
 
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -18,6 +23,7 @@ public class Pesquisa {private String descricao;
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
+        this.pesquisadoresDaPesquisa = new HashSet<>();
     }
 
 
@@ -77,5 +83,14 @@ public class Pesquisa {private String descricao;
      */
     public String toString() {
         return " - " + this.descricao + " - " + campoInteresse;
+    }
+
+    public boolean associaPesquisador(Pesquisador pesquisador){
+        if (this.pesquisadoresDaPesquisa.contains(pesquisador)){
+            return false;
+        }else{
+            this.pesquisadoresDaPesquisa.add(pesquisador);
+            return true;
+        }
     }
 }
