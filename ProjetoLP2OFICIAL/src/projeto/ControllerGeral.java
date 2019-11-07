@@ -29,8 +29,9 @@ public class ControllerGeral {
      * @param campoDeInteresse campo de interesse de uma pesquisa
      * @return codigo de identificacao de uma pesquisa
      */
-    public void cadastraPesquisa(String descricao, String campoDeInteresse) {
-        cp.cadastraPesquisa(descricao, campoDeInteresse);
+    public String cadastraPesquisa(String descricao, String campoDeInteresse) {
+        return cp.cadastraPesquisa(descricao, campoDeInteresse);
+
     }
 
     /**

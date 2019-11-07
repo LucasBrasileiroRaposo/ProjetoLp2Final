@@ -26,12 +26,14 @@ public class ControllerPesquisa implements Busca{
      * @return codigo de identificacao de uma pesquisa
      */
 
-    public void cadastraPesquisa(String descricao, String campoDeInteresse) {
+    public String cadastraPesquisa(String descricao, String campoDeInteresse) {
         Validadora.verificaValorNullVazio(descricao, "Descricao nao pode ser nula ou vazia.");
         Validadora.validaEntradaCampo(campoDeInteresse);
         Pesquisa pesquisa = new Pesquisa(descricao, campoDeInteresse);
         pesquisa.setCodigo(geraCodigo(campoDeInteresse.substring(0,3),1));
         this.pesquisas.put(pesquisa.getCodigo(), pesquisa);
+
+        return pesquisa.getCodigo();
 
     }
 
@@ -170,9 +172,9 @@ public class ControllerPesquisa implements Busca{
         return descricaoValida;
     }
     @Override
-    public int contaResultadosBusca(String termo, String descricao){
+    public int contaResultadosBusca(String termo, String description){
         int contador = 0;
-        for(String s: descricao.split(" | ")){
+        for(String s: description.split(" | ")){
             contador +=1;
         }
         return contador;

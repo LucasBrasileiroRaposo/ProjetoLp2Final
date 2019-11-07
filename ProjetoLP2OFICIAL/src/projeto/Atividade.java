@@ -5,7 +5,7 @@ import java.util.Map;
 
 /** Classe que representa uma atividade
  */
-public class Atividade {
+public class Atividade implements Busca{
 
     /**
      * representa a descricao da atividade;
@@ -115,5 +115,11 @@ public class Atividade {
             }
         }
         return this.contadorDeItensRealizados;
+    }
+    @Override
+    public String buscaSubString(String palavra){
+
+        return palavra;
+
     }
 }
