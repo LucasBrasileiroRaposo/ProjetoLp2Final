@@ -60,9 +60,7 @@ public class ControllerPesquisa {
     }
 
     public Pesquisa retornaPesquisa(String codigoPesquisa) {
-    	if(pesquisaExiste(codigoPesquisa) == true) {
     		return this.pesquisas.get(codigoPesquisa);
-    	}
     }
 
 	/**

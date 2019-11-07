@@ -1,5 +1,8 @@
 package projeto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Método responsável por representar um objeto pesquisa
  */
@@ -8,6 +11,7 @@ public class Pesquisa {
 	private String descricao;
     private String campoInteresse;
     private boolean status;
+    private Map<String, Atividade> atividadesDaPesquisa;
  
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -19,6 +23,7 @@ public class Pesquisa {
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
+        this.atividadesDaPesquisa = new HashMap<>();
     }
 
 
