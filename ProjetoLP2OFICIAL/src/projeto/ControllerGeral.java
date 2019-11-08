@@ -266,7 +266,7 @@ public class ControllerGeral {
 		Validadora.verificaValorNullVazio(idPesquisa, "Campo idPesquisa nao pode ser nulo ou vazio.");
 		Validadora.verificaValorNullVazio(idProblema, "Campo idProblema nao pode ser nulo ou vazio.");
 		
-		Problema problema = this.controllerProblemas.pegaProblema(idProblema);
+		Problema problema = this.controllerProblemas.getProblema(idProblema);
 		return this.controllerPesquisa.associaProblema(idPesquisa, problema);
 	}
 
@@ -275,7 +275,27 @@ public class ControllerGeral {
 		Validadora.verificaValorNullVazio(idPesquisa, "Campo idPesquisa nao pode ser nulo ou vazio.");
 		Validadora.verificaValorNullVazio(idProblema, "Campo idProblema nao pode ser nulo ou vazio.");
 		
-		Problema problema = this.controllerProblemas.pegaProblema(idProblema);
+		Problema problema = this.controllerProblemas.getProblema(idProblema);
 		return this.controllerPesquisa.desassociaProblema(idPesquisa, problema);
 	}
+
+	public boolean associaObjetivo(String idPesquisa, String idObjetivo) {
+		
+		Validadora.verificaValorNullVazio(idPesquisa, "Campo idPesquisa nao pode ser nulo ou vazio.");
+		Validadora.verificaValorNullVazio(idObjetivo, "Campo idObjetivo nao pode ser nulo ou vazio.");
+		
+		Objetivo objetivo = this.controllerObjetivos.getObjetivo(idObjetivo);
+		return this.controllerPesquisa.associaObjetivo(idPesquisa, objetivo);
+	}
+
+	public boolean desassociaObjetivo(String idPesquisa, String idObjetivo) {
+		
+		Validadora.verificaValorNullVazio(idPesquisa, "Campo idPesquisa nao pode ser nulo ou vazio.");
+		Validadora.verificaValorNullVazio(idObjetivo, "Campo idObjetivo nao pode ser nulo ou vazio.");
+		
+		Objetivo objetivo = this.controllerObjetivos.getObjetivo(idObjetivo);
+		return this.controllerPesquisa.dessassociaObjetivo(idPesquisa, objetivo);
+	}
+	
+	
 }

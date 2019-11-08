@@ -29,6 +29,8 @@ public class Objetivo {
 	 * Valor do objetivo, o qual é a soma da aderencia e da viabilidade.
 	 */
 	private int valor;
+	
+	private boolean associado;
 	/**
 	 * Constroi um objetivo a partir do seu tipo, descricao, aderencia, viabilidade e codigo.
 	 * @param tipo tipo do objetivo (Especifico ou Geral)
@@ -44,6 +46,7 @@ public class Objetivo {
 		this.codigo = codigo;
 		this.viabilidade = viabilidade;
 		this.valor = this.viabilidade + this.aderencia;
+		this.associado = false;
 	}
 	/**
 	 * Representacao em String dos dados do Objetivo.
@@ -53,7 +56,19 @@ public class Objetivo {
 	public String toString() {
 		return this.codigo + " - " + this.tipo + " - " + this.descricao + " - "+ this.valor;
 	}
-
+	public void associaObjetivo() {
+		this.associado = true;
+		
+	}
+	
+	public boolean getAssociado() {
+		return this.associado;
+	}
+	public void desassociaObjetivo() {
+		
+		this.associado = false;
+		
+	}
 
 
 }

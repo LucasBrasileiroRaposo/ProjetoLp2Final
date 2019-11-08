@@ -24,11 +24,13 @@ public class Pesquisa {
      */
 
     public Pesquisa(String descricao, String campo) {
+    	
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
         this.listaProblema = new ArrayList<Problema>();
         this.listaObjetivos= new ArrayList<Objetivo>();
+        
     }
     
 
@@ -115,5 +117,23 @@ public class Pesquisa {
 			return true;
 		}
 		return false;
+	}
+
+
+
+	public boolean associaObjetivo(Objetivo objetivo) {
+		
+		this.listaObjetivos.add(objetivo);
+		objetivo.associaObjetivo();
+		return true;
+	}
+
+
+
+	public boolean desassociaObjetivo(Objetivo objetivo) {
+		
+		this.listaObjetivos.remove(objetivo);
+		objetivo.desassociaObjetivo();
+		return true;
 	}
 }

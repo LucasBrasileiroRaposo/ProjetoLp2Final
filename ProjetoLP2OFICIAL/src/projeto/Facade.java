@@ -134,5 +134,13 @@ public class Facade {
     
     	return this.controllerGeral.desassociaProblema(idPesquisa, idProblema);
     }
+    
+    public boolean associaObjetivo(String idPesquisa, String idObjetivo) {
+    	return this.controllerGeral.associaObjetivo(idPesquisa, idObjetivo);
+    }
+    
+    public boolean desassociaObjetivo(String idPesquisa, String idObjetivo) {
+    	return this.controllerGeral.desassociaObjetivo(idPesquisa, idObjetivo);
+    }
             
 }

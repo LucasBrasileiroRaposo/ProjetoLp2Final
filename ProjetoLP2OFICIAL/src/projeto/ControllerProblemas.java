@@ -49,7 +49,7 @@ import Util.Validadora;
 		 * @param codigo codigo identificador do Mapa.
 		 * @return um Objeto Problema
 		 */
-		public Problema pegaProblema(String codigo) {
+		public Problema getProblema(String codigo) {
 			return this.mapaProblemas.get(codigo);
 		}
 		/**
@@ -96,7 +96,7 @@ import Util.Validadora;
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 			
 			if (existeProblema(codigo)){
-				Problema problema = pegaProblema(codigo);
+				Problema problema = getProblema(codigo);
 					return problema.toString();
 				}
 			else {

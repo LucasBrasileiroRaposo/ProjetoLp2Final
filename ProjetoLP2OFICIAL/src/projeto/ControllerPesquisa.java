@@ -161,24 +161,54 @@ public class ControllerPesquisa {
 
 
 	public boolean associaProblema(String codigo, Problema problema) {
+		
+		if (this.pesquisas.containsKey(codigo)) {
+			if (verificaSeAtiva(codigo)) {
 			
-		Pesquisa pesquisa = this.pesquisas.get(codigo);
-		return pesquisa.associaProblema(problema);
+				Pesquisa pesquisa = this.pesquisas.get(codigo);
+				return pesquisa.associaProblema(problema);
+			} else {
+				throw new IllegalArgumentException("Pesquisa desativada.");
+			}
+		} else {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		}
 	}
 
 
 	public boolean desassociaProblema(String codigo, Problema problema) {
 		
+		if (this.pesquisas.containsKey(codigo)) {
+			if (verificaSeAtiva(codigo)) {
+				Pesquisa pesquisa = this.pesquisas.get(codigo);
+				return pesquisa.desassociaProblema(problema);
+			} else {
+				throw new IllegalArgumentException("Pesquisa desativada.");
+			}
+			
+			}
+		else {
+				throw new IllegalArgumentException("Pesquisa nao encontrada.");
+			}
 		
-		Pesquisa pesquisa = this.pesquisas.get(codigo);
-		return pesquisa.desassociaProblema(problema);
 	}
 
-    /**
-     * Método auxiliar para verificar as excecões de uma topico de uma pesquisa
-     *
-     * @param camposDeInteresse campo de interesse de uma pesquisa
-     * @return um boolean true ou false
-     */
+
+	public boolean associaObjetivo(String codigo, Objetivo objetivo) {
+		
+		
+		Pesquisa pesquisa = this.pesquisas.get(codigo);
+		return pesquisa.associaObjetivo(objetivo);
+	}
+
+
+	public boolean dessassociaObjetivo(String codigo, Objetivo objetivo) {
+		
+		Pesquisa pesquisa = this.pesquisas.get(codigo);
+		return pesquisa.desassociaObjetivo(objetivo);
+		
+	}
+
+    
 
 }
