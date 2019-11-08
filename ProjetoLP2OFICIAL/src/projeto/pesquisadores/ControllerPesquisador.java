@@ -52,22 +52,22 @@ public class ControllerPesquisador {
             Validadora.verificaValorNullVazio(novoValor,"Campo nome nao pode ser nulo ou vazio.");
             listaDePesquisadores.get(email).setNome(novoValor);
         }
-        if (atributo.toUpperCase().equals("FUNCAO")) {
+        else if (atributo.toUpperCase().equals("FUNCAO")) {
             Validadora.verificaValorNullVazio(novoValor,"Campo funcao nao pode ser nulo ou vazio.");
             listaDePesquisadores.get(email).setFuncao(novoValor);
         }
-        if (atributo.toUpperCase().equals("BIOGRAFIA")) {
+        else if (atributo.toUpperCase().equals("BIOGRAFIA")) {
             Validadora.verificaValorNullVazio(novoValor,"Campo biografia nao pode ser nulo ou vazio.");
             listaDePesquisadores.get(email).setBiografia(novoValor);
         }
-        if (atributo.toUpperCase().equals("EMAIL")) {
+        else if (atributo.toUpperCase().equals("EMAIL")) {
             Validadora.verificaValorNullVazio(novoValor,"Campo email nao pode ser nulo ou vazio.");
             Validadora.validaEmail(novoValor,"Formato de email invalido.");
             listaDePesquisadores.get(email).setEmail(novoValor);
             listaDePesquisadores.put(novoValor,listaDePesquisadores.get(email));
             listaDePesquisadores.remove(email);
         }
-        if (atributo.toUpperCase().equals("FOTO")) {
+        else if (atributo.toUpperCase().equals("FOTO")) {
             Validadora.verificaValorNullVazio(novoValor,"Campo fotoURL nao pode ser nulo ou vazio.");
             Validadora.validaFoto(novoValor,"Formato de foto invalido.");
             listaDePesquisadores.get(email).setFotoURL(novoValor);
@@ -139,5 +139,13 @@ public class ControllerPesquisador {
         }else{
             return false;
         }
+    }
+
+
+    public Pesquisador pegaPesquisador(String emailPesquisador){
+        if(!this.listaDePesquisadores.containsKey(emailPesquisador)){
+            throw new IllegalArgumentException("Pesquisador nao encontrado");
+        }else{
+        return this.listaDePesquisadores.get(emailPesquisador);}
     }
 }

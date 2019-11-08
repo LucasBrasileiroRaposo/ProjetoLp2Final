@@ -3,10 +3,8 @@ package Util;
 
 public class Validadora {
     public static void verificaValorNullVazio(String valor, String msg) {
-        if (valor == null) {
+        if (valor == null || valor.trim().equals("")) {
             throw new NullPointerException(msg);
-        } else if (valor.trim().equals("")) {
-            throw new IllegalArgumentException(msg);
         }
     }
     
