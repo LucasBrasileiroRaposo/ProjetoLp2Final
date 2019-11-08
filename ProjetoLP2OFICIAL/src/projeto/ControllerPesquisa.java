@@ -48,7 +48,7 @@ public class ControllerPesquisa {
         if (this.pesquisas.containsKey(codigo)) {
             Validadora.verificaValorNullVazio(motivo, "Motivo nao pode ser nulo ou vazio.");
             if (pesquisas.get(codigo).getStatus() == true) {
-                pesquisas.get(codigo).setStatus();
+                pesquisas.get(codigo).desativaStatus();
             } else {
                 throw new IllegalArgumentException("Pesquisa desativada.");
             }
@@ -65,7 +65,7 @@ public class ControllerPesquisa {
     public void ativaPesquisa(String codigo) {
         if (this.pesquisas.containsKey(codigo)) {
             if (pesquisas.get(codigo).getStatus() == false) {
-                pesquisas.get(codigo).setStatus();
+                pesquisas.get(codigo).ativaStatus();
             } else {
                 throw new IllegalArgumentException("Pesquisa ja ativada.");
             }
@@ -195,18 +195,44 @@ public class ControllerPesquisa {
 
 
 	public boolean associaObjetivo(String codigo, Objetivo objetivo) {
+
 		
 		
-		Pesquisa pesquisa = this.pesquisas.get(codigo);
-		return pesquisa.associaObjetivo(objetivo);
+		if (this.pesquisas.containsKey(codigo)) {
+			if (verificaSeAtiva(codigo)) {
+				Pesquisa pesquisa = this.pesquisas.get(codigo);
+				return pesquisa.associaObjetivo(objetivo);
+			} else {
+				throw new IllegalArgumentException("Pesquisa desativada.");
+			}
+		} else {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		}
+		
 	}
 
 
 	public boolean dessassociaObjetivo(String codigo, Objetivo objetivo) {
 		
-		Pesquisa pesquisa = this.pesquisas.get(codigo);
-		return pesquisa.desassociaObjetivo(objetivo);
 		
+		if (this.pesquisas.containsKey(codigo)) {
+			if (verificaSeAtiva(codigo)) {
+				Pesquisa pesquisa = this.pesquisas.get(codigo);
+				return pesquisa.desassociaObjetivo(objetivo);
+			} else {
+				throw new IllegalArgumentException("Pesquisa desativada.");
+			}
+		} else {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		}
+
+		
+	}
+
+
+	public String listaPesquisas(String ordem) {
+		
+		return "calma...";
 	}
 
     

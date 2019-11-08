@@ -15,6 +15,7 @@ public class ControllerGeral {
     private ControllerPesquisadores controllerPesquisadores;
 
     public ControllerGeral(){
+    	
         this.controllerPesquisa = new ControllerPesquisa();
         this.controllerObjetivos = new ControllerObjetivos();
         this.controllerProblemas = new ControllerProblemas();
@@ -295,6 +296,16 @@ public class ControllerGeral {
 		
 		Objetivo objetivo = this.controllerObjetivos.getObjetivo(idObjetivo);
 		return this.controllerPesquisa.dessassociaObjetivo(idPesquisa, objetivo);
+	}
+
+	public String listaPesquisas(String ordem) {
+		
+		Validadora.verificaValorNullVazio(ordem, "Valor invalido da ordem");
+		if(!(ordem.toUpperCase().equals("PROBLEMA")) && !(ordem.toUpperCase().equals("OBJETIVOS")) && !(ordem.toUpperCase().equals("PESQUISA"))) {
+			throw new IllegalArgumentException("Valor invalido da ordem");
+		}
+		
+		return this.controllerPesquisa.listaPesquisas(ordem);
 	}
 	
 	

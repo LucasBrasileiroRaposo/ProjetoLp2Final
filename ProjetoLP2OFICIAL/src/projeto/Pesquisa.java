@@ -78,12 +78,21 @@ public class Pesquisa {
     }
 
     /**
-     * Método responsável por alterar o status da pesquisa
+     * Método responsável por desativar o status da pesquisa
      */
 
-    public void setStatus() {
+    public void desativaStatus() {
         this.status = false;
     }
+    
+    /**
+     * Metodo responsavel por ativar o status da pesquisa
+     */
+    
+    public void ativaStatus() {
+    	this.status = true;
+    }
+    
 
     /**
      * Método resposável por retornar representação textual de uma pesquisa
@@ -123,6 +132,15 @@ public class Pesquisa {
 
 	public boolean associaObjetivo(Objetivo objetivo) {
 		
+		if(this.listaObjetivos.contains(objetivo)) {
+			return false;
+		}
+		
+
+		else if(objetivo.getAssociado()) {
+			throw new IllegalArgumentException("Objetivo ja associado a uma pesquisa.");
+		}
+		
 		this.listaObjetivos.add(objetivo);
 		objetivo.associaObjetivo();
 		return true;
@@ -132,6 +150,9 @@ public class Pesquisa {
 
 	public boolean desassociaObjetivo(Objetivo objetivo) {
 		
+		if(!this.listaObjetivos.contains(objetivo)) {
+			return false;
+		}
 		this.listaObjetivos.remove(objetivo);
 		objetivo.desassociaObjetivo();
 		return true;

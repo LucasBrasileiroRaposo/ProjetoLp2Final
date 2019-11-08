@@ -142,5 +142,10 @@ public class Facade {
     public boolean desassociaObjetivo(String idPesquisa, String idObjetivo) {
     	return this.controllerGeral.desassociaObjetivo(idPesquisa, idObjetivo);
     }
+    
+    public String listaPesquisas(String ordem) {
+    	
+    	return this.controllerGeral.listaPesquisas(ordem);
+    }
             
 }
