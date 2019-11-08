@@ -25,9 +25,6 @@ class FacadeTest {
         this.controleAtividade = new ControllerAtividade();
         this.controllerPesquisadores = new ControllerPesquisador();
     }
-
-    /** TESTES US1
-     */
     @Test
     void cadastraPesquisa() {
         assertEquals("COM1", this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", "Computacao, saude"));

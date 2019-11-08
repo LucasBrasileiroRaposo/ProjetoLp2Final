@@ -140,12 +140,24 @@ public class ControllerPesquisador {
             return false;
         }
     }
+    public Pesquisador pegaPesquisador(String email){
+        Validadora.verificaPesquisador(listaDePesquisadores.containsKey(email),"Pesquisador nao encontrado");
 
+        return this.listaDePesquisadores.get(email);
+    }
 
-    public Pesquisador pegaPesquisador(String emailPesquisador){
-        if(!this.listaDePesquisadores.containsKey(emailPesquisador)){
-            throw new IllegalArgumentException("Pesquisador nao encontrado");
-        }else{
-        return this.listaDePesquisadores.get(emailPesquisador);}
+    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data) {
+        Validadora.verificaValorNullVazio(email,"Campo email nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(formacao,"Campo formacao nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(unidade,"Campo unidade nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(data,"Campo data nao pode ser nulo ou vazio.");
+        Validadora.verificaFormatoData(data,"Atributo data com formato invalido.");
+
+        if (!this.listaDePesquisadores.containsKey(email)) {
+            throw new IllegalArgumentException("Pesquisadora nao encontrada.");
+        }
+        else{
+            this.listaDePesquisadores.get(email);/** composição*/
+        }
     }
 }

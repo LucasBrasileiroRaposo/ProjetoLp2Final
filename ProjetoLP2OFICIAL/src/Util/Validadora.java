@@ -92,6 +92,23 @@ public class Validadora {
             throw new IllegalArgumentException(msg);
         }
     }
+    public static void verificaFormatoData(String data, String msg){
+        int dias = Integer.parseInt(data.substring(0,2));
+        int mes = Integer.parseInt(data.substring(3,5));
+        int ano = Integer.parseInt(data.substring(6,10));
+
+        if (data.length() != 10){
+            throw new IllegalArgumentException(msg);
+        }else if (!data.substring(2,3).equals("/") || !data.substring(5,6).equals("/")){
+            throw new IllegalArgumentException(msg);
+        }else if ( dias <= 0 || dias > 31){
+            throw new IllegalArgumentException(msg);
+        }else if ( mes <= 0 || mes > 12){
+            throw new IllegalArgumentException(msg);
+        }else if (ano < 0){
+            throw new IllegalArgumentException(msg);
+        }
+    }
 
 }
 

@@ -4,9 +4,6 @@ import Util.Validadora;
 import projeto.pesquisadores.ControllerPesquisador;
 import projeto.pesquisadores.Pesquisador;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ControllerAssociacao {
 
     private ControllerPesquisa controllerPesquisa;
@@ -19,15 +16,12 @@ public class ControllerAssociacao {
 
     private ControllerPesquisador controllerPesquisadores;
 
-    private Map<String, Pesquisa> pesquisas;
-    private Map<String, Pesquisador> pesquisadores;
-
-    public ControllerAssociacao(){
-        this.controllerPesquisa = new ControllerPesquisa();
-        this.controllerObjetivos = new ControllerObjetivos();
-        this.controllerProblemas = new ControllerProblemas();
-        this.controleAtividade = new ControllerAtividade();
-        this.controllerPesquisadores = new ControllerPesquisador();
+    public ControllerAssociacao(ControllerPesquisa controllerPesquisa, ControllerPesquisador controllerPesquisadores, ControllerAtividade controleAtividade, ControllerObjetivos controllerObjetivos, ControllerProblemas controllerProblemas){
+        this.controllerPesquisa = controllerPesquisa;
+        this.controllerObjetivos = controllerObjetivos;
+        this.controllerProblemas = controllerProblemas;
+        this.controleAtividade = controleAtividade;
+        this.controllerPesquisadores = controllerPesquisadores;
     }
 
     /** Parte US6
@@ -41,6 +35,13 @@ public class ControllerAssociacao {
         Validadora.verificaValorNullVazio(emailPesquisador,"Campo emailPesquisador nao pode ser nulo ou vazio.");
 
         Pesquisador pesquisador = this.controllerPesquisadores.pegaPesquisador(emailPesquisador);
+
         return this.controllerPesquisa.associaPesquisador(idPesquisa, pesquisador);
+    }
+
+    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador) {
+        Validadora.verificaValorNullVazio(idPesquisa,"Campo idPesquisa nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(emailPesquisador,"Campo emailPesquisador nao pode ser nulo ou vazio.");
+        return this.controllerPesquisa.desassociaPesquisador(idPesquisa,emailPesquisador) ;
     }
 }

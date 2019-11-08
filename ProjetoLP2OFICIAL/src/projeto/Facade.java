@@ -17,8 +17,8 @@ public class Facade {
     private ControllerAssociacao controllerAssociacao;
 
 
-    public static void main(String[] args) {
-        args = new String[]{"projeto.Facade", "ProjetoLP2OFICIAL/TestesAceitacao/use_case_1.txt", "ProjetoLP2OFICIAL/TestesAceitacao/use_case_2.txt", "ProjetoLP2OFICIAL/TestesAceitacao/use_case_3.txt", "ProjetoLP2OFICIAL/TestesAceitacao/use_case_4.txt", "ProjetoLP2OFICIAL/TestesAceitacao/use_case_6.txt"};
+    public static void main(String[] args){
+        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt","TestesAceitacao/use_case_4.txt","TestesAceitacao/use_case_6.txt"};
         EasyAccept.main(args);
     }
 
@@ -28,7 +28,7 @@ public class Facade {
         this.controllerProblemas = new ControllerProblemas();
         this.controleAtividade = new ControllerAtividade();
         this.controllerPesquisadores = new ControllerPesquisador();
-        this.controllerAssociacao = new ControllerAssociacao();
+        this.controllerAssociacao = new ControllerAssociacao(this.controllerPesquisa, this.controllerPesquisadores, this.controleAtividade, this.controllerObjetivos, this.controllerProblemas);
     }
 
     /** Parte 1
@@ -144,9 +144,11 @@ public class Facade {
         return this.controllerAssociacao.associaPesquisador(idPesquisa, emailPesquisador);
     }
 
-    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){return false;}
+    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){return this.controllerAssociacao.desassociaPesquisador(idPesquisa,emailPesquisador);}
 
-    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){}
+    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
+        this.controllerPesquisadores.cadastraEspecialidadeProfessor(email,formacao,unidade,data);
+    }
     public void cadastraEspecialidadeAluno(String email, int semestre, double IEA){}
     public String listaPesquisadores(String tipo){return "";}
 

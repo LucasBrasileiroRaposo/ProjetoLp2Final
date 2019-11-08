@@ -2,7 +2,9 @@ package projeto;
 
 import projeto.pesquisadores.Pesquisador;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Método responsável por representar um objeto pesquisa
@@ -11,7 +13,7 @@ import java.util.HashSet;
 public class Pesquisa {private String descricao;
     private String campoInteresse;
     private boolean status;
-    private HashSet<Pesquisador> pesquisadoresDaPesquisa;
+    private Map< String, Pesquisador> pesquisadoresDaPesquisa;
 
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -23,7 +25,7 @@ public class Pesquisa {private String descricao;
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
-        this.pesquisadoresDaPesquisa = new HashSet<>();
+        this.pesquisadoresDaPesquisa = new HashMap();
     }
 
 
@@ -70,11 +72,18 @@ public class Pesquisa {private String descricao;
     }
 
     /**
-     * Método responsável por alterar o status da pesquisa
+     * Método responsável para desativar a pesquisa
      */
 
-    public void setStatus() {
+    public void desativaPesquisa() {
         this.status = false;
+    }
+
+    /**
+     * Método responsável para ativar a pesquisa
+     */
+    public void ativaPesquisa(){
+        this.status = true;
     }
 
     /**
@@ -86,10 +95,19 @@ public class Pesquisa {private String descricao;
     }
 
     public boolean associaPesquisador(Pesquisador pesquisador){
-        if (this.pesquisadoresDaPesquisa.contains(pesquisador)){
+        if (this.pesquisadoresDaPesquisa.containsKey(pesquisador.getEmail())){
             return false;
         }else{
-            this.pesquisadoresDaPesquisa.add(pesquisador);
+            this.pesquisadoresDaPesquisa.put(pesquisador.getEmail(),pesquisador);
+            return true;
+        }
+    }
+
+    public boolean desassociaPesquisador(String emailPesquisador) {
+        if (!this.pesquisadoresDaPesquisa.containsKey(emailPesquisador)){
+            return false;
+        }else{
+            this.pesquisadoresDaPesquisa.remove(emailPesquisador);
             return true;
         }
     }

@@ -1,4 +1,5 @@
 package projeto.pesquisadores;
+
 public abstract class Pesquisador {
     protected String nome;
     protected String funcao;
@@ -48,6 +49,9 @@ public abstract class Pesquisador {
     }
     public String getStatus(){
         return this.status;
+    }
+    public String getEmail(){
+        return this.email;
     }
 
 

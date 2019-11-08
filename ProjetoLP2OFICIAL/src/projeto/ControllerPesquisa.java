@@ -49,7 +49,7 @@ public class ControllerPesquisa {
         if (this.pesquisas.containsKey(codigo)) {
             Validadora.verificaValorNullVazio(motivo, "Motivo nao pode ser nulo ou vazio.");
             if (pesquisas.get(codigo).getStatus() == true) {
-                pesquisas.get(codigo).setStatus();
+                pesquisas.get(codigo).desativaPesquisa();
             } else {
                 throw new IllegalArgumentException("Pesquisa desativada.");
             }
@@ -66,7 +66,7 @@ public class ControllerPesquisa {
     public void ativaPesquisa(String codigo) {
         if (this.pesquisas.containsKey(codigo)) {
             if (pesquisas.get(codigo).getStatus() == false) {
-                pesquisas.get(codigo).setStatus();
+                pesquisas.get(codigo).ativaPesquisa();
             } else {
                 throw new IllegalArgumentException("Pesquisa ja ativada.");
             }
@@ -166,9 +166,24 @@ public class ControllerPesquisa {
     public boolean associaPesquisador(String idPesquisa, Pesquisador pesquisador){
         if (!this.pesquisas.containsKey(idPesquisa)){
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
-        }else if(!this.pesquisas.get(idPesquisa).getStatus()){
+        }else {
+            if(!this.pesquisas.get(idPesquisa).getStatus()){
                 throw new IllegalArgumentException("Pesquisa desativada.");
+            }else{
+                return this.pesquisas.get(idPesquisa).associaPesquisador(pesquisador);
+            }
+        }
+    }
+
+    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador) {
+        if (!this.pesquisas.containsKey(idPesquisa)){
+            throw new IllegalArgumentException("Pesquisa nao encontrada.");
         }else{
-            return this.pesquisas.get(idPesquisa).associaPesquisador(pesquisador);}
+            if(!this.pesquisas.get(idPesquisa).getStatus()){
+                throw new IllegalArgumentException("Pesquisa desativada.");
+            }else{
+                return this.pesquisas.get(idPesquisa).desassociaPesquisador(emailPesquisador);
+            }
+        }
     }
 }
