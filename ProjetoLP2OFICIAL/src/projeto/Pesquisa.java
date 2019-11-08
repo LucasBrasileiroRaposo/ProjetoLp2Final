@@ -26,11 +26,16 @@ public class Pesquisa {
         this.atividadesDaPesquisa = new HashMap<>();
     }
     
-    public static void cadastraAtividade(String codigo, Atividade atividade) {
-    	 atividadesDaPesquisa.put(codigo, atividade);
+    public boolean cadastraAtividade(Atividade atividade) {
+    	if(this.atividadesDaPesquisa.containsKey(atividade.getCodigo())) {
+    		return false;
+    	}else {
+    		this.atividadesDaPesquisa.put(atividade.getCodigo(), atividade);
+    		return true;
+    	 }
     }
     
-    public static boolean verificaAtividade(String codigo) {
+    public boolean verificaAtividade(String codigo) {
     	if(!atividadesDaPesquisa.containsValue(codigo)) {
     		return false;
     	}
@@ -38,8 +43,16 @@ public class Pesquisa {
     		return true;
     	}
     }
-    public static void removeAtividade(String codigo) {
-    	atividadesDaPesquisa.remove(codigo);
+    
+    public boolean removeAtividade(String codigoAtividade) {
+    	if(!atividadesDaPesquisa.containsValue(codigoAtividade)) {
+    		return false;
+    	}
+    	else {
+    		atividadesDaPesquisa.remove(codigoAtividade);
+    		return true;
+    	}
+    	
     }
 
     /**

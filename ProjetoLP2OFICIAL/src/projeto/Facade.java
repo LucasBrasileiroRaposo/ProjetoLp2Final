@@ -117,10 +117,10 @@ public class Facade {
     public int contaItensRealizados(String codigo){
         return this.controllerGeral.contaItensRealizados(codigo);
     }
-    public void associaAtividade(String codigoPesquisa, String codigoAtividade) {
-    	this.controllerGeral.associaAtividade(codigoPesquisa, codigoAtividade);
+    public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
+    	return this.controllerGeral.associaAtividade(codigoPesquisa, codigoAtividade);
     }
-    public void desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
-    	this.controllerGeral.desassociaAtividade(codigoPesquisa, codigoAtividade);
+    public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
+    	return this.controllerGeral.desassociaAtividade(codigoPesquisa, codigoAtividade);
     }
 }

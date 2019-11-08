@@ -214,6 +214,26 @@ public class ControllerGeral {
 	public String exibeObjetivo(String codigo) {
 		return this.controllerObjetivos.exibeObjetivo(codigo);
 	}
+	
+	
+	public void executaAtividade(String codigoAtividade, int item, int duracao) {
+		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
+		if(item < 1) {
+			throw new NullPointerException("Campo item nao pode ser nulo ou vazio.");
+		}
+		if(duracao < 1) {
+			throw new NullPointerException("Campo item nao pode ser nulo ou vazio.");
+		}
+		else if(this.controleAtividade.verificaItem(codigoAtividade, item) != 0) {
+			throw new NullPointerException("Campo item nao pode ser nulo ou vazio.");
+		}
+		else if(this.cp.verificaAtividade(codigoAtividade)== false) {
+			throw new NullPointerException("false");
+		}
+		else {
+			this.controleAtividade.executaAtividade(codigoAtividade, item, duracao);
+		}
+	}
 
 	/**
 	 * Chamado no cadastro de uma Atividade, criando um objeto do tipo Atividade se
@@ -232,52 +252,15 @@ public class ControllerGeral {
 	public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
 		Validadora.verificaValorNullVazio(codigoPesquisa, "Campo codigoPesquisa nao pode ser nulo ou vazio.");
 		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
-    	if(this.controleAtividade.atividadeExiste(codigoAtividade) == true) {
-    		if(this.controleAtividade.atividadeExiste(codigoAtividade)== false) {
-    			return false;
-    		}
-    		if(this.cp.pesquisaExiste(codigoPesquisa) == true) {
-    		if(this.cp.verificaSeAtiva(codigoPesquisa)) {
-    			Atividade atividade = this.controleAtividade.retornaAtividade(codigoAtividade);
-    			this.cp.adicionaAtividade(codigoAtividade, atividade);
-    			return true;
-  
-    		}
-    		else {
-    			throw new NullPointerException("Pesquisa desativada.");
-    		}
-    	}
-    	else {
-    	throw new NullPointerException("Pesquisa nao encontrada.");
-    		
-    }
-    	}
-    	else {
-    		throw new NullPointerException("Atividade nao encontrada");
-    	}
+    	
+		Atividade atividade = this.controleAtividade.retornaAtividade(codigoAtividade);
+    	return this.cp.adicionaAtividade(codigoPesquisa, atividade);
     }
 	
-	public void desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
+	public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
 		Validadora.verificaValorNullVazio(codigoPesquisa, "Campo codigoPesquisa nao pode ser nulo ou vazio.");
 		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
-    	if(this.controleAtividade.atividadeExiste(codigoAtividade) == true) {
-    		if(this.cp.pesquisaExiste(codigoPesquisa) == true) {
-    		if(this.cp.verificaSeAtiva(codigoPesquisa)) {
-    			this.cp.removeAtividade(codigoAtividade);
-  
-    		}
-    		else {
-    			throw new NullPointerException("Pesquisa desativada.");
-    		}
-    	}
-    	else {
-    	throw new NullPointerException("Pesquisa nao encontrada.");
-    		
-    }
-    	}
-    	else {
-    		throw new NullPointerException("Atividade nao encontrada");
-    	}
+		return this.cp.removeAtividade(codigoPesquisa, codigoAtividade);
     }
 	
 	

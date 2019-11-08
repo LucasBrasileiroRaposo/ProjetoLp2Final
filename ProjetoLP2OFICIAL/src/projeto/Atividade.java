@@ -15,7 +15,7 @@ public class Atividade {
     /**
      * Mapa com todos os itens dessa atividade;
      */
-    private Map<Integer, Item> resultados;
+    private static Map<Integer, Item> resultados;
 
     /**
      * Nivel de risco da atividade;
@@ -46,6 +46,8 @@ public class Atividade {
      * Duracao da atividade;
      */
     private int duracaoAtividade;
+    
+    private String codigoIdentificador;
 
     /**
      * Constrou um objeto do tipo Atividade, com descricao, nivel de risco da atividade e a descricao desse risco;
@@ -54,7 +56,7 @@ public class Atividade {
      * @param nivelDeRisco     String, que representa o nivel de risco da atividade;
      * @param descricaoDeRisco String, que representa a descricao do nivel de risco citado anteriormente.
      */
-    public Atividade(String descricao, String nivelDeRisco, String descricaoDeRisco) {
+    public Atividade(String descricao, String nivelDeRisco, String descricaoDeRisco, String codigoIdentificador) {
         this.descricao = descricao;
         this.nivelDeRisco = nivelDeRisco;
         this.descricaoDeRisco = descricaoDeRisco;
@@ -62,6 +64,8 @@ public class Atividade {
         this.contadorDeItensRealizados = 0;
         this.contadorDeItensPendentes = 0;
         this.contadorDeItens = 1;
+        this.codigoIdentificador = codigoIdentificador;
+        
     }
 
     /**
@@ -88,6 +92,12 @@ public class Atividade {
         this.resultados.put(this.contadorDeItens, itemNovo);
         this.contadorDeItens++;
     }
+    
+    
+   
+    public static void cadastraResultado(String codigoAtividade, String resultado) {
+   	 	resultados.put(codigoAtividade, resultado);
+   }
 
     /**
      * Quando chamado conta os itens que possuem os status PENDENTE.
@@ -116,4 +126,19 @@ public class Atividade {
         }
         return this.contadorDeItensRealizados;
     }
+
+	public void executaAtividade(int item, int duracao) {
+		this.resultados.get(item).alteraDuracao(duracao);
+		
+	}
+	
+	public int retornaDuracao(int codigoItem) {
+		return this.resultados.get(codigoItem).getDuracao();
+	}
+	
+	public String getCodigo() {
+		return this.codigoIdentificador;
+	}
+    
+
 }

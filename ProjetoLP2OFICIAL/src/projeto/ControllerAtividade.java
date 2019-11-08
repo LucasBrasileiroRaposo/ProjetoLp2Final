@@ -44,14 +44,19 @@ public class ControllerAtividade {
         Validadora.validaAtividadeChecaOpcoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
         Validadora.verificaValorNullVazio(descricaoRisco, "Campo descricaoRisco nao pode ser nulo ou vazio.");
 
-        Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco);
         String codigo = "A" + this.contadorDeAtividades;
+        Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco,codigo);
         this.atividades.put(codigo, atividade);
         this.contadorDeAtividades++;
         return codigo;
     }
+    
+    public void executaAtividade(String codigoAtividade, int item, int duracao) {
+    	this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
 
-    /**
+    }
+
+     /**
      * Quando chamado, esse metodo recebe como parametro o codigo identificador da atividade, e se tudo ocorrer como esperado
      * a atividade do determinado codigo eh removida.
      *
@@ -65,6 +70,11 @@ public class ControllerAtividade {
         } else {
             this.atividades.remove(codigo);
         }
+    }
+    
+    public int verificaItem(String codigoAtividade, int codigoItem) {
+    	int duracao = this.atividades.get(codigoAtividade).retornaDuracao(codigoItem);
+    	return duracao;
     }
 
     /**
@@ -102,7 +112,12 @@ public class ControllerAtividade {
     }
     
     public Atividade retornaAtividade(String codigoAtividade) {
+    	if(!this.atividades.containsKey(codigoAtividade)) {
+    		throw new IllegalArgumentException("Atividade nao encontrada");
+    	}
+    	else {
 		return this.atividades.get(codigoAtividade);
+    }
     }
     
     public boolean atividadeExiste(String codigoAtividade) {
