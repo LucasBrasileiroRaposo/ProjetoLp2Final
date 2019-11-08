@@ -30,6 +30,14 @@ public class Pesquisa {
     	 atividadesDaPesquisa.put(codigo, atividade);
     }
     
+    public static boolean verificaAtividade(String codigo) {
+    	if(!atividadesDaPesquisa.containsValue(codigo)) {
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
     public static void removeAtividade(String codigo) {
     	atividadesDaPesquisa.remove(codigo);
     }

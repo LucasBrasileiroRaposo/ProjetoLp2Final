@@ -36,6 +36,9 @@ public class ControllerPesquisa {
         return codigo;
 
     }
+    public boolean verificaAtividade(String codigo) {
+    	return Pesquisa.verificaAtividade(codigo);
+    }
     
     public void adicionaAtividade(String codigo, Atividade atividade) {
     		Pesquisa.cadastraAtividade(codigo,atividade);

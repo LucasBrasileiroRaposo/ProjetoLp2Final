@@ -229,18 +229,22 @@ public class ControllerGeral {
 		return this.controleAtividade.cadastraAtividade(Descricao, nivelRisco, descricaoRisco);
 	}
 
-	public void associaAtividade(String codigoPesquisa, String codigoAtividade) {
+	public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
 		Validadora.verificaValorNullVazio(codigoPesquisa, "Campo codigoPesquisa nao pode ser nulo ou vazio.");
 		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
     	if(this.controleAtividade.atividadeExiste(codigoAtividade) == true) {
+    		if(this.controleAtividade.atividadeExiste(codigoAtividade)== false) {
+    			return false;
+    		}
     		if(this.cp.pesquisaExiste(codigoPesquisa) == true) {
     		if(this.cp.verificaSeAtiva(codigoPesquisa)) {
     			Atividade atividade = this.controleAtividade.retornaAtividade(codigoAtividade);
     			this.cp.adicionaAtividade(codigoAtividade, atividade);
+    			return true;
   
     		}
     		else {
-    			throw new NullPointerException("Pesquisa ja desativada");
+    			throw new NullPointerException("Pesquisa desativada.");
     		}
     	}
     	else {
@@ -249,11 +253,13 @@ public class ControllerGeral {
     }
     	}
     	else {
-    		throw new NullPointerException("Atividade nao encontrada.");
+    		throw new NullPointerException("Atividade nao encontrada");
     	}
     }
 	
 	public void desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
+		Validadora.verificaValorNullVazio(codigoPesquisa, "Campo codigoPesquisa nao pode ser nulo ou vazio.");
+		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
     	if(this.controleAtividade.atividadeExiste(codigoAtividade) == true) {
     		if(this.cp.pesquisaExiste(codigoPesquisa) == true) {
     		if(this.cp.verificaSeAtiva(codigoPesquisa)) {
@@ -261,7 +267,7 @@ public class ControllerGeral {
   
     		}
     		else {
-    			throw new NullPointerException("Pesquisa ja desativada");
+    			throw new NullPointerException("Pesquisa desativada.");
     		}
     	}
     	else {
@@ -270,7 +276,7 @@ public class ControllerGeral {
     }
     	}
     	else {
-    		throw new NullPointerException("Atividade nao encontrada.");
+    		throw new NullPointerException("Atividade nao encontrada");
     	}
     }
 	
