@@ -4,7 +4,11 @@ package projeto;
  * Classe responsável por por manipular e fazer as operações sobre o objeto Pesquisa
  */
 import Util.Validadora;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class ControllerPesquisa {
     /**
@@ -30,8 +34,9 @@ public class ControllerPesquisa {
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
         Validadora.verificaValorNullVazio(descricao, "Descricao nao pode ser nula ou vazia.");
         Validadora.validaEntradaCampo(campoDeInteresse);
-        Pesquisa pesquisa = new Pesquisa(descricao, campoDeInteresse);
+       
         String codigo = geraCodigo(campoDeInteresse.substring(0, 3), 1);
+        Pesquisa pesquisa = new Pesquisa(descricao, campoDeInteresse, codigo);
         this.pesquisas.put(codigo, pesquisa);
 
         return codigo;
@@ -176,12 +181,12 @@ public class ControllerPesquisa {
 	}
 
 
-	public boolean desassociaProblema(String codigo, Problema problema) {
+	public boolean desassociaProblema(String codigo) {
 		
 		if (this.pesquisas.containsKey(codigo)) {
 			if (verificaSeAtiva(codigo)) {
 				Pesquisa pesquisa = this.pesquisas.get(codigo);
-				return pesquisa.desassociaProblema(problema);
+				return pesquisa.desassociaProblema();
 			} else {
 				throw new IllegalArgumentException("Pesquisa desativada.");
 			}
@@ -232,7 +237,62 @@ public class ControllerPesquisa {
 
 	public String listaPesquisas(String ordem) {
 		
-		return "calma...";
+		if (ordem.toUpperCase().equals("PESQUISA")) {
+			List<Pesquisa> listaPesquisas = new ArrayList();
+			listaPesquisas.addAll(this.pesquisas.values());
+			Collections.sort (listaPesquisas);
+			
+			String listar = "";
+			
+			for(Pesquisa pesquisa: listaPesquisas) {
+				listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
+			}
+			listar = listar.substring(0, listar.length()-3);
+			return listar;
+		}
+		else if (ordem.toUpperCase().equals("PROBLEMA")) {
+			List<Pesquisa> listaPesquisas = new ArrayList();
+			listaPesquisas.addAll(this.pesquisas.values());
+			
+			Collections.sort (listaPesquisas);
+			
+			String listar = "";
+			
+			for(Pesquisa pesquisa: listaPesquisas) {
+				if(pesquisa.getListaProblema().size() == 1) {
+					listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
+				}
+			}
+			for(Pesquisa pesquisa: listaPesquisas) {
+				if (pesquisa.getListaProblema().size() == 0) {
+					listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
+				}
+				
+			}
+			listar = listar.substring(0, listar.length() -3);
+			return listar;
+		} else {
+			ObjetivoComparator objetivoComparator = new ObjetivoComparator();
+			List<Pesquisa> listaPesquisas = new ArrayList();
+			listaPesquisas.addAll(this.pesquisas.values());
+			
+			Collections.sort (listaPesquisas, objetivoComparator );
+			String listar = "";
+			for(Pesquisa pesquisa: listaPesquisas) {
+				if(pesquisa.getListaObjetivos().size() != 0) {
+				listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
+				}
+			}
+			
+			Collections.sort(listaPesquisas);
+			for (Pesquisa pesquisa: listaPesquisas) {
+				if(pesquisa.getListaObjetivos().size() == 0) {
+					listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
+				}
+			}
+			listar = listar.substring(0, listar.length()-3);
+			return listar;
+		}
 	}
 
     

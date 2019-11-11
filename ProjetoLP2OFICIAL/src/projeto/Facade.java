@@ -130,9 +130,9 @@ public class Facade {
     	
     }
     
-    public boolean desassociaProblema(String idPesquisa, String idProblema) {
+    public boolean desassociaProblema(String idPesquisa) {
     
-    	return this.controllerGeral.desassociaProblema(idPesquisa, idProblema);
+    	return this.controllerGeral.desassociaProblema(idPesquisa);
     }
     
     public boolean associaObjetivo(String idPesquisa, String idObjetivo) {

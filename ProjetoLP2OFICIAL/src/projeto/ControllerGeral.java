@@ -271,13 +271,11 @@ public class ControllerGeral {
 		return this.controllerPesquisa.associaProblema(idPesquisa, problema);
 	}
 
-	public boolean desassociaProblema(String idPesquisa, String idProblema) {
+	public boolean desassociaProblema(String idPesquisa) {
 		
 		Validadora.verificaValorNullVazio(idPesquisa, "Campo idPesquisa nao pode ser nulo ou vazio.");
-		Validadora.verificaValorNullVazio(idProblema, "Campo idProblema nao pode ser nulo ou vazio.");
 		
-		Problema problema = this.controllerProblemas.getProblema(idProblema);
-		return this.controllerPesquisa.desassociaProblema(idPesquisa, problema);
+		return this.controllerPesquisa.desassociaProblema(idPesquisa);
 	}
 
 	public boolean associaObjetivo(String idPesquisa, String idObjetivo) {

@@ -7,13 +7,14 @@ import java.util.ArrayList;
  * Método responsável por representar um objeto pesquisa
  */
 
-public class Pesquisa {
+public class Pesquisa implements Comparable<Pesquisa> {
 	
 	private String descricao;
     private String campoInteresse;
     private boolean status;
     private ArrayList<Problema> listaProblema;
     private ArrayList<Objetivo> listaObjetivos;
+    private String codigo;
     
     
 
@@ -23,14 +24,14 @@ public class Pesquisa {
      * @param campo campo de interre de uma pesquisa
      */
 
-    public Pesquisa(String descricao, String campo) {
+    public Pesquisa(String descricao, String campo, String codigo) {
     	
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
         this.listaProblema = new ArrayList<Problema>();
         this.listaObjetivos= new ArrayList<Objetivo>();
-        
+        this.codigo = codigo;
     }
     
 
@@ -119,10 +120,10 @@ public class Pesquisa {
 
 
 
-	public boolean desassociaProblema(Problema problema) {
+	public boolean desassociaProblema() {
 		
-		if (this.listaProblema.contains(problema)) {
-			this.listaProblema.remove(problema);
+		if (this.listaProblema.size() != 0) {
+			this.listaProblema.remove(0);
 			return true;
 		}
 		return false;
@@ -157,4 +158,31 @@ public class Pesquisa {
 		objetivo.desassociaObjetivo();
 		return true;
 	}
+
+
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+
+
+	@Override
+	public int compareTo(Pesquisa outraPesquisa) {
+		
+		return outraPesquisa.getCodigo().compareTo(this.codigo);
+	}
+
+
+
+	public ArrayList<Problema> getListaProblema() {
+		return listaProblema;
+	}
+
+
+
+	public ArrayList<Objetivo> getListaObjetivos() {
+		return listaObjetivos;
+	}
+	
 }
