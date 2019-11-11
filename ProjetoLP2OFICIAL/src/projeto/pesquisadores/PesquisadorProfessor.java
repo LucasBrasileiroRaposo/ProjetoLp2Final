@@ -27,4 +27,16 @@ public class PesquisadorProfessor extends Pesquisador {
     public String toString(){
         return this.nome+" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL + " - " + this.formacao + " - " + this.unidade + " - " + this.data;
     }
+
+    public void setFormacao(String formacao) {
+        this.formacao = formacao;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 }

@@ -1,20 +1,32 @@
 package projeto;
 
 import easyaccept.EasyAccept;
-import projeto.pesquisadores.ControllerPesquisador;
+import projeto.atividades.RepositorioAtividade;
+import projeto.objetivos_e_problemas.RepositorioObjetivos;
+import projeto.objetivos_e_problemas.RepositorioProblemas;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaAtividade;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaObjetivoProblema;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
+import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
+import projeto.pesquisadores.RepositorioPesquisador;
 
 public class Facade {
 
-    private ControllerPesquisa controllerPesquisa;
+    private RepositorioAtividade repositorioAtividades;
 
-    private ControllerObjetivos controllerObjetivos;
+    private RepositorioPesquisador repositorioPesquisadores;
 
-    private ControllerProblemas controllerProblemas;
+    private RepositorioPesquisa repositorioPesquisa;
 
-    private ControllerAtividade controleAtividade;
+    private RepositorioProblemas repositorioProblemas;
 
-    private ControllerPesquisador controllerPesquisadores;
-    private ControllerAssociacao controllerAssociacao;
+    private RepositorioObjetivos repositorioObjetivos;
+
+    private ControllerAssociacaoPesquisaObjetivoProblema controllerAssociacaoPesquisaObjetivoProblema;
+
+    private ControllerAssociacaoPesquisaAtividade controllerAssociacaoPesquisaAtividade;
+
+    private ControllerAssociacaoPesquisaPesquisador controllerAssociacaoPesquisaPesquisador;
 
 
     public static void main(String[] args){
@@ -23,113 +35,117 @@ public class Facade {
     }
 
     public Facade() {
-        this.controllerPesquisa = new ControllerPesquisa();
-        this.controllerObjetivos = new ControllerObjetivos();
-        this.controllerProblemas = new ControllerProblemas();
-        this.controleAtividade = new ControllerAtividade();
-        this.controllerPesquisadores = new ControllerPesquisador();}
+        this.repositorioAtividades = new RepositorioAtividade();
+        this.repositorioPesquisadores = new RepositorioPesquisador();
+        this.repositorioPesquisa = new RepositorioPesquisa();
+        this.repositorioObjetivos = new RepositorioObjetivos();
+        this.repositorioProblemas = new RepositorioProblemas();
+        this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.repositorioPesquisa,this.repositorioPesquisadores);
+        this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.repositorioPesquisa,this.repositorioAtividades);
+        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.repositorioPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
+    }
 
     /** Parte 1
      */
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
-        return this.controllerPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
+        return this.repositorioPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
     }
 
     public void encerraPesquisa(String codigo, String motivo) {
-        this.controllerPesquisa.encerraPesquisa(codigo, motivo);
+        this.repositorioPesquisa.encerraPesquisa(codigo, motivo);
     }
 
     public void ativaPesquisa(String codigo) {
-                controllerPesquisa.ativaPesquisa(codigo);
+                repositorioPesquisa.ativaPesquisa(codigo);
     }
 
     public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo) {
-        controllerPesquisa.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
+        repositorioPesquisa.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
 
     public String exibePesquisa(String codigo) {
-                return controllerPesquisa.exibePesquisa(codigo);
+                return repositorioPesquisa.exibePesquisa(codigo);
     }
 
     public boolean pesquisaEhAtiva(String codigo) {
-                return controllerPesquisa.verificaSeAtiva(codigo);
+                return repositorioPesquisa.verificaSeAtiva(codigo);
     }
 
     /** Parte 2
      */
     public void cadastraPesquisador(String nome, String funcao, String biografia, String email, String fotoURL){
-        this.controllerPesquisadores.cadastraPesquisador(nome,funcao,biografia,email,fotoURL);
+        this.repositorioPesquisadores.cadastraPesquisador(nome,funcao,biografia,email,fotoURL);
     }
    
     public void alteraPesquisador(String email, String atributo, String novoValor){
-        this.controllerPesquisadores.alteraPesquisador(email,atributo,novoValor);
+        this.repositorioPesquisadores.alteraPesquisador(email,atributo,novoValor);
     }
     
     public void desativaPesquisador(String email){
-        this.controllerPesquisadores.desativaPesquisador(email);
+        this.repositorioPesquisadores.desativaPesquisador(email);
     }
     
     public void ativaPesquisador(String email){
-        this.controllerPesquisadores.ativaPesquisador(email);
+        this.repositorioPesquisadores.ativaPesquisador(email);
     }
     
     public String exibePesquisador(String email){
-       return this.controllerPesquisadores.exibePesquisador(email);
+       return this.repositorioPesquisadores.exibePesquisador(email);
     }
     
     public boolean pesquisadorEhAtivo(String email){
-        return this.controllerPesquisadores.pesquisadorEhAtivo(email);
+        return this.repositorioPesquisadores.pesquisadorEhAtivo(email);
     }
 
     /** Parte 3
      */
     public String cadastraProblema(String descricao, int viabilidade) {
-        return this.controllerProblemas.cadastraProblema(descricao, viabilidade);
+        return this.repositorioProblemas.cadastraProblema(descricao, viabilidade);
     }
 
     public String cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade) {
-        return this.controllerObjetivos.cadastraObjetivo(tipo, descricao, aderencia,viabilidade);
+        return this.repositorioObjetivos.cadastraObjetivo(tipo, descricao, aderencia,viabilidade);
     }
     		
     public void apagarProblema(String codigo) {
-        this.controllerProblemas.apagarProblema(codigo);
+        this.repositorioProblemas.apagarProblema(codigo);
     }
 
     public void apagarObjetivo(String codigo) {
-        this.controllerObjetivos.apagarObjetivo(codigo);
+        this.repositorioObjetivos.apagarObjetivo(codigo);
     }
 
     public String exibeProblema(String codigo) {
-        return this.controllerProblemas.exibeProblema(codigo);
+        return this.repositorioProblemas.exibeProblema(codigo);
     }
 
     public String exibeObjetivo(String codigo) {
-        return this.controllerObjetivos.exibeObjetivo(codigo);
+        return this.repositorioObjetivos.exibeObjetivo(codigo);
     }
 
     /** Parte 4
      */
     public String cadastraAtividade(String Descricao, String nivelRisco, String descricaoRisco){
-        return this.controleAtividade.cadastraAtividade(Descricao, nivelRisco, descricaoRisco);
+        return this.repositorioAtividades.cadastraAtividade(Descricao, nivelRisco, descricaoRisco);
     }
     public void apagaAtividade(String codigo){
-        this.controleAtividade.apagaAtividade(codigo);
+        this.repositorioAtividades.apagaAtividade(codigo);
     }
 
     public void cadastraItem(String codigo, String item){
-        this.controleAtividade.cadastraItem(codigo,item);
+        this.repositorioAtividades.cadastraItem(codigo,item);
     }
 
     public String exibeAtividade(String codigo){
-        return this.controleAtividade.exibeAtividade(codigo);
+        return this.repositorioAtividades.exibeAtividade(codigo);
     }
 
     public int contaItensPendentes(String codigo){
-        return this.controleAtividade.contaItensPendentes(codigo);
+        return this.repositorioAtividades.contaItensPendentes(codigo);
     }
 
     public int contaItensRealizados(String codigo){
-        return this.controleAtividade.contaItensRealizados(codigo);
+        return this.repositorioAtividades.contaItensRealizados(codigo);
     }
 
     /**Parte 5
@@ -139,14 +155,18 @@ public class Facade {
      */
 
     public boolean associaPesquisador(String idPesquisa, String emailPesquisador){
-        return this.controllerAssociacao.associaPesquisador(idPesquisa, emailPesquisador);
+        return this.controllerAssociacaoPesquisaPesquisador.associaPesquisador(idPesquisa, emailPesquisador);
     }
 
-    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){return false;}
+    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){return this.controllerAssociacaoPesquisaPesquisador.desassociaPesquisador(idPesquisa, emailPesquisador);}
 
-    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){}
-    public void cadastraEspecialidadeAluno(String email, int semestre, double IEA){}
-    public String listaPesquisadores(String tipo){return "";}
+    public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
+        this.repositorioPesquisadores.cadastraEspecialidadeProfessor(email,formacao,unidade,data);
+    }
+    public void cadastraEspecialidadeAluno(String email, int semestre, double IEA){
+        this.repositorioPesquisadores.cadastraEspecialidadeAluno(email,semestre,IEA);
+    }
+    public String listaPesquisadores(String tipo){return this.repositorioPesquisadores.listaPesquisadores(tipo);}
 
 
 

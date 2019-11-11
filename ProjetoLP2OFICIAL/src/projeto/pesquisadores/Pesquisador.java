@@ -49,6 +49,11 @@ public abstract class Pesquisador {
     public String getStatus(){
         return this.status;
     }
+    public String getEmail() {
+        return this.email;
+    }
 
-
+    public String getFuncao(){
+        return this.funcao;
+    }
 }

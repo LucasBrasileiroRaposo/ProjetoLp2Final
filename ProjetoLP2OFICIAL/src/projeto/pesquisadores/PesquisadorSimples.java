@@ -22,6 +22,6 @@ public class PesquisadorSimples extends Pesquisador {
      */
     @Override
     public String toString() {
-        return this.nome+" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL;
+        return this.nome +" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL;
     }
 }

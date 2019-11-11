@@ -4,7 +4,7 @@ import projeto.pesquisadores.Pesquisador;
 
 public class PesquisadorAluno extends Pesquisador {
 
-    private String semestreIngresso;
+    private Integer semestreIngresso;
     private double iea;
 
     /**
@@ -16,7 +16,7 @@ public class PesquisadorAluno extends Pesquisador {
      * @param email     email do pesquisador
      * @param fotoURL   link URL da foto do pesquisador
      */
-    public PesquisadorAluno(String nome, String funcao, String biografia, String email, String fotoURL, String semestreIngresso,double iea) {
+    public PesquisadorAluno(String nome, String funcao, String biografia, String email, String fotoURL, Integer semestreIngresso,double iea) {
         super(nome, funcao, biografia, email, fotoURL);
         this.iea = iea;
         this.semestreIngresso = semestreIngresso;
@@ -29,5 +29,11 @@ public class PesquisadorAluno extends Pesquisador {
     @Override
     public String toString() {
         return this.nome+" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL + " - " + this.semestreIngresso + " - " + this.iea;
+    }
+    public void setSemestreIngresso(Integer semestreIngresso){
+        this.semestreIngresso = semestreIngresso;
+    }
+    public void setIea(double iea){
+        this.iea = iea;
     }
 }

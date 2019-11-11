@@ -2,15 +2,16 @@ package projeto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerPesquisaTest {
-    private ControllerPesquisa controllerPesquisa;
+    private RepositorioPesquisa controllerPesquisa;
 
     @BeforeEach
     public void setup() {
-        this.controllerPesquisa = new ControllerPesquisa();
+        this.controllerPesquisa = new RepositorioPesquisa();
     }
 
     @Test
