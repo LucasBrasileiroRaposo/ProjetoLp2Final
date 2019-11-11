@@ -18,7 +18,7 @@ public class Atividade {
     /**
      * Mapa com todos os itens dessa atividade;
      */
-    private static Map<Integer, Item> itens;
+    private Map<Integer, Item> itens;
 
     /**
      * Nivel de risco da atividade;
@@ -68,6 +68,7 @@ public class Atividade {
         this.contadorDeItensPendentes = 0;
         this.contadorDeItens = 1;
         this.codigoIdentificador = codigoIdentificador;
+        this.resultadosItens = new HashMap<>();
         
     }
 
@@ -98,7 +99,6 @@ public class Atividade {
     
     
 
-
     /**
      * Quando chamado conta os itens que possuem os status PENDENTE.
      *
@@ -127,9 +127,19 @@ public class Atividade {
         return this.contadorDeItensRealizados;
     }
 
-	public void executaAtividade(int item, int duracao) {
-		this.itens.get(item).alteraDuracao(duracao);
-		
+	public boolean executaAtividade(int item, int duracao) {
+		if(!this.itens.containsKey(item)) {
+			throw new IllegalArgumentException("Item nao encontrado.");
+		}
+		else {
+			if(this.itens.get(item).getDuracao() !=0) {
+				throw new IllegalArgumentException("Item ja executado.");
+			}
+			else {
+				this.itens.get(item).alteraDuracao(duracao);
+				return true;
+			}				
+	}
 	}
 	
 	public int retornaDuracao(int codigoItem) {

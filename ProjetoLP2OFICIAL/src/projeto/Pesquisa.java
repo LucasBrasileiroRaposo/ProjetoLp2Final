@@ -45,7 +45,7 @@ public class Pesquisa {
     }
     
     public boolean removeAtividade(String codigoAtividade) {
-    	if(!atividadesDaPesquisa.containsValue(codigoAtividade)) {
+    	if(!atividadesDaPesquisa.containsKey(codigoAtividade)) {
     		return false;
     	}
     	else {

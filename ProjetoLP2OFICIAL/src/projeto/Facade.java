@@ -128,8 +128,8 @@ public class Facade {
     	return this.controllerGeral.cadastraResultado(codigoAtividade, resultado);
     }
     
-    public void executaAtividade(String codigoAtividade, int item, int duracao) {
-    	this.controllerGeral.executaAtividade(codigoAtividade, item, duracao);
+    public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
+    	return this.controllerGeral.executaAtividade(codigoAtividade, item, duracao);
     }
     public boolean removeResultado(String codigoAtividade, int numeroResultado) {
     	return this.controllerGeral.removeResultado(codigoAtividade, numeroResultado);

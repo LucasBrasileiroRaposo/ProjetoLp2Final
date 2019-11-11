@@ -51,7 +51,6 @@ public class ControllerPesquisa {
 	}
 
 	public boolean removeAtividade(String codigoPesquisa, String codigoAtividade) {
-
 		if (!this.pesquisas.containsKey(codigoPesquisa)) {
 			throw new IllegalArgumentException("Pesquisa nao encontrada.");
 		} else if (!this.pesquisas.get(codigoPesquisa).getStatus()) {

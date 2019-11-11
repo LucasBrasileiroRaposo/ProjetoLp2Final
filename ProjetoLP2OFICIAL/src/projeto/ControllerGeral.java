@@ -216,22 +216,14 @@ public class ControllerGeral {
 	}
 	
 	
-	public void executaAtividade(String codigoAtividade, int item, int duracao) {
+	public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
 		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
-		if(item < 1) {
-			throw new NullPointerException("Item nao pode ser nulo ou negativo.");
-		}
-		else if(duracao < 1) {
-			throw new NullPointerException("Duracao nao pode ser nula ou negativa.");
-		}
-		else if(this.controleAtividade.verificaItem(codigoAtividade, item) != 0) {
-			throw new IllegalArgumentException("Item ja executado.");
-		}
-		else if(this.cp.verificaAtividade(codigoAtividade)== false) {
+		
+		if(this.cp.verificaAtividade(codigoAtividade)== false) {
 			throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
 		}
 		else {
-			this.controleAtividade.executaAtividade(codigoAtividade, item, duracao);
+			return this.controleAtividade.executaAtividade(codigoAtividade, item, duracao);
 		}
 	}
 	
@@ -343,7 +335,7 @@ public class ControllerGeral {
 			throw new IllegalArgumentException("numeroResultado nao pode ser nulo ou negativo.");
 		}
 		else {
-		return this.controleAtividade.removeResultado(codigoAtividade, numeroResultado);
+			return this.controleAtividade.removeResultado(codigoAtividade, numeroResultado);
 		}
 	}
 	

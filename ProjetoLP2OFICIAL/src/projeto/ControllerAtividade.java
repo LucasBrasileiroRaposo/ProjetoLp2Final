@@ -59,8 +59,15 @@ public class ControllerAtividade {
     }
     
     public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
-    	this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
-    	return true;
+    	if(item < 1) {
+			throw new NullPointerException("Item nao pode ser nulo ou negativo.");
+		}
+		else if(duracao < 1) {
+			throw new NullPointerException("Duracao nao pode ser nula ou negativa.");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
+		}
 
     }
 
@@ -80,7 +87,7 @@ public class ControllerAtividade {
         }
     }
     
-    public int verificaItem(String codigoAtividade, int codigoItem) {
+    public int verificaDuracaoItem(String codigoAtividade, int codigoItem) {
     	int duracao = this.atividades.get(codigoAtividade).retornaDuracao(codigoItem);
     	return duracao;
     }
@@ -111,7 +118,6 @@ public class ControllerAtividade {
      */
     public String exibeAtividade(String codigo) {
         Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
-
         if (!this.atividades.containsKey(codigo)) {
             throw new IllegalArgumentException("Atividade nao encontrada");
         } else {
@@ -170,7 +176,7 @@ public class ControllerAtividade {
 		if(!this.atividades.get(codigoAtividade).veriricaResultado(numeroResultado)) {
 			throw new NullPointerException("Resultado nao encontrado.");
 		}
-		else if(!this.atividades.containsKey(codigoAtividade)) {
+		else if(!(this.atividades.containsKey(codigoAtividade))) {
 			throw new IllegalArgumentException("Atividade nao encontrada");
 		}
 		else {
