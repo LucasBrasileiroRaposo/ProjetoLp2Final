@@ -29,7 +29,14 @@ public class Objetivo {
 	 * Valor do objetivo, o qual é a soma da aderencia e da viabilidade.
 	 */
 	private int valor;
+	
 	/**
+	 * Metodo que indica se este objetivo ja esta associado a uma pesquisa, ou nao.
+	 */
+	private boolean associado;
+	
+	/**
+	 * 
 	 * Constroi um objetivo a partir do seu tipo, descricao, aderencia, viabilidade e codigo.
 	 * @param tipo tipo do objetivo (Especifico ou Geral)
 	 * @param descricao descricao do objetivo
@@ -44,6 +51,7 @@ public class Objetivo {
 		this.codigo = codigo;
 		this.viabilidade = viabilidade;
 		this.valor = this.viabilidade + this.aderencia;
+		this.associado = false;
 	}
 	/**
 	 * Representacao em String dos dados do Objetivo.
@@ -52,6 +60,27 @@ public class Objetivo {
 	@Override
 	public String toString() {
 		return this.codigo + " - " + this.tipo + " - " + this.descricao + " - "+ this.valor;
+	}
+	
+	/**
+	 * metodo que indica que o objetivo foi associado a uma pesquisa.
+	 */
+	public void associaObjetivo() {
+		this.associado = true;
+		
+	}
+	
+	public boolean getAssociado() {
+		return this.associado;
+	}
+	
+	/**
+	 *  metodo que indica que o objetivo foi desassociado de  uma pesquisa.
+	 */
+	public void desassociaObjetivo() {
+		
+		this.associado = false;
+		
 	}
 
 

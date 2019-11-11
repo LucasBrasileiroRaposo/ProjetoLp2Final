@@ -47,7 +47,7 @@ public class RepositorioObjetivos {
 		 * @return um Objeto Objetivo
 	 * 
 	 */
-	private Objetivo pegaObjetivo(String codigo) {
+	public Objetivo getObjetivo(String codigo) {
 		return this.mapaObjetivos.get(codigo);
 	}
 	/**
@@ -100,7 +100,7 @@ public class RepositorioObjetivos {
 		Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 		
 		if (existeObjetivo(codigo)) {
-			Objetivo objetivo = pegaObjetivo(codigo);
+			Objetivo objetivo = getObjetivo(codigo);
 			return objetivo.toString();
 		} else {
 			throw new IllegalArgumentException("Objetivo nao encontrado");

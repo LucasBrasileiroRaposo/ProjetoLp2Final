@@ -1,19 +1,52 @@
 package projeto.pesquisa_e_associacoes;
 
+import projeto.objetivos_e_problemas.Objetivo;
+import projeto.pesquisa_e_associacoes.Pesquisa;
+import projeto.objetivos_e_problemas.Problema;
 import projeto.pesquisadores.Pesquisador;
 
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Método responsável por representar um objeto pesquisa
+ * Classe responsável por representar um objeto Pesquisa.
  */
 
-public class Pesquisa {private String descricao;
+public class Pesquisa implements Comparable<Pesquisa>{
+	
+	/**
+	 * descricao da pesquisa.
+	 */
+	private String descricao;
+	/**
+	 * campo de interesse da pesquisa
+	 */
     private String campoInteresse;
+    /**
+     * status da pesquisa, se for True, a pesquisa esta ativada, se nao, a pesquisa esta desativada.
+     */
     private boolean status;
+    
+    /**
+     * Mapa de pesquisadores da pesquisa.
+     */
     private Map<String, Pesquisador> pesquisadoresDaPesquisa;
+    
+    /**
+     * Lista que contem o problema associado a esta pesquisa.
+     */
+    private ArrayList<Problema> listaProblema;
+    /**
+     * Lista que contem os objetivos associados a esta pesquisa.
+     */
+    private ArrayList<Objetivo> listaObjetivos;
+    /**
+     * Codigo da pesquisa
+     */
+    private String codigo;
 
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -21,11 +54,15 @@ public class Pesquisa {private String descricao;
      * @param campo campo de interre de uma pesquisa
      */
 
-    public Pesquisa(String descricao, String campo) {
+    public Pesquisa(String descricao, String campo, String codigo) {
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
         this.pesquisadoresDaPesquisa = new LinkedHashMap<>();
+        
+        this.listaProblema = new ArrayList<Problema>();
+        this.listaObjetivos= new ArrayList<Objetivo>();
+        this.codigo = codigo;
     }
 
 
@@ -94,16 +131,117 @@ public class Pesquisa {private String descricao;
     public String toString() {
         return " - " + this.descricao + " - " + campoInteresse;
     }
+    
+    /**
+     * Associa o problema na pesquisa
+     * @param problema objeto problema
+     * @return true se for bem sucedido, false se nao.
+     */
 
-    public boolean associaPesquisador(Pesquisador pesquisador){
-        if (this.pesquisadoresDaPesquisa.containsKey(pesquisador.getEmail())){
-            return false;
-        }else{
-            this.pesquisadoresDaPesquisa.put(pesquisador.getEmail(),pesquisador);
-            return true;
-        }
-    }
+	public boolean associaProblema(Problema problema) {
+		
+		if (this.listaProblema.size() == 0) {
+			this.listaProblema.add(problema);
+			return true;
+		} else if (this.listaProblema.contains(problema)){
+			return false;
+			
+		}
+		
+		throw new IllegalArgumentException("Pesquisa ja associada a um problema.");
+	}
 
+
+	/**
+	 * metodo que desassocia um problema da pesquisa
+	 * @return
+	 */
+	public boolean desassociaProblema() {
+		
+		if (this.listaProblema.size() != 0) {
+			this.listaProblema.remove(0);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Metodo que associa um Objetivo a uma pesquisa
+	 * @param objetivo Objeto Objetivo que sera associado
+	 * @return true se for bem sucedido, false se nao.
+	 */
+
+	public boolean associaObjetivo(Objetivo objetivo) {
+		
+		if(this.listaObjetivos.contains(objetivo)) {
+			return false;
+		}
+		
+
+		else if(objetivo.getAssociado()) {
+			throw new IllegalArgumentException("Objetivo ja associado a uma pesquisa.");
+		}
+		
+		this.listaObjetivos.add(objetivo);
+		objetivo.associaObjetivo();
+		return true;
+	}
+
+
+	/**
+	 * Metodo que desassocia um objetivo de uma pesquisa
+	 * @param objetivo objeto objetivo que sera associado
+	 * @return true se for bem sucedido, false se nao.
+	 */
+	public boolean desassociaObjetivo(Objetivo objetivo) {
+		
+		if(!this.listaObjetivos.contains(objetivo)) {
+			return false;
+		}
+		this.listaObjetivos.remove(objetivo);
+		objetivo.desassociaObjetivo();
+		return true;
+	}
+
+    
+    public String getCodigo() {
+		return codigo;
+	}
+
+
+
+	@Override
+	public int compareTo(Pesquisa outraPesquisa) {
+		
+		return outraPesquisa.getCodigo().compareTo(this.codigo);
+	}
+	
+	public ArrayList<Problema> getListaProblema() {
+		return listaProblema;
+	}
+
+
+
+	public ArrayList<Objetivo> getListaObjetivos() {
+		return listaObjetivos;
+	}
+	
+	/**
+	 * PARTE 6!
+	 */
+    /**
+     * 
+     * @param pesquisador
+     * @return
+     */
+	 public boolean associaPesquisador(Pesquisador pesquisador){
+	        if (this.pesquisadoresDaPesquisa.containsKey(pesquisador.getEmail())){
+	            return false;
+	        }else{
+	            this.pesquisadoresDaPesquisa.put(pesquisador.getEmail(),pesquisador);
+	            return true;
+	        }
+	    }
     public boolean desassociaPesquisador(String emailPesquisador) {
         if (!this.pesquisadoresDaPesquisa.containsKey(emailPesquisador)){
             return false;
