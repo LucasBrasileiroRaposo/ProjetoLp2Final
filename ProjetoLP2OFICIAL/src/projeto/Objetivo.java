@@ -30,6 +30,9 @@ public class Objetivo {
 	 */
 	private int valor;
 	
+	/**
+	 * Metodo que indica se este objetivo ja esta associado a uma pesquisa, ou nao.
+	 */
 	private boolean associado;
 	/**
 	 * Constroi um objetivo a partir do seu tipo, descricao, aderencia, viabilidade e codigo.
@@ -56,6 +59,10 @@ public class Objetivo {
 	public String toString() {
 		return this.codigo + " - " + this.tipo + " - " + this.descricao + " - "+ this.valor;
 	}
+	
+	/**
+	 * metodo que indica que o objetivo foi associado a uma pesquisa.
+	 */
 	public void associaObjetivo() {
 		this.associado = true;
 		
@@ -64,6 +71,10 @@ public class Objetivo {
 	public boolean getAssociado() {
 		return this.associado;
 	}
+	
+	/**
+	 *  metodo que indica que o objetivo foi desassociado de  uma pesquisa.
+	 */
 	public void desassociaObjetivo() {
 		
 		this.associado = false;

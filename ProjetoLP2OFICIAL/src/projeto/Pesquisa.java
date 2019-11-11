@@ -4,24 +4,44 @@ import java.awt.List;
 import java.util.ArrayList;
 
 /**
- * Método responsável por representar um objeto pesquisa
+ * Classe responsável por representar um objeto Pesquisa.
  */
 
 public class Pesquisa implements Comparable<Pesquisa> {
 	
+	/**
+	 * descricao da pesquisa.
+	 */
 	private String descricao;
+	/**
+	 * campo de interesse da pesquisa
+	 */
     private String campoInteresse;
+    /**
+     * status da pesquisa, se for True, a pesquisa esta ativada, se nao, a pesquisa esta desativada.
+     */
     private boolean status;
+    
+    /**
+     * Lista que contem o problema associado a esta pesquisa.
+     */
     private ArrayList<Problema> listaProblema;
+    /**
+     * Lista que contem os objetivos associados a esta pesquisa.
+     */
     private ArrayList<Objetivo> listaObjetivos;
+    /**
+     * Codigo da pesquisa
+     */
     private String codigo;
     
     
 
     /**
-     * Método responsável por criar um novo objeto pesquisa
+     * Constroi um novo objeto pesquisa a partir de uma descricao, campo e codigo.
      * @param descricao descricao de uma pesquisa
      * @param campo campo de interre de uma pesquisa
+     * @param codigo da pesquisa.
      */
 
     public Pesquisa(String descricao, String campo, String codigo) {
@@ -103,7 +123,11 @@ public class Pesquisa implements Comparable<Pesquisa> {
         return " - " + this.descricao + " - " + campoInteresse;
     }
 
-
+    /**
+     * Associa o problema na pesquisa
+     * @param problema objeto problema
+     * @return true se for bem sucedido, false se nao.
+     */
 
 	public boolean associaProblema(Problema problema) {
 		
@@ -119,7 +143,10 @@ public class Pesquisa implements Comparable<Pesquisa> {
 	}
 
 
-
+	/**
+	 * metodo que desassocia um problema da pesquisa
+	 * @return
+	 */
 	public boolean desassociaProblema() {
 		
 		if (this.listaProblema.size() != 0) {
@@ -130,6 +157,11 @@ public class Pesquisa implements Comparable<Pesquisa> {
 	}
 
 
+	/**
+	 * Metodo que associa um Objetivo a uma pesquisa
+	 * @param objetivo Objeto Objetivo que sera associado
+	 * @return true se for bem sucedido, false se nao.
+	 */
 
 	public boolean associaObjetivo(Objetivo objetivo) {
 		
@@ -148,7 +180,11 @@ public class Pesquisa implements Comparable<Pesquisa> {
 	}
 
 
-
+	/**
+	 * Metodo que desassocia um objetivo de uma pesquisa
+	 * @param objetivo objeto objetivo que sera associado
+	 * @return true se for bem sucedido, false se nao.
+	 */
 	public boolean desassociaObjetivo(Objetivo objetivo) {
 		
 		if(!this.listaObjetivos.contains(objetivo)) {

@@ -164,7 +164,12 @@ public class ControllerPesquisa {
         return codigoFinal;
     }
 
-
+    /**
+     * Metodo que associa um problema a uma pesquisa. Uma pesquisa so pode ter um problema associado. Se tentar associar um problema a uma pesquisa que ja tem problema, dara erro.
+     * @param codigo codigo que identifica a pesquisa
+     * @param problema objeto problema que quer se associar a pesquisa
+     * @return true se houver a associacao e false se nao houver.
+     */
 	public boolean associaProblema(String codigo, Problema problema) {
 		
 		if (this.pesquisas.containsKey(codigo)) {
@@ -180,7 +185,12 @@ public class ControllerPesquisa {
 		}
 	}
 
-
+	/**
+	 * Metodo que desassocia um problema de uma pesquisa.
+	 * @param codigo codigo que identifica a pesquisa
+	 * @return Se nao houver nenhuma pesquisa ou a pesquisa estiver desativada, dara erro. Se  nao tiver esse problema retornara false
+	 * . Se for bem sucedida, retornara true.
+	 */
 	public boolean desassociaProblema(String codigo) {
 		
 		if (this.pesquisas.containsKey(codigo)) {
@@ -197,7 +207,13 @@ public class ControllerPesquisa {
 			}
 		
 	}
-
+	/**
+	 * Metodo que associa um objetivo a uma pesquisa. Uma pesquisa pode ter varios objetivos associados.
+	 * @param codigo  codigo que identifica a pesquisa
+	 * @param objetivo Objeto objetivo que sera associado dentro da pesquisa.
+	 * @return true se for bem sucedido, false se a pesquisa ja tiver esse objetivo e dara erro se a pesquisa estiver desativada ou nao
+	 * existir.
+	 */
 
 	public boolean associaObjetivo(String codigo, Objetivo objetivo) {
 
@@ -215,7 +231,13 @@ public class ControllerPesquisa {
 		}
 		
 	}
-
+	/**
+	 * Metodo que desassocia um objetivo de uma pesquisa.
+	 * @param codigo codigo que identifica a pesquisa
+	 * @param objetivo Objeto objetivo que sera removido
+	 * @return true se for bem sucedido, false se aquele objetivo nao estiver dentro da lista de objetivos da pesquisa. Sera lancada excecao
+	 * se a pesquisa estiver desativada ou nao existir.
+	 */
 
 	public boolean dessassociaObjetivo(String codigo, Objetivo objetivo) {
 		
@@ -233,16 +255,26 @@ public class ControllerPesquisa {
 
 		
 	}
-
+	/**
+	 * Metodo que lista as pesquisas de acordo com o parametro que é passado. Se a ordem for por pesquisa, a listagem sera das pesquisas
+	 * de Maior ID para as que tem menor ID. Se a ordem for por problema, a listagem sera das pesquisas de maior ID que tem  
+	 * problema associado para o de menor ID, depois sera das pesquisas de Maior ID para as de menor das pesquisas que nao tem problema
+	 * associado.
+	 * Se a ordem for por objetivo, a listagem sera das pesquisas que tem mais objetivos associados para as de menos. Se for igual ou nao
+	 * tiver nenhum objetivo associado dentro da pesquisa, a ordenacao sera das pesquisas de maior ID para as de menor ID.
+	 * @param ordem a ordem de ordenacao desejada
+	 * @return representacao em String dos dados da pesquisa, seu codigo, sua descricao e campo de interesse.
+	 */
 
 	public String listaPesquisas(String ordem) {
 		
+		List<Pesquisa> listaPesquisas = new ArrayList();
+		listaPesquisas.addAll(this.pesquisas.values());
+		String listar = "";
+		
 		if (ordem.toUpperCase().equals("PESQUISA")) {
-			List<Pesquisa> listaPesquisas = new ArrayList();
-			listaPesquisas.addAll(this.pesquisas.values());
-			Collections.sort (listaPesquisas);
 			
-			String listar = "";
+			Collections.sort (listaPesquisas);
 			
 			for(Pesquisa pesquisa: listaPesquisas) {
 				listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
@@ -251,12 +283,9 @@ public class ControllerPesquisa {
 			return listar;
 		}
 		else if (ordem.toUpperCase().equals("PROBLEMA")) {
-			List<Pesquisa> listaPesquisas = new ArrayList();
-			listaPesquisas.addAll(this.pesquisas.values());
+			
 			
 			Collections.sort (listaPesquisas);
-			
-			String listar = "";
 			
 			for(Pesquisa pesquisa: listaPesquisas) {
 				if(pesquisa.getListaProblema().size() == 1) {
@@ -271,20 +300,22 @@ public class ControllerPesquisa {
 			}
 			listar = listar.substring(0, listar.length() -3);
 			return listar;
-		} else {
+			
+		} else {  /**
+		*            ordem == "OBJETIVO";
+		*/
+			
 			ObjetivoComparator objetivoComparator = new ObjetivoComparator();
-			List<Pesquisa> listaPesquisas = new ArrayList();
-			listaPesquisas.addAll(this.pesquisas.values());
 			
 			Collections.sort (listaPesquisas, objetivoComparator );
-			String listar = "";
 			for(Pesquisa pesquisa: listaPesquisas) {
 				if(pesquisa.getListaObjetivos().size() != 0) {
 				listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
 				}
 			}
 			
-			Collections.sort(listaPesquisas);
+			  Collections.sort(listaPesquisas);
+			 
 			for (Pesquisa pesquisa: listaPesquisas) {
 				if(pesquisa.getListaObjetivos().size() == 0) {
 					listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
@@ -292,6 +323,7 @@ public class ControllerPesquisa {
 			}
 			listar = listar.substring(0, listar.length()-3);
 			return listar;
+			
 		}
 	}
 

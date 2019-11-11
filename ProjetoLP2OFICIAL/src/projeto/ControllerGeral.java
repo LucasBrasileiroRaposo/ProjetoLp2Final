@@ -54,6 +54,7 @@ public class ControllerGeral {
     public void ativaPesquisa(String codigo) {
         controllerPesquisa.ativaPesquisa(codigo);
     }
+	
 
     /**
      * Método responsável por editar as informações de uma pesquisa
