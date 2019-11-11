@@ -4,14 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import projeto.objetivos_e_problemas.RepositorioProblemas;
 
 class ControllerProblemasTest {
 	
-	private ControllerProblemas controllerProblemas;
+	private RepositorioProblemas controllerProblemas;
 	
 	@BeforeEach
 	void setup() {
-		this.controllerProblemas = new ControllerProblemas();
+		this.controllerProblemas = new RepositorioProblemas();
 		
 		this.controllerProblemas.cadastraProblema("O alcool no cotidiano", 4);
 		this.controllerProblemas.cadastraProblema("Os vicios dos jogos celulares", 5);

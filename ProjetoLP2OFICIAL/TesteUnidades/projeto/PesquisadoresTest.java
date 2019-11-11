@@ -2,19 +2,21 @@ package projeto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import projeto.pesquisadores.Pesquisador;
+import projeto.pesquisadores.PesquisadorSimples;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class PesquisadoresTest {
 	
-    Pesquisadores p1,p2;
+    Pesquisador p1,p2;
     
     @BeforeEach
     void criaPesquisador() {
     	
-        p1 = new Pesquisadores("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto.com");
-        p2 = new Pesquisadores("Tey", "Professor", "Estudante pesquisador", "Teyn@hotmail.com", "http:www.foto.com");
+        p1 = new PesquisadorSimples("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto.com");
+        p2 = new PesquisadorSimples("Tey", "Professor", "Estudante pesquisador", "Teyn@hotmail.com", "http:www.foto.com");
     }
     
     @Test

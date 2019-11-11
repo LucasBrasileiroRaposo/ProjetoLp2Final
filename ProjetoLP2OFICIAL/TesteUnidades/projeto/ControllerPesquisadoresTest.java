@@ -2,20 +2,23 @@ package projeto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import projeto.pesquisadores.RepositorioPesquisador;
+import projeto.pesquisadores.Pesquisador;
+import projeto.pesquisadores.PesquisadorSimples;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerPesquisadoresTest {
-    Pesquisadores p1,p2,p3;
-    ControllerPesquisadores cp;
+    Pesquisador p1,p2,p3;
+    RepositorioPesquisador cp;
     
     @BeforeEach
     void CriaPesquisador() {
     	
-        p1 = new Pesquisadores("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto1.com");
-        p2 = new Pesquisadores("Kaio", "Externo", "Externo pesquisador", "kaio@hotmail.com", "http://www.foto2.com");
-        p3 = new Pesquisadores("Gaudencio", "Professor", "Professor pesquisador", "gaudencio@hotmail.com", "http://www.foto3.com");
-        cp = new ControllerPesquisadores();
+        p1 = new PesquisadorSimples("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto1.com");
+        p2 = new PesquisadorSimples("Kaio", "Externo", "Externo pesquisador", "kaio@hotmail.com", "http://www.foto2.com");
+        p3 = new PesquisadorSimples("Gaudencio", "Professor", "Professor pesquisador", "gaudencio@hotmail.com", "http://www.foto3.com");
+        cp = new RepositorioPesquisador();
         cp.cadastraPesquisador("Tey","Estudante","Estudante pesquisador","tey@hotmail.com","http://www.foto1.com");
         cp.cadastraPesquisador("Frodo", "Externo", "Externo pesquisador", "frodo@hotmail.com", "http://www.foto2.com");
         cp.cadastraPesquisador("ain", "Professor", "Professor pesquisador", "ain@hotmail.com", "http://www.foto3.com");
