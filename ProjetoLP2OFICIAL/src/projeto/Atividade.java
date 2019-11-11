@@ -158,7 +158,7 @@ public class Atividade {
 	}
 
 	public boolean removeResultado(int numeroResultado) {
-		if(!this.resultadosItens.containsValue(numeroResultado)) {
+		if(!this.resultadosItens.containsKey(numeroResultado)) {
     		return false;
     	}
     	else {
@@ -176,5 +176,21 @@ public class Atividade {
 			return true;
 		}
 	}
+
+	public int getDuracaoAtividade() {
+		return duracaoAtividade;
+	}
+
+	public void setDuracaoAtividade(int duracaoAtividade) {
+		this.duracaoAtividade = duracaoAtividade;
+	}
+	
+	public String exibeResultados() {
+		String saida = "";
+        for (String i : this.resultadosItens.values()) {
+            saida += i.toString() + " | ";
+        }
+        return saida.substring(0, saida.length() - 3);
+    }
 
 }

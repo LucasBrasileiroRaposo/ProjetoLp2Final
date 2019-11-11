@@ -173,14 +173,32 @@ public class ControllerAtividade {
     }
 
 	public boolean removeResultado(String codigoAtividade, int numeroResultado) {
-		if(!this.atividades.get(codigoAtividade).veriricaResultado(numeroResultado)) {
-			throw new NullPointerException("Resultado nao encontrado.");
-		}
-		else if(!(this.atividades.containsKey(codigoAtividade))) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
 			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else if(!this.atividades.get(codigoAtividade).veriricaResultado(numeroResultado)) {
+			throw new NullPointerException("Resultado nao encontrado.");
 		}
 		else {
 			return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
+		}
+	}
+
+	public String exibeResultados(String codigoAtividade) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else {
+		return this.atividades.get(codigoAtividade).exibeResultados();
+		}
+	}
+
+	public int getDuracao(String codigoAtividade) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).getDuracaoAtividade();
 		}
 	}
 }

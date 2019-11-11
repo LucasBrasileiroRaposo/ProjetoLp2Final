@@ -226,7 +226,6 @@ public class ControllerGeral {
 		}
 	}
 	
-	
 	/**
 	 * Chamado no cadastro de uma Atividade, criando um objeto do tipo Atividade se
 	 * todos os campos forem passados corretamente.
@@ -260,8 +259,6 @@ public class ControllerGeral {
 		}
     }
 	
-	
-
 	/**
 	 * Quando chamado, esse metodo recebe como parametro o codigo identificador da
 	 * atividade, e se tudo ocorrer como esperado a atividade do determinado codigo
@@ -336,6 +333,16 @@ public class ControllerGeral {
 		else {
 			return this.controleAtividade.removeResultado(codigoAtividade, numeroResultado);
 		}
+	}
+	
+	public String listaResultados(String codigoAtividade) {
+		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
+		return this.controleAtividade.exibeResultados(codigoAtividade);
+	}
+	
+	public int getDuracao(String codigoAtividade) {
+		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
+		return this.controleAtividade.getDuracao(codigoAtividade);
 	}
 	
 }

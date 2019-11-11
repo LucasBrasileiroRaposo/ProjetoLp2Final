@@ -134,4 +134,10 @@ public class Facade {
     public boolean removeResultado(String codigoAtividade, int numeroResultado) {
     	return this.controllerGeral.removeResultado(codigoAtividade, numeroResultado);
     }
+    public String listaResultados(String codigoAtividade) {
+    	return this.controllerGeral.listaResultados(codigoAtividade);
+    }
+    public int getDuracao(String codigoAtividade) {
+    	return this.controllerGeral.getDuracao(codigoAtividade);
+    }
 }
