@@ -112,4 +112,9 @@ public class Pesquisa {
     public String toString() {
         return " - " + this.descricao + " - " + campoInteresse;
     }
+
+	public void ativaPesquisa() {
+		this.status = true;
+		
+	}
 }

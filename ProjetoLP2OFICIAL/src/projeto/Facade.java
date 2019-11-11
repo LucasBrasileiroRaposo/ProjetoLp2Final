@@ -123,4 +123,15 @@ public class Facade {
     public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
     	return this.controllerGeral.desassociaAtividade(codigoPesquisa, codigoAtividade);
     }
+    
+    public int cadastraResultado(String codigoAtividade, String resultado) {
+    	return this.controllerGeral.cadastraResultado(codigoAtividade, resultado);
+    }
+    
+    public void executaAtividade(String codigoAtividade, int item, int duracao) {
+    	this.controllerGeral.executaAtividade(codigoAtividade, item, duracao);
+    }
+    public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+    	return this.controllerGeral.removeResultado(codigoAtividade, numeroResultado);
+    }
 }

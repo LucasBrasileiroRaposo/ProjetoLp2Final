@@ -1,5 +1,6 @@
 package projeto;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,11 +12,13 @@ public class Atividade {
      * representa a descricao da atividade;
      */
     private String descricao;
+    
+    private HashMap<Integer, String> resultadosItens;
 
     /**
      * Mapa com todos os itens dessa atividade;
      */
-    private static Map<Integer, Item> resultados;
+    private static Map<Integer, Item> itens;
 
     /**
      * Nivel de risco da atividade;
@@ -60,7 +63,7 @@ public class Atividade {
         this.descricao = descricao;
         this.nivelDeRisco = nivelDeRisco;
         this.descricaoDeRisco = descricaoDeRisco;
-        this.resultados = new LinkedHashMap<>();
+        this.itens = new LinkedHashMap<>();
         this.contadorDeItensRealizados = 0;
         this.contadorDeItensPendentes = 0;
         this.contadorDeItens = 1;
@@ -75,7 +78,7 @@ public class Atividade {
      */
     public String toString() {
         String saida = this.descricao + " (" + this.nivelDeRisco + " - " + this.descricaoDeRisco + ") | ";
-        for (Item i : this.resultados.values()) {
+        for (Item i : this.itens.values()) {
             saida += i.toString() + " | ";
         }
         return saida.substring(0, saida.length() - 3);
@@ -89,15 +92,12 @@ public class Atividade {
     public void cadastraItem(String item) {
 
         Item itemNovo = new Item(item);
-        this.resultados.put(this.contadorDeItens, itemNovo);
+        this.itens.put(this.contadorDeItens, itemNovo);
         this.contadorDeItens++;
     }
     
     
-   
-    public static void cadastraResultado(String codigoAtividade, String resultado) {
-   	 	resultados.put(codigoAtividade, resultado);
-   }
+
 
     /**
      * Quando chamado conta os itens que possuem os status PENDENTE.
@@ -105,7 +105,7 @@ public class Atividade {
      * @return o numero de itens com status PENDENTE;
      */
     public int contaItensPendentes() {
-        for (Item i : this.resultados.values()) {
+        for (Item i : this.itens.values()) {
             if (i.getEstadoItem().equals("PENDENTE")) {
                 this.contadorDeItensPendentes++;
             }
@@ -119,7 +119,7 @@ public class Atividade {
      * @return o numero de itens que costam com o status REALIZADO.
      */
     public int contaItensRealizados() {
-        for (Item j : this.resultados.values()) {
+        for (Item j : this.itens.values()) {
             if (j.getEstadoItem().equals("REALIZADO")) {
                 this.contadorDeItensRealizados++;
             }
@@ -128,17 +128,43 @@ public class Atividade {
     }
 
 	public void executaAtividade(int item, int duracao) {
-		this.resultados.get(item).alteraDuracao(duracao);
+		this.itens.get(item).alteraDuracao(duracao);
 		
 	}
 	
 	public int retornaDuracao(int codigoItem) {
-		return this.resultados.get(codigoItem).getDuracao();
+		return this.itens.get(codigoItem).getDuracao();
 	}
 	
 	public String getCodigo() {
 		return this.codigoIdentificador;
 	}
     
+	int i = 0;
+	public int cadastraResultado(String resultado) {
+		i += 1;
+		this.resultadosItens.put(i, resultado);
+		return i;
+	}
+
+	public boolean removeResultado(int numeroResultado) {
+		if(!this.resultadosItens.containsValue(numeroResultado)) {
+    		return false;
+    	}
+    	else {
+    		this.resultadosItens.remove(numeroResultado);
+    		return true;
+    	}
+		
+	}
+	
+	public boolean veriricaResultado(int codigoResultado) {
+		if(!this.resultadosItens.containsKey(codigoResultado)) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 
 }

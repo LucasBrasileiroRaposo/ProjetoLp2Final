@@ -15,6 +15,7 @@ public class ControllerPesquisa {
 
 	public ControllerPesquisa() {
 		this.pesquisas = new HashMap<>();
+
 	}
 
 	/**
@@ -36,35 +37,30 @@ public class ControllerPesquisa {
 		return codigo;
 	}
 
-	public boolean verificaAtividade(String codigo) {
-		for(Pesquisa p : this.pesquisas.values()) {
-			if(p.)
-		}
-	}
-
 	public boolean adicionaAtividade(String codigo, Atividade atividade) {
 		if (!this.pesquisas.containsKey(codigo)) {
 			throw new IllegalArgumentException("Pesquisa nao encontrada.");
-		} else {
-			if(!this.pesquisas.get(codigo).getStatus()) {
+		} 
+		else if (!this.pesquisas.get(codigo).getStatus()) {
 				throw new IllegalArgumentException("Pesquisa desativada.");
 			}
+		else{
 			return this.pesquisas.get(codigo).cadastraAtividade(atividade);
-
 		}
 
 	}
 
 	public boolean removeAtividade(String codigoPesquisa, String codigoAtividade) {
+
 		if (!this.pesquisas.containsKey(codigoPesquisa)) {
 			throw new IllegalArgumentException("Pesquisa nao encontrada.");
-		} else {
-			if(!this.pesquisas.get(codigoPesquisa).getStatus()) {
-				throw new IllegalArgumentException("Pesquisa desativada.");
-			}
-			return this.pesquisas.get(codigoPesquisa).removeAtividade(codigoAtividade);
-
+		} else if (!this.pesquisas.get(codigoPesquisa).getStatus()) {
+			throw new IllegalArgumentException("Pesquisa desativada.");
 		}
+		else {
+			return this.pesquisas.get(codigoPesquisa).removeAtividade(codigoAtividade);
+		}
+
 	}
 
 	/**
@@ -102,7 +98,7 @@ public class ControllerPesquisa {
 	public void ativaPesquisa(String codigo) {
 		if (this.pesquisas.containsKey(codigo)) {
 			if (pesquisas.get(codigo).getStatus() == false) {
-				pesquisas.get(codigo).setStatus();
+				pesquisas.get(codigo).ativaPesquisa();
 			} else {
 				throw new IllegalArgumentException("Pesquisa ja ativada.");
 			}
@@ -160,7 +156,8 @@ public class ControllerPesquisa {
 	}
 
 	/**
-	 * Método responsável por vefirificar se o status de uma pesquisa está "Ativa"
+	 * Método responsável por vefirificar se o status de uma pesquisa está
+	 * "Ativa"
 	 *
 	 * @param codigo codigo identificador de uma pesquisa
 	 * @return retorna um boolean true ou false
@@ -194,6 +191,10 @@ public class ControllerPesquisa {
 			return geraCodigo(codigo, i);
 		}
 		return codigoFinal;
+	}
+
+	public boolean verificaAtividade(String codigoAtividade) {
+		return this.pesquisas.get(codigoAtividade).verificaAtividade(codigoAtividade);
 	}
 
 	/**

@@ -51,8 +51,16 @@ public class ControllerAtividade {
         return codigo;
     }
     
-    public void executaAtividade(String codigoAtividade, int item, int duracao) {
+   
+    public int cadastraResultado(String codigoAtividade, String resultado) {
+    	int i = 0;
+    	i = this.atividades.get(codigoAtividade).cadastraResultado(resultado);
+    	return i;
+    }
+    
+    public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
     	this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
+    	return true;
 
     }
 
@@ -157,4 +165,16 @@ public class ControllerAtividade {
             return this.atividades.get(codigo).contaItensRealizados();
         }
     }
+
+	public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+		if(!this.atividades.get(codigoAtividade).veriricaResultado(numeroResultado)) {
+			throw new NullPointerException("Resultado nao encontrado.");
+		}
+		else if(!this.atividades.containsKey(codigoAtividade)) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
+		}
+	}
 }

@@ -219,22 +219,23 @@ public class ControllerGeral {
 	public void executaAtividade(String codigoAtividade, int item, int duracao) {
 		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
 		if(item < 1) {
-			throw new NullPointerException("Campo item nao pode ser nulo ou vazio.");
+			throw new NullPointerException("Item nao pode ser nulo ou negativo.");
 		}
-		if(duracao < 1) {
-			throw new NullPointerException("Campo item nao pode ser nulo ou vazio.");
+		else if(duracao < 1) {
+			throw new NullPointerException("Duracao nao pode ser nula ou negativa.");
 		}
 		else if(this.controleAtividade.verificaItem(codigoAtividade, item) != 0) {
-			throw new NullPointerException("Campo item nao pode ser nulo ou vazio.");
+			throw new IllegalArgumentException("Item ja executado.");
 		}
 		else if(this.cp.verificaAtividade(codigoAtividade)== false) {
-			throw new NullPointerException("false");
+			throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
 		}
 		else {
 			this.controleAtividade.executaAtividade(codigoAtividade, item, duracao);
 		}
 	}
-
+	
+	
 	/**
 	 * Chamado no cadastro de uma Atividade, criando um objeto do tipo Atividade se
 	 * todos os campos forem passados corretamente.
@@ -260,7 +261,12 @@ public class ControllerGeral {
 	public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
 		Validadora.verificaValorNullVazio(codigoPesquisa, "Campo codigoPesquisa nao pode ser nulo ou vazio.");
 		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
-		return this.cp.removeAtividade(codigoPesquisa, codigoAtividade);
+		if(!this.controleAtividade.atividadeExiste(codigoAtividade)){
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else{
+			return this.cp.removeAtividade(codigoPesquisa, codigoAtividade);
+		}
     }
 	
 	
@@ -324,4 +330,21 @@ public class ControllerGeral {
 	public int contaItensRealizados(String codigo) {
 		return this.controleAtividade.contaItensRealizados(codigo);
 	}
+
+	public int cadastraResultado(String codigoAtividade, String resultado) {
+		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(resultado, "Resultado nao pode ser nulo ou vazio.");
+		return this.controleAtividade.cadastraResultado(codigoAtividade, resultado);
+	}
+	
+	public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
+		if(numeroResultado < 1) {
+			throw new IllegalArgumentException("numeroResultado nao pode ser nulo ou negativo.");
+		}
+		else {
+		return this.controleAtividade.removeResultado(codigoAtividade, numeroResultado);
+		}
+	}
+	
 }
