@@ -11,7 +11,7 @@ public class Pesquisa {
 	private String descricao;
     private String campoInteresse;
     private boolean status;
-    private static Map<String, Atividade> atividadesDaPesquisa;
+    private Map<String, Atividade> atividadesDaPesquisa;
  
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -36,7 +36,7 @@ public class Pesquisa {
     }
     
     public boolean verificaAtividade(String codigo) {
-    	if(!atividadesDaPesquisa.containsValue(codigo)) {
+    	if(!atividadesDaPesquisa.containsKey(codigo)) {
     		return false;
     	}
     	else {

@@ -218,7 +218,6 @@ public class ControllerGeral {
 	
 	public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
 		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
-		
 		if(this.cp.verificaAtividade(codigoAtividade)== false) {
 			throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
 		}
