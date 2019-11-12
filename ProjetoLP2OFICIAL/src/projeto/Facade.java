@@ -196,6 +196,7 @@ public class Facade {
     }
     public String listaPesquisadores(String tipo){return this.repositorioPesquisadores.listaPesquisadores(tipo);}
 
-
+    /** Parte 7
+     */
 
 }

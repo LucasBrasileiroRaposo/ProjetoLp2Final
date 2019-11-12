@@ -28,7 +28,7 @@ public class PesquisadorAluno extends Pesquisador {
      */
     @Override
     public String toString() {
-        return this.nome+" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL + " - " + this.semestreIngresso + " - " + this.iea;
+        return this.nome+" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL + " - " + this.semestreIngresso + "o SEMESTRE"  +  " - " + this.iea;
     }
     public void setSemestreIngresso(Integer semestreIngresso){
         this.semestreIngresso = semestreIngresso;
