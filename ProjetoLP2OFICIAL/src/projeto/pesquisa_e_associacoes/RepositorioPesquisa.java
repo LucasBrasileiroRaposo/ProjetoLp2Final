@@ -4,6 +4,7 @@ package projeto.pesquisa_e_associacoes;
  * Classe responsável por por manipular e fazer as operações sobre o objeto Pesquisa
  */
 import Util.Validadora;
+import projeto.atividades.Atividade;
 import projeto.objetivos_e_problemas.Objetivo;
 import projeto.pesquisa_e_associacoes.ObjetivoComparator;
 import projeto.objetivos_e_problemas.Problema;
@@ -368,4 +369,28 @@ public class RepositorioPesquisa {
             }
         }
     }
+
+	public boolean adicionaAtividade(String codigo, Atividade atividade) {
+		if (!this.pesquisas.containsKey(codigo)) {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		} 
+		else if (!this.pesquisas.get(codigo).getStatus()) {
+				throw new IllegalArgumentException("Pesquisa desativada.");
+		}
+		else{
+			return this.pesquisas.get(codigo).cadastraAtividade(atividade);
+		}
+	}
+	
+	public boolean removeAtividade(String codigoPesquisa, String codigoAtividade) {
+		if (!this.pesquisas.containsKey(codigoPesquisa)) {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		} else if (!this.pesquisas.get(codigoPesquisa).getStatus()) {
+			throw new IllegalArgumentException("Pesquisa desativada.");
+		}
+		else {
+			return this.pesquisas.get(codigoPesquisa).removeAtividade(codigoAtividade);
+		}
+	
+	}
 }
