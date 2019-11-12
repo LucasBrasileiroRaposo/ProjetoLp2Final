@@ -1,15 +1,11 @@
 package projeto.pesquisadores;
-
 public abstract class Pesquisador {
-
     protected String nome;
     protected String funcao;
     protected String biografia;
     protected String email;
     protected String fotoURL;
     protected String status;
-
-
 
     /**
      * Construtor de pesquisadores responsável por armazenar os dados.
@@ -30,52 +26,46 @@ public abstract class Pesquisador {
     }
 
 
+
+
     public void setNome(String nome) {
         this.nome = nome;
     }
-
     public void setFuncao(String funcao){
         this.funcao = funcao;
     }
-
     public void setBiografia(String biografia){
         this.biografia = biografia;
     }
-
     public void setEmail(String email){
         this.email = email;
     }
-
     public void setFotoURL(String fotoURL){
         this.fotoURL = fotoURL;
     }
-
     public void setStatus(String status){
         this.status = status;
     }
-
     public String getStatus(){
         return this.status;
     }
-
     public String getEmail() {
         return this.email;
     }
-
 
     public String getFuncao(){
         return this.funcao;
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public String getBiografia() {
-        return biografia;
+        return this.biografia;
     }
 
     public String getFotoURL() {
-        return fotoURL;
+        return this.fotoURL;
     }
 }

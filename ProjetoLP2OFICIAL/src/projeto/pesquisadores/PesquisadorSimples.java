@@ -1,6 +1,6 @@
 package projeto.pesquisadores;
 
-
+import projeto.pesquisadores.Pesquisador;
 
 public class PesquisadorSimples extends Pesquisador {
     /**

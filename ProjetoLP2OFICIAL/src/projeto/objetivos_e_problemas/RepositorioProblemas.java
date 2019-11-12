@@ -4,7 +4,8 @@ package projeto.objetivos_e_problemas;
 import java.util.HashMap;
 import java.util.Map;
 
-import projeto.Util.Validadora;
+import Util.Validadora;
+import projeto.objetivos_e_problemas.Problema;
 
 /**
 	 * Classe responsavel por controlar a colecao de problemas, alem de cadastrar, apagar e exibir os problemas.
@@ -49,7 +50,7 @@ import projeto.Util.Validadora;
 		 * @param codigo codigo identificador do Mapa.
 		 * @return um Objeto Problema
 		 */
-		private Problema pegaProblema(String codigo) {
+		public Problema getProblema(String codigo) {
 			return this.mapaProblemas.get(codigo);
 		}
 		/**
@@ -96,7 +97,7 @@ import projeto.Util.Validadora;
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 			
 			if (existeProblema(codigo)){
-				Problema problema = pegaProblema(codigo);
+				Problema problema = getProblema(codigo);
 					return problema.toString();
 				}
 			else {

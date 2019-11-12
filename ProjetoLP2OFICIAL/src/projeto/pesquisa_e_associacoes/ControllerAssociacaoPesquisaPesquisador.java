@@ -1,6 +1,6 @@
 package projeto.pesquisa_e_associacoes;
 
-import projeto.Util.Validadora;
+import Util.Validadora;
 import projeto.pesquisadores.Pesquisador;
 import projeto.pesquisadores.RepositorioPesquisador;
 

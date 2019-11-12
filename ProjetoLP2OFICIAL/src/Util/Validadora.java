@@ -1,10 +1,15 @@
 package Util;
 
 
+import projeto.pesquisadores.Pesquisador;
+import projeto.pesquisadores.PesquisadorSimples;
+
 public class Validadora {
     public static void verificaValorNullVazio(String valor, String msg) {
-        if (valor == null || valor.trim().equals("")) {
+        if (valor == null) {
             throw new NullPointerException(msg);
+        } else if (valor.trim().equals("")) {
+            throw new IllegalArgumentException(msg);
         }
     }
     
@@ -65,7 +70,8 @@ public class Validadora {
 
 
         public static void validaAtributo (String atributo, String msg){
-            if (!(atributo.equals("NOME") || atributo.equals("EMAIL") || atributo.equals("FUNCAO") || atributo.equals("FOTO") || atributo.equals("BIOGRAFIA"))){
+            if (!atributo.equals("NOME") && (!atributo.equals("EMAIL")) && (!atributo.equals("FUNCAO")) && !atributo.equals("FOTO") && !atributo.equals("BIOGRAFIA") && !atributo.equals("DATA")
+                    && !atributo.equals("FORMACAO") && !atributo.equals("UNIDADE") && !atributo.equals("SEMESTRE") && !atributo.equals("IEA")){
                 throw new IllegalArgumentException(msg);
             }
     }
@@ -92,24 +98,29 @@ public class Validadora {
             throw new IllegalArgumentException(msg);
         }
     }
-    public static void verificaFormatoData(String data, String msg){
-        int dias = Integer.parseInt(data.substring(0,2));
-        int mes = Integer.parseInt(data.substring(3,5));
-        int ano = Integer.parseInt(data.substring(6,10));
 
-        if (data.length() != 10){
+    public static void verificaFormatoData(String data, String msg) {
+        int dias = 0;
+        int mes = 0;
+        int ano = 0;
+
+        if (data.length() != 10) {
             throw new IllegalArgumentException(msg);
-        }else if (!data.substring(2,3).equals("/") || !data.substring(5,6).equals("/")){
+        } else if (!data.substring(2, 3).equals("/") || !data.substring(5, 6).equals("/")) {
             throw new IllegalArgumentException(msg);
-        }else if ( dias <= 0 || dias > 31){
-            throw new IllegalArgumentException(msg);
-        }else if ( mes <= 0 || mes > 12){
-            throw new IllegalArgumentException(msg);
-        }else if (ano < 0){
-            throw new IllegalArgumentException(msg);
+        } else {
+            dias = Integer.parseInt(data.substring(0, 2));
+            mes = Integer.parseInt(data.substring(3, 5));
+            ano = Integer.parseInt(data.substring(6, 10));
+            if (dias <= 0 || dias > 31) {
+                throw new IllegalArgumentException(msg);
+            } else if (mes <= 0 || mes > 12) {
+                throw new IllegalArgumentException(msg);
+            } else if (ano < 0) {
+                throw new IllegalArgumentException(msg);
+            }
         }
     }
-
 }
 
 

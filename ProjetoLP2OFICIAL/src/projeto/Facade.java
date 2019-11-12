@@ -30,7 +30,9 @@ public class Facade {
 
 
     public static void main(String[] args){
-        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt","TestesAceitacao/use_case_4.txt","TestesAceitacao/use_case_6.txt"};
+        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
+        		"TestesAceitacao/use_case_4.txt",
+        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt"};
         EasyAccept.main(args);
     }
 
@@ -150,6 +152,30 @@ public class Facade {
 
     /**Parte 5
      */
+    
+    public boolean associaProblema(String idPesquisa, String idProblema) {
+    	
+    	return this.controllerAssociacaoPesquisaObjetivoProblema.associaProblema(idPesquisa, idProblema);
+    	
+    }
+    
+    public boolean desassociaProblema(String idPesquisa) {
+    
+    	return this.controllerAssociacaoPesquisaObjetivoProblema.desassociaProblema(idPesquisa);
+    }
+    
+    public boolean associaObjetivo(String idPesquisa, String idObjetivo) {
+    	return this.controllerAssociacaoPesquisaObjetivoProblema.associaObjetivo(idPesquisa, idObjetivo);
+    }
+    
+    public boolean desassociaObjetivo(String idPesquisa, String idObjetivo) {
+    	return this.controllerAssociacaoPesquisaObjetivoProblema.desassociaObjetivo(idPesquisa, idObjetivo);
+    }
+    
+    public String listaPesquisas(String ordem) {
+    	
+    	return this.repositorioPesquisa.listaPesquisas(ordem);
+    }
 
     /** Parte 6
      */
@@ -158,7 +184,9 @@ public class Facade {
         return this.controllerAssociacaoPesquisaPesquisador.associaPesquisador(idPesquisa, emailPesquisador);
     }
 
-    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){return this.controllerAssociacaoPesquisaPesquisador.desassociaPesquisador(idPesquisa, emailPesquisador);}
+    public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador){
+    	return this.controllerAssociacaoPesquisaPesquisador.desassociaPesquisador(idPesquisa, emailPesquisador);
+    	}
 
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data){
         this.repositorioPesquisadores.cadastraEspecialidadeProfessor(email,formacao,unidade,data);
@@ -168,6 +196,7 @@ public class Facade {
     }
     public String listaPesquisadores(String tipo){return this.repositorioPesquisadores.listaPesquisadores(tipo);}
 
-
+    /** Parte 7
+     */
 
 }

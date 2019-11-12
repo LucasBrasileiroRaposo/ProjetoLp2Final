@@ -1,10 +1,9 @@
 package projeto.pesquisadores;
 
-import projeto.Util.Validadora;
+import Util.Validadora;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class RepositorioPesquisador {
     private Map<String, Pesquisador> mapaDePesquisadores;
@@ -104,7 +103,7 @@ public class RepositorioPesquisador {
         Validadora.verificaPesquisador(mapaDePesquisadores.containsKey(email),"Pesquisador nao encontrado");
         Validadora.verificaPesquisadorAtivo(mapaDePesquisadores.get(email).getStatus().equals("DESATIVADO"),"Pesquisador inativo.");
         if (mapaDePesquisadores.containsKey(email)) {
-            this.mapaDePesquisadores.get(email).setStatus("DESATIVADO");
+            mapaDePesquisadores.get(email).setStatus("DESATIVADO");
         }
     }
 
@@ -160,12 +159,25 @@ public class RepositorioPesquisador {
             return false;
         }
     }
+
+    /**
+     * Quando,chamado o metodo retorna um determinado pesquisador quando for necessario a associação de um deles com uma Pesquisa.
+     * @param email String, que vai funcionar como identificador do pesquisador que o usuario deseja que seja retornado seu objeto.
+     * @return determinado Objeto do tipo Pesquisador que
+     */
     public Pesquisador pegaPesquisador(String email){
         Validadora.verificaPesquisador(mapaDePesquisadores.containsKey(email),"Pesquisador nao encontrado");
 
         return this.mapaDePesquisadores.get(email);
     }
 
+    /**
+     * Metodo utilizado para cadastra um pesquisador como pesquisador professor, recebendo o email do pesquisador "normal" e os dados exclusivos de um objeto PesquisadorProfessor.
+     * @param email String, que funciona como identificador do objeto Pesquisador, no mapa de todos os pesquisadores cadastrados.
+     * @param formacao String, que representa o grau de formacao do professor.
+     * @param unidade String, que representa a instituicao que o professor frequentou ou frequenta.
+     * @param data String, que representa a data .
+     */
     public void cadastraEspecialidadeProfessor(String email, String formacao, String unidade, String data) {
         Validadora.verificaValorNullVazio(email,"Campo email nao pode ser nulo ou vazio.");
         Validadora.verificaValorNullVazio(formacao,"Campo formacao nao pode ser nulo ou vazio.");
@@ -177,6 +189,9 @@ public class RepositorioPesquisador {
             throw new IllegalArgumentException("Pesquisadora nao encontrada.");
         }
         else{
+            if(!this.mapaDePesquisadores.get(email).getFuncao().equals("professor")){
+                throw new IllegalArgumentException("Pesquisador nao compativel com a especialidade.");
+            }
             String nomePesquisador = this.mapaDePesquisadores.get(email).getNome();
             String funcaoPesquisador = this.mapaDePesquisadores.get(email).getFuncao();
             String biografiaPesquisador = this.mapaDePesquisadores.get(email).getBiografia();
@@ -187,15 +202,39 @@ public class RepositorioPesquisador {
         }
     }
 
+    /**
+     * Metodo utilizado para cadastrar um estudante como pesquisador aluno, recebendo o email do pesquisador "normal" e os dados exclusivos de um objeto PesquisadorAluno.
+     * @param email String, que funciona como identificador do objeto Pesquisador, no mapa de todos os pesquisadores cadastrados.
+     * @param semestre int, que representa o semestre que o aluno esta.
+     * @param iea double , que representa o indice de eficiencia academica do aluno.
+     */
     public void cadastraEspecialidadeAluno(String email, int semestre, double iea) {
         Validadora.verificaValorNullVazio(email,"Campo email nao pode ser nulo ou vazio.");
         if(semestre < 1 ){
             throw new IllegalArgumentException("Atributo semestre com formato invalido.");
         }else if (iea > 10 || iea < 0){
-            throw new IllegalArgumentException("Atributo iea com formato invalido.");
+            throw new IllegalArgumentException("Atributo IEA com formato invalido.");
+        }else if(!this.mapaDePesquisadores.containsKey(email)){
+            throw new IllegalArgumentException("Pesquisadora nao encontrada.");
+        }else {
+            if(!this.mapaDePesquisadores.get(email).getFuncao().equals("estudante")){
+                throw new IllegalArgumentException("Pesquisador nao compativel com a especialidade.");
+            }
+            String nomePesquisador = this.mapaDePesquisadores.get(email).getNome();
+            String funcaoPesquisador = this.mapaDePesquisadores.get(email).getFuncao();
+            String biografiaPesquisador = this.mapaDePesquisadores.get(email).getBiografia();
+            String fotoURLPesquisador = this.mapaDePesquisadores.get(email).getFotoURL();
+            this.mapaDePesquisadores.remove(email);
+            Pesquisador pesquisadorAluno = new PesquisadorAluno(nomePesquisador,funcaoPesquisador,biografiaPesquisador,email,fotoURLPesquisador,semestre,iea);
+            this.mapaDePesquisadores.put(email,pesquisadorAluno);
         }
     }
 
+    /**
+     * Metodo responsavel por listar todos os pesquisadores de determinada funcao.
+     * @param tipo String, que representao o tipo dos pesquisadores que o usuario quer que seja exibido sua representacao textual.
+     * @return String, que é a representacao textual do pesquisador de tal funcao, podendo ser essa: externo,estudante ou professor.
+     */
     public String listaPesquisadores(String tipo) {
         Validadora.verificaValorNullVazio(tipo,"Campo tipo nao pode ser nulo ou vazio.");
         if(!tipo.equals("EXTERNO") && !tipo.equals("PROFESSOR") && !tipo.equals("ALUNO")){

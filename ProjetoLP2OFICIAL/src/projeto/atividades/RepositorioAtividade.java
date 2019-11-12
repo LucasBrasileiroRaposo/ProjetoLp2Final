@@ -1,7 +1,7 @@
 package projeto.atividades;
 
 
-import projeto.Util.Validadora;
+import Util.Validadora;
 
 import java.util.HashMap;
 import java.util.Map;

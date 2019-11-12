@@ -3,7 +3,8 @@ package projeto.objetivos_e_problemas;
 import java.util.HashMap;
 import java.util.Map;
 
-import projeto.Util.Validadora;
+import Util.Validadora;
+import projeto.objetivos_e_problemas.Objetivo;
 
 /**
  *  Classe responsavel por controlar as operacoes dos objetivos, alem de cadastrar, remover e exibir os objetivos.
@@ -46,7 +47,7 @@ public class RepositorioObjetivos {
 		 * @return um Objeto Objetivo
 	 * 
 	 */
-	private Objetivo pegaObjetivo(String codigo) {
+	public Objetivo getObjetivo(String codigo) {
 		return this.mapaObjetivos.get(codigo);
 	}
 	/**
@@ -99,7 +100,7 @@ public class RepositorioObjetivos {
 		Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 		
 		if (existeObjetivo(codigo)) {
-			Objetivo objetivo = pegaObjetivo(codigo);
+			Objetivo objetivo = getObjetivo(codigo);
 			return objetivo.toString();
 		} else {
 			throw new IllegalArgumentException("Objetivo nao encontrado");
