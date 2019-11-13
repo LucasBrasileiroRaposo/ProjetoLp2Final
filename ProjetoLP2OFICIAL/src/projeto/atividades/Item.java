@@ -4,6 +4,7 @@ package projeto.atividades;
  */
 public class Item {
 
+	private int duracao;
     /** String que representa o status/estado do item.
      */
     private String estadoItem;
@@ -35,4 +36,16 @@ public class Item {
     public String toString(){
         return this.estadoItem + " - " + this.nomeItem;
     }
+
+    public int getDuracao() {
+		return duracao;
+	}
+    public void setEstadoItem(String estadoItem){
+        this.estadoItem = estadoItem;
+    }
+    
+    public void alteraDuracao(int duracao) {
+		this.duracao = duracao;
+		
+	}
 }

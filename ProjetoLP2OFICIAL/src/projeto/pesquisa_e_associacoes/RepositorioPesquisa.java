@@ -4,9 +4,11 @@ package projeto.pesquisa_e_associacoes;
  * Classe responsável por por manipular e fazer as operações sobre o objeto Pesquisa
  */
 import Util.Validadora;
+import projeto.atividades.Atividade;
 import projeto.objetivos_e_problemas.Objetivo;
-import Util.ObjetivoComparator;
+import projeto.pesquisa_e_associacoes.ObjetivoComparator;
 import projeto.objetivos_e_problemas.Problema;
+import projeto.pesquisa_e_associacoes.Pesquisa;
 import projeto.pesquisadores.Pesquisador;
 
 import java.util.ArrayList;
@@ -212,9 +214,9 @@ public class RepositorioPesquisa {
 		
 	}
 	/**
-     * Metodo que associa um objeto a uma pesquisa. Uma pesquisa so pode ter varios objetivos.
+     * Metodo que associa um problema a uma pesquisa. Uma pesquisa so pode ter um problema associado. Se tentar associar um problema a uma pesquisa que ja tem problema, dara erro.
      * @param codigo codigo que identifica a pesquisa
-     * @param objetivo objeto objetivo que quer se associar a pesquisa
+     * @param problema objeto problema que quer se associar a pesquisa
      * @return true se houver a associacao e false se nao houver.
      */
 	
@@ -367,4 +369,28 @@ public class RepositorioPesquisa {
             }
         }
     }
+
+	public boolean adicionaAtividade(String codigo, Atividade atividade) {
+		if (!this.pesquisas.containsKey(codigo)) {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		} 
+		else if (!this.pesquisas.get(codigo).getStatus()) {
+				throw new IllegalArgumentException("Pesquisa desativada.");
+		}
+		else{
+			return this.pesquisas.get(codigo).cadastraAtividade(atividade);
+		}
+	}
+	
+	public boolean removeAtividade(String codigoPesquisa, String codigoAtividade) {
+		if (!this.pesquisas.containsKey(codigoPesquisa)) {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		} else if (!this.pesquisas.get(codigoPesquisa).getStatus()) {
+			throw new IllegalArgumentException("Pesquisa desativada.");
+		}
+		else {
+			return this.pesquisas.get(codigoPesquisa).removeAtividade(codigoAtividade);
+		}
+	
+	}
 }

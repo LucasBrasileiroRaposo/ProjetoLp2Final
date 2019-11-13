@@ -2,8 +2,10 @@ package projeto.atividades;
 
 
 import Util.Validadora;
+import projeto.atividades.Atividade;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /** Classe que permite a comunicacao entre a Facade e a classe Atividade.
@@ -24,7 +26,7 @@ public class RepositorioAtividade {
      * Inicializa o controlador das atividades, com o mapa das atividades e o contador.
      */
     public RepositorioAtividade() {
-        this.atividades = new HashMap<>();
+        this.atividades = new LinkedHashMap<>();
         this.contadorDeAtividades = 1;
     }
 
@@ -41,11 +43,11 @@ public class RepositorioAtividade {
     public String cadastraAtividade(String descricaoAtividade, String nivelRisco, String descricaoRisco) {
         Validadora.verificaValorNullVazio(descricaoAtividade, "Campo Descricao nao pode ser nulo ou vazio.");
         Validadora.verificaValorNullVazio(nivelRisco, "Campo nivelRisco nao pode ser nulo ou vazio.");
-        Validadora.validaAtividadeChecaOpçoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
+        Validadora.validaAtividadeChecaOpcoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
         Validadora.verificaValorNullVazio(descricaoRisco, "Campo descricaoRisco nao pode ser nulo ou vazio.");
 
-        Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco);
         String codigo = "A" + this.contadorDeAtividades;
+        Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco,codigo);
         this.atividades.put(codigo, atividade);
         this.contadorDeAtividades++;
         return codigo;
@@ -132,6 +134,89 @@ public class RepositorioAtividade {
             throw new IllegalArgumentException("Atividade nao encontrada");
         } else {
             return this.atividades.get(codigo).contaItensRealizados();
+        }
+    }
+
+    /**
+     * Quando chamado vai verificar a existencia de um objeto Atividade com esse codigo identificador e caso exista vai retorna-lo.
+     * @param codigoAtividade String, que representa o codigo da identificador da atividade no mapa de atividades.
+     * @return o objeto Atividade que tem como chave determinado codigo.
+     */
+    public Atividade retornaAtividade(String codigoAtividade) {
+    	if(!this.atividades.containsKey(codigoAtividade)) {
+    		throw new IllegalArgumentException("Atividade nao encontrada");
+    	}
+    	else {
+		return this.atividades.get(codigoAtividade);
+    }
+    }
+
+    /**
+     * Quando chamado, o metodo deve checar a existencia de determinada Atividade.
+     * @param codigoAtividade String, que representa o codigo identificador da atividade no mapa de atividades.
+     * @return True caso essa atividade exista ou False caso ela não exista.
+     */
+	public boolean atividadeExiste(String codigoAtividade) {
+		return this.atividades.containsKey(codigoAtividade);
+	}
+
+	public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
+		if(this.atividades.get(codigoAtividade).getControlaPesquisasAtividade() == 0) {
+            throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
+        }else if(item < 1) {
+			throw new NullPointerException("Item nao pode ser nulo ou negativo.");
+		}
+		else if(duracao < 1) {
+			throw new NullPointerException("Duracao nao pode ser nula ou negativa.");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
+		}
+	}
+
+	public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else if(!this.atividades.get(codigoAtividade).veriricaResultado(numeroResultado)) {
+			throw new NullPointerException("Resultado nao encontrado.");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
+		}
+	}
+
+	public int cadastraResultado(String codigoAtividade, String resultado) {
+		int i = 0;
+    	i = this.atividades.get(codigoAtividade).cadastraResultado(resultado);
+    	return i;
+	}
+
+	public String exibeResultados(String codigoAtividade) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else {
+		return this.atividades.get(codigoAtividade).exibeResultados();
+		}
+	}
+
+	public int getDuracao(String codigoAtividade) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).getDuracaoAtividade();
+		}
+	}
+
+    public void defineProximaAtividade(String idPrecedente, String idSubsequente) {
+        Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(idSubsequente,"Atividade nao pode ser nulo ou vazio.");
+
+        if (!this.atividades.containsKey(idPrecedente) || !this.atividades.containsKey(idSubsequente)){
+            throw new IllegalArgumentException("Atividade nao encontrada.");
+        }else {
         }
     }
 }
