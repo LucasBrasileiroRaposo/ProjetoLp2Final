@@ -9,6 +9,7 @@ import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaObjetivoProble
 import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
 import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
 import projeto.pesquisadores.RepositorioPesquisador;
+import projeto.busca.ControllerBusca;
 
 public class Facade {
 
@@ -28,11 +29,14 @@ public class Facade {
 
     private ControllerAssociacaoPesquisaPesquisador controllerAssociacaoPesquisaPesquisador;
 
+    private ControllerBusca controllerBusca;
+
+
 
     public static void main(String[] args){
         args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
         		"TestesAceitacao/use_case_4.txt",
-        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt"};
+        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt","TestesAceitacao/use_case_8.txt"};
         EasyAccept.main(args);
     }
 
@@ -45,6 +49,8 @@ public class Facade {
         this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.repositorioPesquisa,this.repositorioPesquisadores);
         this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.repositorioPesquisa,this.repositorioAtividades);
         this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.repositorioPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
+        this.controllerBusca = new ControllerBusca(this.repositorioPesquisa,this.repositorioPesquisadores,this.repositorioProblemas,this.repositorioObjetivos,this.repositorioAtividades);
+
     }
 
     /** Parte 1
@@ -223,7 +229,18 @@ public class Facade {
     public int getDuracao(String codigoAtividade) {
     	return this.controllerAssociacaoPesquisaAtividade.getDuracao(codigoAtividade);
     }
-    
+    /**Parte 8
+     *
+     */
+    public String busca(String termo){
+        return controllerBusca.busca(termo);
+    }
+    public String busca(String termo,int numeroDoResultado){
+        return controllerBusca.busca(termo,numeroDoResultado);
+    }
+    public int contaResultadosBusca(String termo){
+        return controllerBusca.contaResultadosBusca(termo);
+    }
     
 
 }

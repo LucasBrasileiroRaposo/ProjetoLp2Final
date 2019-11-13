@@ -6,7 +6,7 @@ import java.util.Map;
 
 /** Classe que representa uma atividade
  */
-public class Atividade {
+public class Atividade implements Comparable<Atividade> {
 
     /**
      * representa a descricao da atividade;
@@ -55,6 +55,8 @@ public class Atividade {
     
     private int controlaPesquisasAtividade;
 
+    private String codigo;
+
     /**
      * Constrou um objeto do tipo Atividade, com descricao, nivel de risco da atividade e a descricao desse risco;
      *
@@ -62,7 +64,7 @@ public class Atividade {
      * @param nivelDeRisco     String, que representa o nivel de risco da atividade;
      * @param descricaoDeRisco String, que representa a descricao do nivel de risco citado anteriormente.
      */
-    public Atividade(String descricao, String nivelDeRisco, String descricaoDeRisco, String codigo) {
+    public Atividade(String descricao, String nivelDeRisco, String descricaoDeRisco) {
         this.descricao = descricao;
         this.nivelDeRisco = nivelDeRisco;
         this.descricaoDeRisco = descricaoDeRisco;
@@ -70,7 +72,6 @@ public class Atividade {
         this.contadorDeItensRealizados = 0;
         this.contadorDeItensPendentes = 0;
         this.contadorDeItens = 1;
-        this.codigoIdentificador = codigo;
         this.controlaPesquisasAtividade = 0;
         this.resultadosItens = new HashMap<>();
     }
@@ -131,11 +132,6 @@ public class Atividade {
         return this.contadorDeItensRealizados;
     }
 
-	public String getCodigo() {
-		return this.codigoIdentificador;
-		
-	}
-	
 	public void controlaDestinoAtividade(){
 	    this.controlaPesquisasAtividade += 1;
     }
@@ -211,6 +207,25 @@ public class Atividade {
 	public int retornaDuracao(int codigoItem) {
 		return this.itens.get(codigoItem).getDuracao();
 	}
+    public String getDescricao() {
+        return this.descricao;
+    }
+
+    public String getCodigo() {
+        return this.codigo;
+    }
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescricaoDeRisco() {
+        return descricaoDeRisco;
+    }
+
+    @Override
+    public int compareTo(Atividade atividade) {
+        return atividade.getCodigo().compareTo(this.codigo);
+    }
 	
 	
 	}

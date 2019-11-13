@@ -2,6 +2,10 @@ package projeto.objetivos_e_problemas;
 
 import java.util.HashMap;
 import java.util.Map;
+import projeto.busca.Busca;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import Util.Validadora;
 import projeto.objetivos_e_problemas.Objetivo;
@@ -11,7 +15,7 @@ import projeto.objetivos_e_problemas.Objetivo;
  * @author Matheus Bezerra Andrade
  *
  */
-public class RepositorioObjetivos {
+public class RepositorioObjetivos implements Busca {
 	/**
 	 * Mapa de objetivos que tem a chave formada por "O" + numero da posicao de cadastro no mapa.
 	 */
@@ -105,5 +109,32 @@ public class RepositorioObjetivos {
 		} else {
 			throw new IllegalArgumentException("Objetivo nao encontrado");
 		}
+	}
+	@Override
+	public String busca(String termo) {
+		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+		String msg = "";
+		List<Objetivo> listObjetivos = new ArrayList<>();
+		listObjetivos.addAll(this.mapaObjetivos.values());
+		Collections.sort(listObjetivos);
+		for(Objetivo objetivo : listObjetivos){
+			if(objetivo.getDescricao().contains(termo)) {
+				msg += objetivo.getCodigo() +": "+objetivo.getDescricao() + " | ";
+			}
+		}
+		return msg;
+	}
+
+
+	@Override
+	public int contaResultadosBusca(String termo) {
+		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+		int cont = 0;
+		for(String palavra: busca(termo).split(" | ")){
+			if(termo.contains(palavra)) {
+				cont += 1;
+			}
+		}
+		return cont;
 	}
 }

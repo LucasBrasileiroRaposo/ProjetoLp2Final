@@ -4,7 +4,7 @@ package projeto.objetivos_e_problemas;
  * @author Matheus Bezerra Andrade
  *
  */
-public class Objetivo {
+public class Objetivo implements Comparable<Objetivo>{
 	/**
 	 * Tipo do objetivo. O tipo só pode ser Geral ou Especifico.
 	 */
@@ -83,6 +83,18 @@ public class Objetivo {
 		
 	}
 
+	public String getDescricao() {
+		return this.descricao;
+	}
 
+	public String getCodigo() {
+		return codigo;
+	}
+
+
+	@Override
+	public int compareTo(Objetivo objetivo) {
+		return objetivo.getCodigo().compareTo(this.codigo);
+	}
 
 }

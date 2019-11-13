@@ -2,14 +2,17 @@ package projeto.atividades;
 
 
 import Util.Validadora;
+import projeto.busca.Busca;
 import projeto.atividades.Atividade;
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /** Classe que permite a comunicacao entre a Facade e a classe Atividade.
  */
-public class RepositorioAtividade {
+public class RepositorioAtividade implements Busca{
 
     /**
      * Mapa de das atividades.
@@ -42,14 +45,14 @@ public class RepositorioAtividade {
     public String cadastraAtividade(String descricaoAtividade, String nivelRisco, String descricaoRisco) {
         Validadora.verificaValorNullVazio(descricaoAtividade, "Campo Descricao nao pode ser nulo ou vazio.");
         Validadora.verificaValorNullVazio(nivelRisco, "Campo nivelRisco nao pode ser nulo ou vazio.");
-        Validadora.validaAtividadeChecaOpcoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
+        Validadora.validaAtividadeChecaOpçoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
         Validadora.verificaValorNullVazio(descricaoRisco, "Campo descricaoRisco nao pode ser nulo ou vazio.");
 
-        String codigo = "A" + this.contadorDeAtividades;
-        Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco,codigo);
-        this.atividades.put(codigo, atividade);
+        Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco);
+        atividade.setCodigo("A" + this.contadorDeAtividades);
+        this.atividades.put(atividade.getCodigo(), atividade);
         this.contadorDeAtividades++;
-        return codigo;
+        return atividade.getCodigo();
     }
 
     /**
@@ -198,4 +201,34 @@ public class RepositorioAtividade {
 			return this.atividades.get(codigoAtividade).getDuracaoAtividade();
 		}
 	}
+    @Override
+    public String busca(String termo){
+        Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+        String msg = "";
+        List<Atividade> listaDeAtividades = new ArrayList<>();
+        listaDeAtividades.addAll(this.atividades.values());
+        Collections.sort(listaDeAtividades);
+        for(Atividade a : listaDeAtividades){
+            if(a.getDescricao().contains(termo)) {
+                msg += a.getCodigo() +": "+a.getDescricao() + " | ";
+            }
+            if(a.getDescricaoDeRisco().contains(termo)){
+                msg += a.getCodigo() + ": "+a.getDescricaoDeRisco()+ " | ";
+            }
+        }
+        return msg;
+    }
+
+    @Override
+    public int contaResultadosBusca(String termo) {
+        Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+        int cont = 0;
+
+        for(String palavra: busca(termo).split(" | ")){
+            if(termo.contains(palavra)) {
+                cont += 1;
+            }
+        }
+        return cont;
+    }
 }

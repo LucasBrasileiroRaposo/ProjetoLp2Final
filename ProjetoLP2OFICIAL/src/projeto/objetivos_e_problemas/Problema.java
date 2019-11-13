@@ -4,7 +4,7 @@ package projeto.objetivos_e_problemas;
  * @author Matheus Bezerra Andrade
  *
  */
-public class Problema {
+public class Problema implements Comparable<Problema>{
 	/**
 	 * Codigo do problema. O qual eh formado por "P" + numero da posicao em que foi guardado no mapa.
 	 */
@@ -39,6 +39,18 @@ public class Problema {
 		public String toString() {
 			return this.codigo +" - " + this.descricao + " - " + this.viabilidade;
 		}
-		
-		
+
+	public String getDescricao() {
+		return this.descricao;
+	}
+
+	public String getCodigo() {
+		return this.codigo;
+	}
+
+
+	@Override
+	public int compareTo(Problema problema) {
+		return problema.getCodigo().compareTo(this.codigo);
+	}
 	}

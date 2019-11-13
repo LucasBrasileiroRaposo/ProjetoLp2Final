@@ -276,4 +276,7 @@ public class Pesquisa implements Comparable<Pesquisa>{
     	}
     	
     }
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 }
