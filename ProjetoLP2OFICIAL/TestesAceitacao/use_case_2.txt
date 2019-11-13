@@ -37,7 +37,6 @@ expectError "Formato de foto invalido." cadastraPesquisador nome="teste" funcao=
 
 
 # Alteracao de dados do pesquisador
-
 ## Cadastro de um pesquisador mock para testes
 cadastraPesquisador nome="vazio" funcao="estudante" biografia="Pesquisador vazio para testar as alteracoes dos seus atributos." email="vazio@always" fotoURL="https://vazio"
 expect "vazio (estudante) - Pesquisador vazio para testar as alteracoes dos seus atributos. - vazio@always - https://vazio" exibePesquisador email="vazio@always"
