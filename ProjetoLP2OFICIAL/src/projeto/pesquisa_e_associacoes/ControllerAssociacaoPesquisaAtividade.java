@@ -14,6 +14,7 @@ public class ControllerAssociacaoPesquisaAtividade {
         this.repositorioAtividade = repositorioAtividade;
         this.repositorioPesquisa = repositorioPesquisa;
     }
+    
 
 	public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
 		Validadora.verificaValorNullVazio(codigoPesquisa, "Campo codigoPesquisa nao pode ser nulo ou vazio.");

@@ -26,6 +26,7 @@ public class RepositorioPesquisa implements Busca{
 
     public RepositorioPesquisa() {
         this.pesquisas = new HashMap<>();
+        
     }
 
     /**

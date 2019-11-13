@@ -23,6 +23,7 @@ public class RepositorioAtividade implements Busca{
      * Contador de atividades cadastradas.
      */
     private int contadorDeAtividades;
+    
 
     /**
      * Inicializa o controlador das atividades, com o mapa das atividades e o contador.

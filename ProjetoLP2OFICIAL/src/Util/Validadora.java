@@ -11,6 +11,7 @@ public class Validadora {
         } else if (valor.trim().equals("")) {
             throw new IllegalArgumentException(msg);
         }
+        
     }
 
     public static void validaEntradaCampo(String campoDeInteresse) {
