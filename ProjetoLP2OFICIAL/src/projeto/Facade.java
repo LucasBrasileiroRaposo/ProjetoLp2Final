@@ -35,7 +35,7 @@ public class Facade {
     public static void main(String[] args){
         args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
         		"TestesAceitacao/use_case_4.txt",
-        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt","TestesAceitacao/use_case_8.txt"};
+        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt","TestesAceitacao/use_case_8.txt","TestesAceitacao/use_case_9.txt"};
         EasyAccept.main(args);
     }
 
@@ -242,6 +242,25 @@ public class Facade {
     public int contaResultadosBusca(String termo){
         return controllerBusca.contaResultadosBusca(termo);
     }
-    
+
+    /** Parte 9
+     */
+
+    public void defineProximaAtividade(String idPrecedente, String idSubsquente){
+        this.repositorioAtividades.defineProximaAtividade(idPrecedente,idSubsquente);
+    }
+
+    public void tiraProximaAtividade(String idPrecedente){
+        this.repositorioAtividades.tiraProximaAtividade(idPrecedente);
+    }
+    public int contaProximos(String idPrecedente){
+        return this.repositorioAtividades.contaProximos(idPrecedente);
+    }
+    public String pegaProximo(String idAtividade, int enesimaAtividade){
+        return this.repositorioAtividades.pegaProximo(idAtividade,enesimaAtividade);
+    }
+    public String pegaMaiorRiscoAtividades(String idAtividade){
+        return this.repositorioAtividades.pegaMaiorRiscoAtividades(idAtividade);
+    }
 
 }

@@ -1,8 +1,6 @@
 package projeto.atividades;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /** Classe que representa uma atividade
  */
@@ -57,6 +55,10 @@ public class Atividade implements Comparable<Atividade> {
 
     private String codigo;
 
+    private Atividade atividade;
+
+    private List<Atividade> listadeOrdemAtividades;
+
     /**
      * Constrou um objeto do tipo Atividade, com descricao, nivel de risco da atividade e a descricao desse risco;
      *
@@ -74,6 +76,7 @@ public class Atividade implements Comparable<Atividade> {
         this.contadorDeItens = 1;
         this.controlaPesquisasAtividade = 0;
         this.resultadosItens = new HashMap<>();
+        this.listadeOrdemAtividades = new ArrayList<>();
     }
 
     /**
@@ -236,6 +239,77 @@ public class Atividade implements Comparable<Atividade> {
         return nivelDeRisco;
     }
 
+    public void criaPrecedente(Atividade atividade1) {
+        this.listadeOrdemAtividades.add(atividade1);
+    }
+
+    public boolean apontaPara(Atividade atividade2) {
+	    if(this.atividade != null){
+	        return false;
+        }else{
+	        for(Atividade a: this.listadeOrdemAtividades){
+                if (a.equals(atividade)){
+                    throw new IllegalArgumentException("Criacao de loops negada.");
+                }
+	            a.checaAnterior(atividade2);
+            }
+            this.atividade = atividade2;
+	        return true;
+        }
+    }
+
+    private void checaAnterior(Atividade atividade) {
+        for (Atividade a: this.listadeOrdemAtividades){
+            if (a.equals(atividade)){
+                throw new IllegalArgumentException("Criacao de loops negada.");
+            }
+            a.checaAnterior(atividade);
+        }
+    }
+
+    public void tiraSubsquente() {
+	    if(this.atividade != null){
+	        this.atividade.removePrecedente(this);
+	        this.atividade = null;
+	    }
+
+    }
+
+    private void removePrecedente(Atividade atividade) {
+	    this.listadeOrdemAtividades.remove(atividade);
+    }
+
+    public int contaProximos() {
+	    if(this.atividade == null){
+	        return 0;
+        }else{
+	        return  1 + this.atividade.contaProximos();
+        }
+    }
+
+    public String pegaProximo(int enesimaAtividade) {
+	    if (this.atividade == null){
+	        throw new IllegalArgumentException("Atividade inexistente.");
+        }
+	    if (enesimaAtividade == 1){
+	        return this.atividade.getCodigo();
+        }else {
+	        return this.atividade.pegaProximo(enesimaAtividade - 1);
+        }
+
+    }
+
+    public String pegaMaiorRiscoAtividades() {
+	    if (this.atividade == null){
+	        throw new IllegalArgumentException("Nao existe proxima atividade.");
+        }else if (this.getNivelDeRisco().equals("BAIXO") && this.atividade.getNivelDeRisco().equals("MEDIO")){
+	        return this.atividade.pegaMaiorRiscoAtividades();
+        }else if(this.getNivelDeRisco().equals("MEDIO") && this.atividade.getNivelDeRisco().equals("ALTO")){
+	        return this.atividade.pegaMaiorRiscoAtividades();
+        }else {
+            return this.atividade.pegaMaiorRiscoAtividades();
+        }
+    }
 }
 	
 	
