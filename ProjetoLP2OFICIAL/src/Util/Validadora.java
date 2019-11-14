@@ -147,6 +147,12 @@ public class Validadora {
             }
         }
     }
+    
+    public static void verificaEstrategia(String estrategia,String msg){
+        if (!estrategia.equals("MENOS_PENDENCIAS") && !estrategia.equals("MAIOR_RISCO") && !!estrategia.equals("MAIS_ANTIGA") && !estrategia.equals("MAIOR_DURACAO")){
+            throw new IllegalArgumentException(msg);
+        }
+    }
 }
 
 

@@ -54,10 +54,7 @@ import projeto.objetivos_e_problemas.Problema;
 		 * @return um Objeto Problema
 		 */
 		public Problema getProblema(String codigo) {
-			if(existeProblema(codigo)) {
-				return this.mapaProblemas.get(codigo);
-			}
-			throw new IllegalArgumentException("Problema nao existe.");
+			return this.mapaProblemas.get(codigo);
 		}
 		/**
 		 * cadastra um problema no mapa de problemas e incrementa uma unidade no contador de problemas

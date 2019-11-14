@@ -8,8 +8,10 @@ import projeto.pesquisadores.Pesquisador;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +52,8 @@ public class Pesquisa implements Comparable<Pesquisa>{
     private String codigo;
     
     private Map<String, Atividade> atividadesDaPesquisa;
+    
+    private String estrategia;
 
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -67,7 +71,8 @@ public class Pesquisa implements Comparable<Pesquisa>{
         this.listaObjetivos= new ArrayList<Objetivo>();
         this.codigo = codigo;
         this.atividadesDaPesquisa = new LinkedHashMap<>();
-    }
+        this.estrategia = "MAIS_ANTIGA";
+        }
 
 
     
@@ -262,7 +267,7 @@ public class Pesquisa implements Comparable<Pesquisa>{
     		return false;
     	}else {
     		this.atividadesDaPesquisa.put(atividade.getCodigo(), atividade);
-    		atividade.controlaDestinoAtividade(true);
+    		this.atividadesDaPesquisa.get(atividade.getCodigo()).controlaDestinoAtividade(true);
     		return true;
     	 }
 	}
@@ -272,12 +277,65 @@ public class Pesquisa implements Comparable<Pesquisa>{
     	}
     	else {
     		this.atividadesDaPesquisa.get(codigoAtividade).controlaDestinoAtividade(false);
-    		atividadesDaPesquisa.remove(codigoAtividade);
+    		this.atividadesDaPesquisa.remove(codigoAtividade);
     		return true;
     	}
     	
     }
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+
+
+
+	public void configuraEstragia(String estrategia) {
+		
+		if (estrategia.equals("MENOS_PENDENCIAS")){
+            this.estrategia = "MENOS_PENDENCIAS";
+       }else if(estrategia.equals("MAIOR_RISCO")){
+            this.estrategia = "MAIOR_RISCO";
+       }else if(estrategia.equals("MAIOR_DURACAO")){
+          this.estrategia = "MAIOR_DURACAO";
+       }else if(estrategia.equals("MAIS_ANTIGA")){
+          this.estrategia = "MAIS_ANTIGA";
+       }
+		
+	}
+
+
+
+	public String proximaAtividade() {
+		List<Atividade> listaAtividades = new ArrayList();
+		listaAtividades.addAll(this.atividadesDaPesquisa.values());
+		
+		if(this.estrategia.equals("MAIS_ANTIGA")) {
+			
+			for(Atividade atividade: listaAtividades) {
+				System.out.println(atividade.contaItensPendentes());
+				if(atividade.contaItensPendentes() != 0) {
+					return atividade.getCodigo();
+				}
+				
+			}
+			return "Pesquisa sem atividades com pendencias.";
+		}
+		else if(this.estrategia.equals("MENOS_PENDENCIAS")) {
+			MenosPendenciasComparator menosPendenciasComparator = new MenosPendenciasComparator();
+			Collections.sort(listaAtividades, menosPendenciasComparator);
+			
+			for(Atividade atividade: listaAtividades) {
+				System.out.println(atividade.contaItensPendentes());
+				if(atividade.contaItensPendentes() != 0) {
+					return atividade.getCodigo();
+					
+				}
+				
+			}
+			return "Pesquisa sem atividades com pendencias.";
+			
+			
+			
+		}
+		return "calma...";
 	}
 }

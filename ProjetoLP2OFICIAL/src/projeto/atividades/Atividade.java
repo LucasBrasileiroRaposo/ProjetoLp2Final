@@ -108,12 +108,16 @@ public class Atividade implements Comparable<Atividade> {
      */
     public int contaItensPendentes() {
     	this.contadorDeItensPendentes = 0;
-    
+    	
         for (Item i : this.itens.values()) {
+        
             if (i.getEstadoItem().equals("PENDENTE")) {
                 this.contadorDeItensPendentes++;
+          
             }
+            
         }
+      
         return this.contadorDeItensPendentes;
     }
 
@@ -134,8 +138,8 @@ public class Atividade implements Comparable<Atividade> {
 
 	public void controlaDestinoAtividade(boolean valor){
         if(valor){
-	    this.controlaPesquisasAtividade += 1;
-    }else{
+	        this.controlaPesquisasAtividade += 1;
+         }else if (!valor){
             this.controlaPesquisasAtividade -=1;
         }
     }
@@ -230,8 +234,18 @@ public class Atividade implements Comparable<Atividade> {
     public int compareTo(Atividade atividade) {
         return atividade.getCodigo().compareTo(this.codigo);
     }
-	
-	
+
+
+    public String getNivelDeRisco() {
+        return nivelDeRisco;
+    }
+
+	public int getContadorDeItensPendentes() {
+		return contaItensPendentes();
+	}
+    
+    
+
 }
 	
 	
