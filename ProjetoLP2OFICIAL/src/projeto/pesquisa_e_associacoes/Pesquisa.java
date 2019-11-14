@@ -262,7 +262,7 @@ public class Pesquisa implements Comparable<Pesquisa>{
     		return false;
     	}else {
     		this.atividadesDaPesquisa.put(atividade.getCodigo(), atividade);
-    		atividade.controlaDestinoAtividade();
+    		atividade.controlaDestinoAtividade(true);
     		return true;
     	 }
 	}
@@ -271,6 +271,7 @@ public class Pesquisa implements Comparable<Pesquisa>{
     		return false;
     	}
     	else {
+    		this.atividadesDaPesquisa.get(codigoAtividade).controlaDestinoAtividade(false);
     		atividadesDaPesquisa.remove(codigoAtividade);
     		return true;
     	}

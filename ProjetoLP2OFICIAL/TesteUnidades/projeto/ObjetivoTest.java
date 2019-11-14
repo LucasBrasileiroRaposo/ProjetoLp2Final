@@ -1,15 +1,10 @@
 package projeto;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import projeto.objetivos_e_problemas.Objetivo;
-import projeto.objetivos_e_problemas.Problema;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class ObjetivoTest {

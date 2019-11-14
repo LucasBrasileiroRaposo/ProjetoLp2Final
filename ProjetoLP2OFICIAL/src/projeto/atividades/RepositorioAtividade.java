@@ -3,12 +3,8 @@ package projeto.atividades;
 
 import Util.Validadora;
 import projeto.busca.Busca;
-import projeto.atividades.Atividade;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 /** Classe que permite a comunicacao entre a Facade e a classe Atividade.
  */
@@ -154,7 +150,7 @@ public class RepositorioAtividade implements Busca{
 	}
 
 	public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
-		if(this.atividades.get(codigoAtividade).getControlaPesquisasAtividade() == 0) {
+	if(this.atividades.get(codigoAtividade).getControlaPesquisasAtividade() == 0) {
             throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
         }else if(item < 1) {
 			throw new NullPointerException("Item nao pode ser nulo ou negativo.");

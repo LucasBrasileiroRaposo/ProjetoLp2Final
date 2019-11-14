@@ -7,9 +7,7 @@ import Util.Validadora;
 import projeto.atividades.Atividade;
 import projeto.busca.Busca;
 import projeto.objetivos_e_problemas.Objetivo;
-import projeto.pesquisa_e_associacoes.ObjetivoComparator;
 import projeto.objetivos_e_problemas.Problema;
-import projeto.pesquisa_e_associacoes.Pesquisa;
 import projeto.pesquisadores.Pesquisador;
 
 import java.util.ArrayList;

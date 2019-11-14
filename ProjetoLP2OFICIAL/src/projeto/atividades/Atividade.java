@@ -132,8 +132,12 @@ public class Atividade implements Comparable<Atividade> {
         return this.contadorDeItensRealizados;
     }
 
-	public void controlaDestinoAtividade(){
+	public void controlaDestinoAtividade(boolean valor){
+        if(valor){
 	    this.controlaPesquisasAtividade += 1;
+    }else{
+            this.controlaPesquisasAtividade -=1;
+        }
     }
 
 
@@ -228,6 +232,6 @@ public class Atividade implements Comparable<Atividade> {
     }
 	
 	
-	}
+}
 	
 	
