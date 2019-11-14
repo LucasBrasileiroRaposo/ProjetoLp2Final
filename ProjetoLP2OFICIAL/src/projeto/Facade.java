@@ -4,10 +4,7 @@ import easyaccept.EasyAccept;
 import projeto.atividades.RepositorioAtividade;
 import projeto.objetivos_e_problemas.RepositorioObjetivos;
 import projeto.objetivos_e_problemas.RepositorioProblemas;
-import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaAtividade;
-import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaObjetivoProblema;
-import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
-import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
+import projeto.pesquisa_e_associacoes.*;
 import projeto.pesquisadores.RepositorioPesquisador;
 import projeto.busca.ControllerBusca;
 
@@ -29,6 +26,8 @@ public class Facade {
 
     private ControllerAssociacaoPesquisaPesquisador controllerAssociacaoPesquisaPesquisador;
 
+    private ControllerPesquisa controllerPesquisa;
+
     private ControllerBusca controllerBusca;
 
 
@@ -46,9 +45,10 @@ public class Facade {
         this.repositorioPesquisa = new RepositorioPesquisa();
         this.repositorioObjetivos = new RepositorioObjetivos();
         this.repositorioProblemas = new RepositorioProblemas();
-        this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.repositorioPesquisa,this.repositorioPesquisadores);
-        this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.repositorioPesquisa,this.repositorioAtividades);
-        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.repositorioPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
+        this.controllerPesquisa = new ControllerPesquisa(this.repositorioPesquisa);
+        this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.controllerPesquisa,this.repositorioPesquisadores);
+        this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.controllerPesquisa,this.repositorioAtividades);
+        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.controllerPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
         this.controllerBusca = new ControllerBusca(this.repositorioPesquisa,this.repositorioPesquisadores,this.repositorioProblemas,this.repositorioObjetivos,this.repositorioAtividades);
 
     }
@@ -56,27 +56,27 @@ public class Facade {
     /** Parte 1
      */
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
-        return this.repositorioPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
+        return this.controllerPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
     }
 
     public void encerraPesquisa(String codigo, String motivo) {
-        this.repositorioPesquisa.encerraPesquisa(codigo, motivo);
+        this.controllerPesquisa.encerraPesquisa(codigo, motivo);
     }
 
     public void ativaPesquisa(String codigo) {
-                repositorioPesquisa.ativaPesquisa(codigo);
+        this.controllerPesquisa.ativaPesquisa(codigo);
     }
 
     public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo) {
-        repositorioPesquisa.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
+        this.controllerPesquisa.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
 
     public String exibePesquisa(String codigo) {
-                return repositorioPesquisa.exibePesquisa(codigo);
+                return controllerPesquisa.exibePesquisa(codigo);
     }
 
     public boolean pesquisaEhAtiva(String codigo) {
-                return repositorioPesquisa.verificaSeAtiva(codigo);
+                return controllerPesquisa.verificaSeAtiva(codigo);
     }
 
     /** Parte 2
@@ -180,7 +180,7 @@ public class Facade {
     
     public String listaPesquisas(String ordem) {
     	
-    	return this.repositorioPesquisa.listaPesquisas(ordem);
+    	return this.controllerPesquisa.listaPesquisas(ordem);
     }
 
     /** Parte 6

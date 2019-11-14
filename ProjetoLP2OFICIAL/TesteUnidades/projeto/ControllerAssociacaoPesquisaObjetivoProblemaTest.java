@@ -5,22 +5,25 @@ import org.junit.jupiter.api.Test;
 import projeto.objetivos_e_problemas.RepositorioObjetivos;
 import projeto.objetivos_e_problemas.RepositorioProblemas;
 import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaObjetivoProblema;
+import projeto.pesquisa_e_associacoes.ControllerPesquisa;
 import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerAssociacaoPesquisaObjetivoProblemaTest {
     ControllerAssociacaoPesquisaObjetivoProblema CAPOP;
-    RepositorioPesquisa repositorioPesquisa;
+    ControllerPesquisa controllerPesquisa;
     RepositorioObjetivos repositorioObjetivos;
     RepositorioProblemas repositorioProblemas;
+    RepositorioPesquisa repositorioPesquisa;
 
     @BeforeEach
     void Inicializa(){
-        repositorioPesquisa = new RepositorioPesquisa();
-        repositorioObjetivos = new RepositorioObjetivos();
-        repositorioProblemas = new RepositorioProblemas();
-        CAPOP = new ControllerAssociacaoPesquisaObjetivoProblema(repositorioPesquisa,repositorioObjetivos,repositorioProblemas);
+        this.repositorioPesquisa = new RepositorioPesquisa();
+        this.controllerPesquisa = new ControllerPesquisa(repositorioPesquisa);
+        this.repositorioObjetivos = new RepositorioObjetivos();
+        this.repositorioProblemas = new RepositorioProblemas();
+        this.CAPOP = new ControllerAssociacaoPesquisaObjetivoProblema(controllerPesquisa,repositorioObjetivos,repositorioProblemas);
     }
 
     @Test

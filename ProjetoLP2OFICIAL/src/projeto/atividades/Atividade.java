@@ -134,8 +134,8 @@ public class Atividade implements Comparable<Atividade> {
 
 	public void controlaDestinoAtividade(boolean valor){
         if(valor){
-	    this.controlaPesquisasAtividade += 1;
-    }else{
+	        this.controlaPesquisasAtividade += 1;
+         }else if (!valor){
             this.controlaPesquisasAtividade -=1;
         }
     }
@@ -230,8 +230,12 @@ public class Atividade implements Comparable<Atividade> {
     public int compareTo(Atividade atividade) {
         return atividade.getCodigo().compareTo(this.codigo);
     }
-	
-	
+
+
+    public String getNivelDeRisco() {
+        return nivelDeRisco;
+    }
+
 }
 	
 	

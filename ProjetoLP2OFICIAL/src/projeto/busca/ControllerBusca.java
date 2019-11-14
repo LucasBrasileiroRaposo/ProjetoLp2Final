@@ -4,6 +4,7 @@ import Util.Validadora;
 import projeto.atividades.RepositorioAtividade;
 import projeto.objetivos_e_problemas.RepositorioObjetivos;
 import projeto.objetivos_e_problemas.RepositorioProblemas;
+import projeto.pesquisa_e_associacoes.ControllerPesquisa;
 import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
 import projeto.pesquisadores.RepositorioPesquisador;
 

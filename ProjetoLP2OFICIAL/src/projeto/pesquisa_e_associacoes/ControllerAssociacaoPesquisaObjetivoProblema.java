@@ -8,15 +8,15 @@ import projeto.objetivos_e_problemas.RepositorioProblemas;
 
 public class ControllerAssociacaoPesquisaObjetivoProblema {
 
-    private RepositorioPesquisa repositorioPesquisa;
+    private ControllerPesquisa controllerPesquisa;
 
     private RepositorioObjetivos repositorioObjetivos;
 
     private RepositorioProblemas repositorioProblemas;
 
-    public ControllerAssociacaoPesquisaObjetivoProblema(RepositorioPesquisa repositorioPesquisa, RepositorioObjetivos repositorioObjetivos, RepositorioProblemas repositorioProblemas) {
+    public ControllerAssociacaoPesquisaObjetivoProblema(ControllerPesquisa controllerPesquisa, RepositorioObjetivos repositorioObjetivos, RepositorioProblemas repositorioProblemas) {
         this.repositorioObjetivos = repositorioObjetivos;
-        this.repositorioPesquisa = repositorioPesquisa;
+        this.controllerPesquisa = controllerPesquisa;
         this.repositorioProblemas = repositorioProblemas;
     }
     
@@ -26,7 +26,7 @@ public boolean associaProblema(String idPesquisa, String idProblema) {
 		Validadora.verificaValorNullVazio(idProblema, "Campo idProblema nao pode ser nulo ou vazio.");
 		
 		Problema problema = this.repositorioProblemas.getProblema(idProblema);
-		return this.repositorioPesquisa.associaProblema(idPesquisa, problema);
+		return this.controllerPesquisa.associaProblema(idPesquisa, problema);
 	}
 
 	
@@ -34,7 +34,7 @@ public boolean associaProblema(String idPesquisa, String idProblema) {
 		
 		Validadora.verificaValorNullVazio(idPesquisa, "Campo idPesquisa nao pode ser nulo ou vazio.");
 		
-		return this.repositorioPesquisa.desassociaProblema(idPesquisa);
+		return this.controllerPesquisa.desassociaProblema(idPesquisa);
 	}
 
 	public boolean associaObjetivo(String idPesquisa, String idObjetivo) {
@@ -43,7 +43,7 @@ public boolean associaProblema(String idPesquisa, String idProblema) {
 		Validadora.verificaValorNullVazio(idObjetivo, "Campo idObjetivo nao pode ser nulo ou vazio.");
 		
 		Objetivo objetivo = this.repositorioObjetivos.getObjetivo(idObjetivo);
-		return this.repositorioPesquisa.associaObjetivo(idPesquisa, objetivo);
+		return this.controllerPesquisa.associaObjetivo(idPesquisa, objetivo);
 	}
 
 	public boolean desassociaObjetivo(String idPesquisa, String idObjetivo) {
@@ -52,7 +52,7 @@ public boolean associaProblema(String idPesquisa, String idProblema) {
 		Validadora.verificaValorNullVazio(idObjetivo, "Campo idObjetivo nao pode ser nulo ou vazio.");
 		
 		Objetivo objetivo = this.repositorioObjetivos.getObjetivo(idObjetivo);
-		return this.repositorioPesquisa.dessassociaObjetivo(idPesquisa, objetivo);
+		return this.controllerPesquisa.dessassociaObjetivo(idPesquisa, objetivo);
 	}
 	
 	
