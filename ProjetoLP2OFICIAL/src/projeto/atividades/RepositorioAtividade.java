@@ -2,13 +2,13 @@ package projeto.atividades;
 
 
 import Util.Validadora;
+import projeto.busca.Busca;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /** Classe que permite a comunicacao entre a Facade e a classe Atividade.
  */
-public class RepositorioAtividade {
+public class RepositorioAtividade implements Busca{
 
     /**
      * Mapa de das atividades.
@@ -19,6 +19,7 @@ public class RepositorioAtividade {
      * Contador de atividades cadastradas.
      */
     private int contadorDeAtividades;
+    
 
     /**
      * Inicializa o controlador das atividades, com o mapa das atividades e o contador.
@@ -45,10 +46,10 @@ public class RepositorioAtividade {
         Validadora.verificaValorNullVazio(descricaoRisco, "Campo descricaoRisco nao pode ser nulo ou vazio.");
 
         Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco);
-        String codigo = "A" + this.contadorDeAtividades;
-        this.atividades.put(codigo, atividade);
+        atividade.setCodigo("A" + this.contadorDeAtividades);
+        this.atividades.put(atividade.getCodigo(), atividade);
         this.contadorDeAtividades++;
-        return codigo;
+        return atividade.getCodigo();
     }
 
     /**
@@ -133,5 +134,98 @@ public class RepositorioAtividade {
         } else {
             return this.atividades.get(codigo).contaItensRealizados();
         }
+    }
+    
+    public Atividade retornaAtividade(String codigoAtividade) {
+    	if(!this.atividades.containsKey(codigoAtividade)) {
+    		throw new IllegalArgumentException("Atividade nao encontrada");
+    	}
+    	else {
+		return this.atividades.get(codigoAtividade);
+    }
+    }
+
+	public boolean atividadeExiste(String codigoAtividade) {
+		return this.atividades.containsKey(codigoAtividade);
+	}
+
+	public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
+	if(this.atividades.get(codigoAtividade).getControlaPesquisasAtividade() == 0) {
+            throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
+        }else if(item < 1) {
+			throw new NullPointerException("Item nao pode ser nulo ou negativo.");
+		}
+		else if(duracao < 1) {
+			throw new NullPointerException("Duracao nao pode ser nula ou negativa.");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
+		}
+	}
+
+	public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else if(!this.atividades.get(codigoAtividade).veriricaResultado(numeroResultado)) {
+			throw new NullPointerException("Resultado nao encontrado.");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
+		}
+	}
+
+	public int cadastraResultado(String codigoAtividade, String resultado) {
+		int i = 0;
+    	i = this.atividades.get(codigoAtividade).cadastraResultado(resultado);
+    	return i;
+	}
+
+	public String exibeResultados(String codigoAtividade) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else {
+		return this.atividades.get(codigoAtividade).exibeResultados();
+		}
+	}
+
+	public int getDuracao(String codigoAtividade) {
+		if(!(this.atividades.containsKey(codigoAtividade))) {
+			throw new IllegalArgumentException("Atividade nao encontrada");
+		}
+		else {
+			return this.atividades.get(codigoAtividade).getDuracaoAtividade();
+		}
+	}
+    @Override
+    public String busca(String termo){
+        Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+        String msg = "";
+        List<Atividade> listaDeAtividades = new ArrayList<>();
+        listaDeAtividades.addAll(this.atividades.values());
+        Collections.sort(listaDeAtividades);
+        for(Atividade a : listaDeAtividades){
+            if(a.getDescricao().contains(termo)) {
+                msg += a.getCodigo() +": "+a.getDescricao() + " | ";
+            }
+            if(a.getDescricaoDeRisco().contains(termo)){
+                msg += a.getCodigo() + ": "+a.getDescricaoDeRisco()+ " | ";
+            }
+        }
+        return msg;
+    }
+
+    @Override
+    public int contaResultadosBusca(String termo) {
+        Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+        int cont = 0;
+
+        for(String palavra: busca(termo).split(" | ")){
+            if(termo.contains(palavra)) {
+                cont += 1;
+            }
+        }
+        return cont;
     }
 }

@@ -28,6 +28,7 @@ public boolean associaProblema(String idPesquisa, String idProblema) {
 		Problema problema = this.repositorioProblemas.getProblema(idProblema);
 		return this.repositorioPesquisa.associaProblema(idPesquisa, problema);
 	}
+
 	
 	public boolean desassociaProblema(String idPesquisa) {
 		

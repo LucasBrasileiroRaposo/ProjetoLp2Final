@@ -1,9 +1,12 @@
 package projeto.objetivos_e_problemas;
 
 	
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
-
+import java.util.List;
+import java.util.ArrayList;
+import projeto.busca.Busca;
 import Util.Validadora;
 import projeto.objetivos_e_problemas.Problema;
 
@@ -12,7 +15,7 @@ import projeto.objetivos_e_problemas.Problema;
 	 * @author Matheus Bezerra Andrade
 	 *
 	 */
-	public class RepositorioProblemas {
+	public class RepositorioProblemas implements Busca{
 		/**
 		 * Mapa que contem os problemas. A sua chave eh formada por "P"+ o numero da posicao da insercao no mapa.
 		 */
@@ -27,7 +30,7 @@ import projeto.objetivos_e_problemas.Problema;
 		 * Constroi um novo HashMap e um novo contador de problemas que se inicia pela posicao 1.
 		 */
 		public RepositorioProblemas() {
-			this.mapaProblemas = new HashMap< >();
+			this.mapaProblemas = new LinkedHashMap<>();
 			
 			
 			this.contaProblemas = 1;
@@ -51,7 +54,10 @@ import projeto.objetivos_e_problemas.Problema;
 		 * @return um Objeto Problema
 		 */
 		public Problema getProblema(String codigo) {
-			return this.mapaProblemas.get(codigo);
+			if(existeProblema(codigo)) {
+				return this.mapaProblemas.get(codigo);
+			}
+			throw new IllegalArgumentException("Problema nao existe.");
 		}
 		/**
 		 * cadastra um problema no mapa de problemas e incrementa uma unidade no contador de problemas
@@ -103,6 +109,31 @@ import projeto.objetivos_e_problemas.Problema;
 			else {
 				throw new IllegalArgumentException("Problema nao encontrado");
 			}
-		}		
-		
-}
+		}
+	@Override
+	public String busca(String termo) {
+		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+		String msg = "";
+		List<Problema> listaDeProblemas = new ArrayList<>();
+		listaDeProblemas.addAll(this.mapaProblemas.values());
+		Collections.sort(listaDeProblemas);
+		for(Problema problema : listaDeProblemas){
+			if(problema.getDescricao().contains(termo)) {
+				msg += problema.getCodigo() +": "+problema.getDescricao() + " | ";
+			}
+		}
+		return msg;
+	}
+
+
+	@Override
+	public int contaResultadosBusca(String termo) {
+		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+		int cont = 0;
+		for(String palavra: busca(termo).split(" | ")){
+			if(termo.contains(palavra)) {
+				cont += 1;
+			}
+		}
+		return cont;
+	}}

@@ -37,6 +37,7 @@ public class ControllerPesquisador {
         Pesquisador P = new PesquisadorSimples(nome, funcao, biografia, email, foto);
         listaDePesquisadores.put(email, P);
     }
+    
 
     /**
      * Altera um determinado dado por um novo valor
