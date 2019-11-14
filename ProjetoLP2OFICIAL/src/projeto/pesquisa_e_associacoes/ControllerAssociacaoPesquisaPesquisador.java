@@ -28,4 +28,5 @@ public class ControllerAssociacaoPesquisaPesquisador {
         Validadora.verificaValorNullVazio(emailPesquisador,"Campo emailPesquisador nao pode ser nulo ou vazio.");
         return this.repositorioPesquisa.desassociaPesquisador(idPesquisa,emailPesquisador) ;
     }
+    
 }

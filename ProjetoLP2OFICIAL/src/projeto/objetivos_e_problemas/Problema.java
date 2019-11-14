@@ -18,6 +18,7 @@ public class Problema implements Comparable<Problema>{
 		 */
 		private int viabilidade;
 		
+		
 		/**
 		 * Constroi um problema a partir da descricao, viabilidade e o seu codigo.
 		 * @param descricao descricao do problema
@@ -39,9 +40,12 @@ public class Problema implements Comparable<Problema>{
 		public String toString() {
 			return this.codigo +" - " + this.descricao + " - " + this.viabilidade;
 		}
+
 	public String getDescricao() {
 		return this.descricao;
 	}
+
+	
 
 	public String getCodigo() {
 		return this.codigo;
@@ -50,6 +54,32 @@ public class Problema implements Comparable<Problema>{
 
 	@Override
 	public int compareTo(Problema problema) {
-			return problema.getCodigo().compareTo(this.codigo);
+		return problema.getCodigo().compareTo(this.codigo);
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Problema other = (Problema) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
 	}
 }
+

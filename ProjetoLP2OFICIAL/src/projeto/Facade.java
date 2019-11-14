@@ -2,7 +2,6 @@ package projeto;
 
 import easyaccept.EasyAccept;
 import projeto.atividades.RepositorioAtividade;
-import projeto.busca.ControllerBusca;
 import projeto.objetivos_e_problemas.RepositorioObjetivos;
 import projeto.objetivos_e_problemas.RepositorioProblemas;
 import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaAtividade;
@@ -10,6 +9,7 @@ import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaObjetivoProble
 import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
 import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
 import projeto.pesquisadores.RepositorioPesquisador;
+import projeto.busca.ControllerBusca;
 
 public class Facade {
 
@@ -32,10 +32,11 @@ public class Facade {
     private ControllerBusca controllerBusca;
 
 
+
     public static void main(String[] args){
         args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
         		"TestesAceitacao/use_case_4.txt",
-        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_8.txt"};
+        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt","TestesAceitacao/use_case_8.txt"};
         EasyAccept.main(args);
     }
 
@@ -49,6 +50,7 @@ public class Facade {
         this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.repositorioPesquisa,this.repositorioAtividades);
         this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.repositorioPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
         this.controllerBusca = new ControllerBusca(this.repositorioPesquisa,this.repositorioPesquisadores,this.repositorioProblemas,this.repositorioObjetivos,this.repositorioAtividades);
+
     }
 
     /** Parte 1
@@ -199,6 +201,38 @@ public class Facade {
         this.repositorioPesquisadores.cadastraEspecialidadeAluno(email,semestre,IEA);
     }
     public String listaPesquisadores(String tipo){return this.repositorioPesquisadores.listaPesquisadores(tipo);}
+
+    
+    /** Parte 7
+     */
+    
+    public boolean associaAtividade(String codigoPesquisa, String codigoAtividade) {
+    	return this.controllerAssociacaoPesquisaAtividade.associaAtividade(codigoPesquisa, codigoAtividade);
+    }
+    
+    public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
+    	return this.controllerAssociacaoPesquisaAtividade.desassociaAtividade(codigoPesquisa, codigoAtividade);
+    }
+    
+    public int cadastraResultado(String codigoAtividade, String resultado) {
+    	return this.controllerAssociacaoPesquisaAtividade.cadastraResultado(codigoAtividade, resultado);
+    }
+    public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
+    	return this.controllerAssociacaoPesquisaAtividade.executaAtividade(codigoAtividade, item, duracao);
+    }
+    
+    public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+    	return this.controllerAssociacaoPesquisaAtividade.removeResultado(codigoAtividade, numeroResultado);
+    }
+    public String listaResultados(String codigoAtividade) {
+    	return this.controllerAssociacaoPesquisaAtividade.listaResultados(codigoAtividade);
+    }
+    public int getDuracao(String codigoAtividade) {
+    	return this.controllerAssociacaoPesquisaAtividade.getDuracao(codigoAtividade);
+    }
+    /**Parte 8
+     *
+     */
     public String busca(String termo){
         return controllerBusca.busca(termo);
     }
@@ -208,7 +242,6 @@ public class Facade {
     public int contaResultadosBusca(String termo){
         return controllerBusca.contaResultadosBusca(termo);
     }
-
-
+    
 
 }

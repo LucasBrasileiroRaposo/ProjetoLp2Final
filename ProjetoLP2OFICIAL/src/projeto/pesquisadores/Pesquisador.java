@@ -56,8 +56,16 @@ public abstract class Pesquisador {
     public String getFuncao(){
         return this.funcao;
     }
-    public String getBiografia(){
-        return this.biografia;
 
+    public String getNome() {
+        return this.nome;
+    }
+
+    public String getBiografia() {
+        return this.biografia;
+    }
+
+    public String getFotoURL() {
+        return this.fotoURL;
     }
 }

@@ -1,37 +1,40 @@
 package projeto.objetivos_e_problemas;
 
 	
-import java.util.*;
-
-import Util.Validadora;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 import projeto.busca.Busca;
+import Util.Validadora;
+import projeto.objetivos_e_problemas.Problema;
 
 /**
 	 * Classe responsavel por controlar a colecao de problemas, alem de cadastrar, apagar e exibir os problemas.
 	 * @author Matheus Bezerra Andrade
 	 *
 	 */
-	public class RepositorioProblemas implements Busca {
+	public class RepositorioProblemas implements Busca{
 		/**
 		 * Mapa que contem os problemas. A sua chave eh formada por "P"+ o numero da posicao da insercao no mapa.
 		 */
 		private Map< String , Problema> mapaProblemas;
-
 		/**
 		 * Atributo que controla a posicao da insercao no mapa, para prosteriormente ser usado como codigo.
-		 * 
+		 *
 		 */
 		private int contaProblemas;
-	
+
 		/**
 		 * Constroi um novo HashMap e um novo contador de problemas que se inicia pela posicao 1.
 		 */
 		public RepositorioProblemas() {
 			this.mapaProblemas = new LinkedHashMap<>();
-			
-			
+
+
 			this.contaProblemas = 1;
-			
+
 		}
 		/**
 		 * Metodo privado que vefifica se existe um objeto Problema no mapa de problemas.
@@ -51,7 +54,11 @@ import projeto.busca.Busca;
 		 * @return um Objeto Problema
 		 */
 		public Problema getProblema(String codigo) {
-			return this.mapaProblemas.get(codigo);
+			if(existeProblema(codigo)){
+			return this.mapaProblemas.get(codigo);}
+			else{
+			    throw new IllegalArgumentException("Problema nao existe.");
+            }
 		}
 		/**
 		 * cadastra um problema no mapa de problemas e incrementa uma unidade no contador de problemas
@@ -62,12 +69,12 @@ import projeto.busca.Busca;
 			Validadora.verificaValorNullVazio(descricao, "Campo descricao nao pode ser nulo ou vazio.");
 			Validadora.verificaValorNullVazio(descricao, "Campo descricao nao pode ser nulo ou vazio.");
 			Validadora.verificaViabilidade_Aderencia(viabilidade, "Valor invalido de viabilidade.");
-			
-			
+
+
 			String codigo = "P" + this.contaProblemas;
 			Problema problema = new Problema(descricao, viabilidade,codigo);
 			this.mapaProblemas.put(codigo, problema);
-			
+
 			this.contaProblemas ++;
 			return codigo;
 		}
@@ -78,14 +85,14 @@ import projeto.busca.Busca;
 		public void apagarProblema(String codigo) {
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
-			
+
 			if (existeProblema(codigo)) {
 				this.mapaProblemas.remove(codigo);
 				}
 			else {
 				throw new IllegalArgumentException("Problema nao encontrado");
 			}
-			
+
 		}
 		/**
 		 * Metodo que exibe uma representacao textual dos dados de um determinado problema
@@ -95,7 +102,7 @@ import projeto.busca.Busca;
 		public String exibeProblema(String codigo) {
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
-			
+
 			if (existeProblema(codigo)){
 				Problema problema = getProblema(codigo);
 					return problema.toString();
@@ -130,8 +137,4 @@ import projeto.busca.Busca;
 			}
 		}
 		return cont;
-	}
-
-
-		
-}
+	}}

@@ -1,5 +1,6 @@
 package projeto.pesquisa_e_associacoes;
 
+import projeto.atividades.Atividade;
 import projeto.objetivos_e_problemas.Objetivo;
 import projeto.pesquisa_e_associacoes.Pesquisa;
 import projeto.objetivos_e_problemas.Problema;
@@ -7,7 +8,7 @@ import projeto.pesquisadores.Pesquisador;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -47,6 +48,8 @@ public class Pesquisa implements Comparable<Pesquisa>{
      * Codigo da pesquisa
      */
     private String codigo;
+    
+    private Map<String, Atividade> atividadesDaPesquisa;
 
     /**
      * Método responsável por criar um novo objeto pesquisa
@@ -54,7 +57,7 @@ public class Pesquisa implements Comparable<Pesquisa>{
      * @param campo campo de interre de uma pesquisa
      */
 
-    public Pesquisa(String descricao, String campo) {
+    public Pesquisa(String descricao, String campo, String codigo) {
         this.campoInteresse = campo;
         this.descricao = descricao;
         this.status = true;
@@ -62,9 +65,12 @@ public class Pesquisa implements Comparable<Pesquisa>{
         
         this.listaProblema = new ArrayList<Problema>();
         this.listaObjetivos= new ArrayList<Objetivo>();
+        this.codigo = codigo;
+        this.atividadesDaPesquisa = new HashMap<>();
     }
 
 
+    
     /**
      * Método responsável por retornar uma descricao
      * @return descricao da pesquisa
@@ -248,6 +254,28 @@ public class Pesquisa implements Comparable<Pesquisa>{
             this.pesquisadoresDaPesquisa.remove(emailPesquisador);
             return true;
         }
+    }
+
+
+	public boolean cadastraAtividade(Atividade atividade) {
+		if(this.atividadesDaPesquisa.containsKey(atividade.getCodigo())) {
+    		return false;
+    	}else {
+    		this.atividadesDaPesquisa.put(atividade.getCodigo(), atividade);
+    		atividade.controlaDestinoAtividade(true);
+    		return true;
+    	 }
+	}
+	public boolean removeAtividade(String codigoAtividade) {
+    	if(!atividadesDaPesquisa.containsKey(codigoAtividade)) {
+    		return false;
+    	}
+    	else {
+    		this.atividadesDaPesquisa.get(codigoAtividade).controlaDestinoAtividade(false);
+    		atividadesDaPesquisa.remove(codigoAtividade);
+    		return true;
+    	}
+    	
     }
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;

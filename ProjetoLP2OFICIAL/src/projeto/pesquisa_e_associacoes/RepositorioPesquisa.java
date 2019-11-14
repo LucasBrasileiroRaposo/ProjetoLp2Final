@@ -4,6 +4,7 @@ package projeto.pesquisa_e_associacoes;
  * Classe responsável por por manipular e fazer as operações sobre o objeto Pesquisa
  */
 import Util.Validadora;
+import projeto.atividades.Atividade;
 import projeto.busca.Busca;
 import projeto.objetivos_e_problemas.Objetivo;
 import projeto.objetivos_e_problemas.Problema;
@@ -14,7 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class RepositorioPesquisa implements Busca {
+public class RepositorioPesquisa implements Busca{
     /**
      * pesquisas Mapa responsável por associar um objeto pesquisa ao seu código
      * gerado
@@ -23,6 +24,7 @@ public class RepositorioPesquisa implements Busca {
 
     public RepositorioPesquisa() {
         this.pesquisas = new HashMap<>();
+        
     }
 
     /**
@@ -35,13 +37,14 @@ public class RepositorioPesquisa implements Busca {
      */
 
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
-		Validadora.verificaValorNullVazio(descricao, "Descricao nao pode ser nula ou vazia.");
-		Validadora.validaEntradaCampo(campoDeInteresse);
-		Pesquisa pesquisa = new Pesquisa(descricao, campoDeInteresse);
-		pesquisa.setCodigo(geraCodigo(campoDeInteresse.substring(0,3),1));
-		this.pesquisas.put(pesquisa.getCodigo(), pesquisa);
+        Validadora.verificaValorNullVazio(descricao, "Descricao nao pode ser nula ou vazia.");
+        Validadora.validaEntradaCampo(campoDeInteresse);
+      
+        String codigo = geraCodigo(campoDeInteresse.substring(0, 3), 1);
+        Pesquisa pesquisa = new Pesquisa(descricao, campoDeInteresse, codigo);
+        this.pesquisas.put(codigo, pesquisa);
 
-		return pesquisa.getCodigo();
+        return codigo;
 
     }
 
@@ -213,7 +216,7 @@ public class RepositorioPesquisa implements Busca {
 	/**
      * Metodo que associa um problema a uma pesquisa. Uma pesquisa so pode ter um problema associado. Se tentar associar um problema a uma pesquisa que ja tem problema, dara erro.
      * @param codigo codigo que identifica a pesquisa
-     * @param objetivo objeto objetivo que quer se associar a pesquisa
+     * @param objetivo objeto problema que quer se associar a pesquisa
      * @return true se houver a associacao e false se nao houver.
      */
 	
@@ -366,6 +369,30 @@ public class RepositorioPesquisa implements Busca {
             }
         }
     }
+
+	public boolean adicionaAtividade(String codigo, Atividade atividade) {
+		if (!this.pesquisas.containsKey(codigo)) {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		} 
+		else if (!this.pesquisas.get(codigo).getStatus()) {
+				throw new IllegalArgumentException("Pesquisa desativada.");
+		}
+		else{
+			return this.pesquisas.get(codigo).cadastraAtividade(atividade);
+		}
+	}
+	
+	public boolean removeAtividade(String codigoPesquisa, String codigoAtividade) {
+		if (!this.pesquisas.containsKey(codigoPesquisa)) {
+			throw new IllegalArgumentException("Pesquisa nao encontrada.");
+		} else if (!this.pesquisas.get(codigoPesquisa).getStatus()) {
+			throw new IllegalArgumentException("Pesquisa desativada.");
+		}
+		else {
+			return this.pesquisas.get(codigoPesquisa).removeAtividade(codigoAtividade);
+		}
+	
+	}
 	@Override
 	public String busca(String termo){
 		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -384,13 +411,11 @@ public class RepositorioPesquisa implements Busca {
 	public int contaResultadosBusca(String termo){
 		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
 		int cont = 0;
-		for(String palavra: busca(termo).split(" | ")){
+		for(String palavra: busca(termo).split(" \\| ")){
 			if(termo.contains(palavra)) {
 				cont += 1;
 			}
 		}
 		return cont;
 	}
-
-
 }
