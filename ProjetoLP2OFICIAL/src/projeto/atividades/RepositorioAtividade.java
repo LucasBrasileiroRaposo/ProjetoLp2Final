@@ -274,7 +274,9 @@ public class RepositorioAtividade implements Busca{
         Validadora.verificaValorNullVazio(idAtividade,"Atividade nao pode ser nulo ou vazio.");
         if(!this.atividades.containsKey(idAtividade)){
             throw  new IllegalArgumentException("Atividade nao encontrada.");
+        }else if(this.atividades.get(idAtividade).getProximaAtiviade() == null){
+            throw new IllegalArgumentException("Nao existe proxima atividade.");
         }
-        return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades();
+        return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades(this.atividades.get(idAtividade));
     }
 }

@@ -1,10 +1,15 @@
 package projeto;
 
+
 import easyaccept.EasyAccept;
 import projeto.atividades.RepositorioAtividade;
 import projeto.objetivos_e_problemas.RepositorioObjetivos;
 import projeto.objetivos_e_problemas.RepositorioProblemas;
-import projeto.pesquisa_e_associacoes.*;
+import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
+import projeto.pesquisa_e_associacoes.ControllerPesquisa;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaObjetivoProblema;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaAtividade;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
 import projeto.pesquisadores.RepositorioPesquisador;
 import projeto.busca.ControllerBusca;
 
@@ -33,7 +38,7 @@ public class Facade {
 
 
     public static void main(String[] args){
-        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
+        args = new String[]{"projeto.Facade", "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
         		"TestesAceitacao/use_case_4.txt",
         		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt","TestesAceitacao/use_case_8.txt","TestesAceitacao/use_case_9.txt"};
         EasyAccept.main(args);
@@ -43,9 +48,9 @@ public class Facade {
         this.repositorioAtividades = new RepositorioAtividade();
         this.repositorioPesquisadores = new RepositorioPesquisador();
         this.repositorioPesquisa = new RepositorioPesquisa();
+        this.controllerPesquisa = new ControllerPesquisa(this.repositorioPesquisa);
         this.repositorioObjetivos = new RepositorioObjetivos();
         this.repositorioProblemas = new RepositorioProblemas();
-        this.controllerPesquisa = new ControllerPesquisa(this.repositorioPesquisa);
         this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.controllerPesquisa,this.repositorioPesquisadores);
         this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.controllerPesquisa,this.repositorioAtividades);
         this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.controllerPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
