@@ -22,13 +22,13 @@ class ControllerGeralTest {
         try {
             this.controllerGeral.cadastraPesquisa("  ", "Computaçao");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
             this.controllerGeral.cadastraPesquisa("", "Computacao");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
@@ -85,12 +85,12 @@ class ControllerGeralTest {
         try {
             this.controllerGeral.encerraPesquisa("COM2", "    ");
             fail("Motivo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
             this.controllerGeral.encerraPesquisa("COM2", "");
             fail("Motivo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
@@ -175,22 +175,22 @@ class ControllerGeralTest {
         } catch (IllegalArgumentException e) {
         }
         try {
-            this.controllerGeral.alteraPesquisa("COM1", "DESCRICAO", "");
+            this.controllerGeral.alteraPesquisa("COM1", "DESCRICAO", null);
             fail("Descricao nao pode ser nula ou vazia.");
         } catch (NullPointerException e) {
         }
         try {
-            this.controllerGeral.alteraPesquisa("COM1", "DESCRICAO", "    ");
+            this.controllerGeral.alteraPesquisa("COM1", "DESCRICAO", null);
             fail("Descricao nao pode ser nula ou vazia.");
         } catch (NullPointerException e) {
         }
         try {
-            this.controllerGeral.alteraPesquisa("COM1", "CAMPO", "    ");
+            this.controllerGeral.alteraPesquisa("COM1", "CAMPO", null);
             fail("Formato do campo de interesse invalido.");
         } catch (NullPointerException e) {
         }
         try {
-            this.controllerGeral.alteraPesquisa("COM1", "CAMPO", "");
+            this.controllerGeral.alteraPesquisa("COM1", "CAMPO", null);
             fail("Formato do campo de interesse invalido.");
         } catch (NullPointerException e) {
 
@@ -244,10 +244,10 @@ class ControllerGeralTest {
         try {
             this.controllerGeral.pesquisaEhAtiva("");
             fail("Codigo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
-            this.controllerGeral.pesquisaEhAtiva("   ");
+            this.controllerGeral.pesquisaEhAtiva(null);
             fail("Codigo nao pode ser nulo ou vazio.");
         } catch (NullPointerException e) {
 
@@ -278,7 +278,7 @@ class ControllerGeralTest {
         try {
             this.controllerGeral.cadastraAtividade("","MEDIO","se nao lançar exececao complica");
             fail("Campo Descricao nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.controllerGeral.cadastraAtividade(null,"MEDIO","se nao lançar execao complica2");
@@ -288,17 +288,17 @@ class ControllerGeralTest {
         try {
             this.controllerGeral.cadastraAtividade("                ","MEDIO","se nao lançar exececao complica");
             fail("Campo Descricao nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
-            this.controllerGeral.cadastraAtividade("Nada","","Lança excecao pf");
+            this.controllerGeral.cadastraAtividade("Nada",null,"Lança excecao pf");
             fail("Campo nivelRisco nao pode ser nulo ou vazio.");
         }catch (NullPointerException e){
         }
         try{
             this.controllerGeral.cadastraAtividade("Nada","            ","Lança excecao pf");
             fail("Campo nivelRisco nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.controllerGeral.cadastraAtividade("Nada",null,"Lança excecao pf");
@@ -308,12 +308,12 @@ class ControllerGeralTest {
         try{
             this.controllerGeral.cadastraAtividade("Nada","BAIXO","");
             fail("Campo descricaoRisco nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.controllerGeral.cadastraAtividade("Nada","MEDIO","           ");
             fail("Campo descricaoRisco nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.controllerGeral.cadastraAtividade("Nada","ALTO",null);
@@ -351,19 +351,19 @@ class ControllerGeralTest {
         }catch (IllegalArgumentException e){
         }
         try{
-            this.controllerGeral.apagaAtividade("");
+            this.controllerGeral.apagaAtividade(null);
             fail("Campo codigo nao pode ser nulo ou vazio.");
         }catch (NullPointerException e){
         }
         try{
             this.controllerGeral.apagaAtividade("          ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
-            this.controllerGeral.apagaAtividade(null);
+            this.controllerGeral.apagaAtividade("");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
     }
 
@@ -377,12 +377,12 @@ class ControllerGeralTest {
         try {
             this.controllerGeral.cadastraItem("","paralelepipedo");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.controllerGeral.cadastraItem("        ","paralelepipedo");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.controllerGeral.cadastraItem(null,"paralelepipedo");
@@ -397,12 +397,12 @@ class ControllerGeralTest {
         try {
             this.controllerGeral.cadastraItem("A1","");
             fail("Item nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.controllerGeral.cadastraItem("A1","       ");
             fail("Item nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.controllerGeral.cadastraItem("A1",null);
@@ -423,12 +423,12 @@ class ControllerGeralTest {
         try {
             this.controllerGeral.exibeAtividade("");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.controllerGeral.exibeAtividade("      ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.controllerGeral.exibeAtividade(null);
@@ -454,12 +454,12 @@ class ControllerGeralTest {
         try{
             this.controllerGeral.contaItensPendentes("");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.controllerGeral.contaItensPendentes("           ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.controllerGeral.contaItensPendentes(null);
@@ -493,12 +493,12 @@ class ControllerGeralTest {
         try{
             this.controllerGeral.contaItensRealizados("");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.controllerGeral.contaItensRealizados("          ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.controllerGeral.contaItensRealizados(null);

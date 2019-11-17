@@ -22,12 +22,12 @@ class ControllerAtividadeTest {
         try{
             this.repositorioAtividade.cadastraAtividade("","BAIXO","pois eh facil dimai papai");
             fail("Campo Descricao nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.cadastraAtividade("            ","BAIXO","pois eh facil dimai papai");
             fail("Campo Descricao nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.cadastraAtividade(null,"BAIXO","pois eh facil dimai papai");
@@ -37,12 +37,12 @@ class ControllerAtividadeTest {
         try{
             this.repositorioAtividade.cadastraAtividade("Analisar os jogares de peda na lua","","pois eh facil dimai papai");
             fail("Campo nivelRisco nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.cadastraAtividade("Analisar os jogares de peda na lua","   ","pois eh facil dimai papai");
             fail("Campo nivelRisco nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.cadastraAtividade("Analisar os jogares de peda na lua",null,"pois eh facil dimai papai");
@@ -52,12 +52,12 @@ class ControllerAtividadeTest {
         try{
             this.repositorioAtividade.cadastraAtividade("Analisar os jogares de peda na lua","ALTO","");
             fail("Campo descricaoRisco nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.cadastraAtividade("Analisar os jogares de peda na lua","ALTO","            ");
             fail("Campo descricaoRisco nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.cadastraAtividade("Analisar os jogares de peda na lua","ALTO",null);
@@ -85,7 +85,7 @@ class ControllerAtividadeTest {
         try{
             this.repositorioAtividade.apagaAtividade("");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.apagaAtividade(null);
@@ -95,7 +95,7 @@ class ControllerAtividadeTest {
         try{
             this.repositorioAtividade.apagaAtividade("      ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
 
     }
@@ -110,12 +110,12 @@ class ControllerAtividadeTest {
         try {
             this.repositorioAtividade.cadastraItem("","abrir jogo");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.repositorioAtividade.cadastraItem("        ","abrir o jogo");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.repositorioAtividade.cadastraItem(null,"abrir o jogo");
@@ -130,12 +130,12 @@ class ControllerAtividadeTest {
         try {
             this.repositorioAtividade.cadastraItem("A1","");
             fail("Item nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.repositorioAtividade.cadastraItem("A1","       ");
             fail("Item nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.repositorioAtividade.cadastraItem("A1",null);
@@ -150,12 +150,12 @@ class ControllerAtividadeTest {
         try {
             this.repositorioAtividade.cadastraItem("","       ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.repositorioAtividade.cadastraItem("","");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.repositorioAtividade.cadastraItem(null,"");
@@ -180,12 +180,12 @@ class ControllerAtividadeTest {
         try {
             this.repositorioAtividade.exibeAtividade("");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.repositorioAtividade.exibeAtividade("      ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try {
             this.repositorioAtividade.exibeAtividade(null);
@@ -222,12 +222,12 @@ class ControllerAtividadeTest {
         try{
             this.repositorioAtividade.contaItensPendentes("");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.contaItensPendentes("    ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.contaItensPendentes(null);
@@ -246,12 +246,12 @@ class ControllerAtividadeTest {
         try{
             this.repositorioAtividade.contaItensRealizados("");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.contaItensRealizados("          ");
             fail("Campo codigo nao pode ser nulo ou vazio.");
-        }catch (NullPointerException e){
+        }catch (IllegalArgumentException e){
         }
         try{
             this.repositorioAtividade.contaItensRealizados(null);

@@ -36,29 +36,17 @@ import projeto.objetivos_e_problemas.Problema;
 			this.contaProblemas = 1;
 
 		}
-		/**
-		 * Metodo privado que vefifica se existe um objeto Problema no mapa de problemas.
-		 * @param codigo codigo identificador do Mapa
-		 * @return true, se existir, false se nao existir.
-		 */
-		private boolean existeProblema(String codigo) {
-			if(this.mapaProblemas.containsKey(codigo)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
+
 		/**
 		 * Metodo que pega um objeto Problema do mapa.
 		 * @param codigo codigo identificador do Mapa.
 		 * @return um Objeto Problema
 		 */
 		public Problema getProblema(String codigo) {
-			if(existeProblema(codigo)){
-			return this.mapaProblemas.get(codigo);}
-			else{
-			    throw new IllegalArgumentException("Problema nao existe.");
-            }
+			if(this.mapaProblemas.containsKey(codigo)){
+			return this.mapaProblemas.get(codigo);
+			}
+			return null;
 		}
 		/**
 		 * cadastra um problema no mapa de problemas e incrementa uma unidade no contador de problemas
@@ -86,7 +74,7 @@ import projeto.objetivos_e_problemas.Problema;
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 
-			if (existeProblema(codigo)) {
+			if (this.mapaProblemas.containsKey(codigo)) {
 				this.mapaProblemas.remove(codigo);
 				}
 			else {
@@ -103,7 +91,7 @@ import projeto.objetivos_e_problemas.Problema;
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 			Validadora.verificaValorNullVazio(codigo, "Campo codigo nao pode ser nulo ou vazio.");
 
-			if (existeProblema(codigo)){
+			if (this.mapaProblemas.containsKey(codigo)){
 				Problema problema = getProblema(codigo);
 					return problema.toString();
 				}

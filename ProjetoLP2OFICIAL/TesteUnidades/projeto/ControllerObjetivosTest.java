@@ -28,13 +28,13 @@ class ControllerObjetivosTest {
 		assertThrows( IllegalArgumentException.class, ()-> 
 		this.controllerObjetivos.cadastraObjetivo("Xablau", "Salvar o Xablau", 3 , 5));
 		
-		assertThrows( NullPointerException.class, ()-> 
+		assertThrows( IllegalArgumentException.class, ()->
 		this.controllerObjetivos.cadastraObjetivo("", "Salvar o Xablau", 3 , 5));
 		
 		assertThrows( NullPointerException.class, ()-> 
 		this.controllerObjetivos.cadastraObjetivo(null, "Salvar o Xablau", 3 , 5));
 		
-		assertThrows( NullPointerException.class, ()-> 
+		assertThrows( IllegalArgumentException.class, ()->
 		this.controllerObjetivos.cadastraObjetivo("GERAL", "", 3 , 5));
 		
 		assertThrows( NullPointerException.class, ()-> 
@@ -61,7 +61,7 @@ class ControllerObjetivosTest {
 		assertThrows( IllegalArgumentException.class, ()-> 
 		this.controllerObjetivos.apagarObjetivo("O9"));
 		
-		assertThrows( NullPointerException.class, ()-> 
+		assertThrows( IllegalArgumentException.class, ()->
 		this.controllerObjetivos.apagarObjetivo(""));
 		
 		assertThrows( NullPointerException.class, ()-> 
@@ -78,7 +78,7 @@ class ControllerObjetivosTest {
 		assertThrows( NullPointerException.class, ()-> 
 		this.controllerObjetivos.exibeObjetivo(null));
 		
-		assertThrows( NullPointerException.class, ()-> 
+		assertThrows( IllegalArgumentException.class, ()->
 		this.controllerObjetivos.exibeObjetivo(""));
 		
 		assertThrows( IllegalArgumentException.class, ()-> 

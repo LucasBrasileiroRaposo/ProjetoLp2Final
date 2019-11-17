@@ -25,7 +25,7 @@ class ControllerProblemasTest {
 		assertEquals( "P3", this.controllerProblemas.cadastraProblema("Violencia no Brasil", 4));
 		assertEquals( "P4", this.controllerProblemas.cadastraProblema("Os altos impostos no Brasil", 5));
 		
-		assertThrows( NullPointerException.class, ()-> 
+		assertThrows( IllegalArgumentException.class, ()->
 		this.controllerProblemas.cadastraProblema("", 5));
 		
 		assertThrows( NullPointerException.class, ()-> 
@@ -48,7 +48,7 @@ class ControllerProblemasTest {
 		assertThrows( IllegalArgumentException.class, ()-> 
 		this.controllerProblemas.exibeProblema("P1"));
 		
-		assertThrows( NullPointerException.class, ()-> 
+		assertThrows( IllegalArgumentException.class, ()->
 		this.controllerProblemas.apagarProblema(""));
 		
 		assertThrows( NullPointerException.class, ()-> 
@@ -65,7 +65,7 @@ class ControllerProblemasTest {
 		
 		assertEquals( "P1 - O alcool no cotidiano - 4", this.controllerProblemas.exibeProblema("P1"));
 		
-		assertThrows( NullPointerException.class, ()-> 
+		assertThrows( IllegalArgumentException.class, ()->
 		this.controllerProblemas.exibeProblema(""));
 		
 		assertThrows( NullPointerException.class, ()-> 

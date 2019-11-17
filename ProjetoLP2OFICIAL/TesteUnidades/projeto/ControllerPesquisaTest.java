@@ -21,13 +21,13 @@ class ControllerPesquisaTest {
         try {
             this.controllerPesquisa.cadastraPesquisa("  ", "Computacao");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
             this.controllerPesquisa.cadastraPesquisa("", "Computacao");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
@@ -37,7 +37,7 @@ class ControllerPesquisaTest {
 
         }
         try {
-            this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", "");
+            this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", null);
             fail("Formato do campo de interesse invalido.");
         } catch (NullPointerException e) {
 
@@ -82,14 +82,14 @@ class ControllerPesquisaTest {
 
         }
         try {
-            this.controllerPesquisa.encerraPesquisa("COM2", "    ");
+            this.controllerPesquisa.encerraPesquisa("COM2", null);
             fail("Motivo nao pode ser nulo ou vazio.");
         } catch (NullPointerException e) {
         }
         try {
             this.controllerPesquisa.encerraPesquisa("COM2", "");
             fail("Motivo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
@@ -174,17 +174,17 @@ class ControllerPesquisaTest {
         } catch (IllegalArgumentException e) {
         }
         try {
-            this.controllerPesquisa.alteraPesquisa("COM1", "DESCRICAO", "");
+            this.controllerPesquisa.alteraPesquisa("COM1", "DESCRICAO", null);
             fail("Descricao nao pode ser nula ou vazia.");
         } catch (NullPointerException e) {
         }
         try {
             this.controllerPesquisa.alteraPesquisa("COM1", "DESCRICAO", "    ");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
-            this.controllerPesquisa.alteraPesquisa("COM1", "CAMPO", "    ");
+            this.controllerPesquisa.alteraPesquisa("COM1", "CAMPO", null);
             fail("Formato do campo de interesse invalido.");
         } catch (NullPointerException e) {
         }
@@ -243,10 +243,10 @@ class ControllerPesquisaTest {
         try {
             this.controllerPesquisa.verificaSeAtiva("");
             fail("Codigo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
-            this.controllerPesquisa.verificaSeAtiva("   ");
+            this.controllerPesquisa.verificaSeAtiva(null);
             fail("Codigo nao pode ser nulo ou vazio.");
         } catch (NullPointerException e) {
 

@@ -1,5 +1,6 @@
 package projeto.pesquisa_e_associacoes;
 
+import Util.Validadora;
 import projeto.atividades.Atividade;
 import projeto.objetivos_e_problemas.Objetivo;
 import projeto.pesquisa_e_associacoes.Pesquisa;
