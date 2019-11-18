@@ -261,7 +261,7 @@ public class RepositorioPesquisa implements Busca{
 	
 
 
-	public HashMap getMapaPesquisas() {
+	public HashMap<String, Pesquisa> getMapaPesquisas() {
 		return this.pesquisas;
 	}
 	

@@ -42,7 +42,7 @@ public class RepositorioAtividade implements Busca{
     public String cadastraAtividade(String descricaoAtividade, String nivelRisco, String descricaoRisco) {
         Validadora.verificaValorNullVazio(descricaoAtividade, "Campo Descricao nao pode ser nulo ou vazio.");
         Validadora.verificaValorNullVazio(nivelRisco, "Campo nivelRisco nao pode ser nulo ou vazio.");
-        Validadora.validaAtividadeChecaOpçoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
+        Validadora.validaAtividadeChecaOpcoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
         Validadora.verificaValorNullVazio(descricaoRisco, "Campo descricaoRisco nao pode ser nulo ou vazio.");
 
         Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco);
