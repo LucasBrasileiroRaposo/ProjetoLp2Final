@@ -356,23 +356,22 @@ public class RepositorioPesquisa implements Busca{
 	 * @param codigoPesquisa codigo da pesquisa em quest�o
 	 * @return arquivo txt contendo informa��es da pesquisa
 	 */
-	public boolean geraTxt(String codigoPesquisa) {
+	public void geraTxt(String codigoPesquisa) {
 		Validadora.verificaValorNullVazio(codigoPesquisa, "Pesquisa nao pode ser nula ou vazia.");
         if (!this.pesquisas.containsKey(codigoPesquisa)) {
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
         }
         else {
 		Pesquisa pesquisa = this.pesquisas.get(codigoPesquisa);
+		String txt = pesquisa.geraTxt();
 		try {
 			String nomeArquivo = "_" + codigoPesquisa + ".txt";
-			FileWriter arq = new FileWriter("/home/raifffmm/Área de Trabalho/ProjetoLp2Final-master/ProjetoLP2OFICIAL/ProjetoLP2OFICIAL/" + nomeArquivo);
+			FileWriter arq = new FileWriter(nomeArquivo);
 			PrintWriter gravarArq = new PrintWriter(arq);
-			gravarArq.println(pesquisa.geraTxt());
+			gravarArq.print(txt);
 			gravarArq.close();
-			return true;
 		}catch(IOException e) {
-			System.out.println(e.getMessage());
-			return false;
+			e.printStackTrace();
 			}
         }
 		
@@ -392,7 +391,7 @@ public class RepositorioPesquisa implements Busca{
 		Pesquisa pesquisa = this.pesquisas.get(codigoPesquisa);
 		try {
 			String nomeArquivo = codigoPesquisa + "-" + "Resultados.txt";
-			FileWriter arq2 = new FileWriter("/home/raifffmm/Área de Trabalho/ProjetoLp2Final-master/ProjetoLP2OFICIAL/ProjetoLP2OFICIAL/easyaccept/" + nomeArquivo);
+			FileWriter arq2 = new FileWriter("/home/raifffmm/Área de Trabalho/ProjetoLp2Final-master/ProjetoLP2OFICIAL/ProjetoLP2OFICIAL/" + nomeArquivo);
 			PrintWriter gravarArq = new PrintWriter(arq2);
 			gravarArq.println(pesquisa.geraTxtResultadoss());
 			gravarArq.close();

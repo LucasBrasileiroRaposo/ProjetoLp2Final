@@ -28,10 +28,7 @@ public class PesquisadorProfessor extends Pesquisador {
         return this.nome+" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL + " - " + this.formacao + " - " + this.unidade + " - " + this.data;
     }
     
-    @Override
-    public String retornaTxt() {
-    	return this.formacao + " - " + this.unidade + " - " + this.data; 
-    }
+   
 
     public void setFormacao(String formacao) {
         this.formacao = formacao;

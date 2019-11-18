@@ -67,5 +67,5 @@ public abstract class Pesquisador {
         return this.fotoURL;
     }
     
-    public abstract String retornaTxt();
+    public abstract String toString();
 }

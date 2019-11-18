@@ -56,6 +56,9 @@ public class Item {
 		this.duracao = duracao;
 		
 	}
+    public int getCodigoItem() {
+    	return this.codigoItem;
+    }
     
     public String retornaTxt() {
     	return this.estadoItem + " - " + "ITEM"+ this.codigoItem;
