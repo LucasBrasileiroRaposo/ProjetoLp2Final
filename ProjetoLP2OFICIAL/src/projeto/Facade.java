@@ -41,7 +41,8 @@ public class Facade {
         args = new String[]{"projeto.Facade", "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
         		"TestesAceitacao/use_case_4.txt",
         		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt",
-        		"TestesAceitacao/use_case_8.txt","TestesAceitacao/use_case_9.txt", "TestesAceitacao/use_case_10.txt"};
+        		"TestesAceitacao/use_case_8.txt","TestesAceitacao/use_case_9.txt",
+        		"TestesAceitacao/use_case_10.txt", "TestesAceitacao/use_case_11.txt"};
         EasyAccept.main(args);
     }
 
@@ -281,5 +282,16 @@ public class Facade {
     
     public String proximaAtividade(String codigoPesquisa) {
  	    return this.controllerPesquisa.proximaAtividade(codigoPesquisa);
+    }
+    
+    /**
+     * Parte 11
+     */
+    
+    public void gravarResumo(String codigoPesquisa) {
+    	this.repositorioPesquisa.geraTxt(codigoPesquisa);
+    }
+    public void gravarResultados(String codigoPesquisa) {
+    	this.repositorioPesquisa.geraTxtResultados(codigoPesquisa);
     }
 }
