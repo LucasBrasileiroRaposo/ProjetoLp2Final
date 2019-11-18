@@ -122,6 +122,14 @@ public class Objetivo implements Comparable<Objetivo>{
 		return true;
 	}
 	
+	/**
+	 * Metodo respons�vel por retorna representa��o textual para o arquivo txt
+	 * @return String com informacoes do objetivo
+	 */
+	public String retornaTxt() {
+		return "      - " + this.codigo + " - " + this.descricao + " - "+ this.valor;
+	}
+	
 	
 
 }

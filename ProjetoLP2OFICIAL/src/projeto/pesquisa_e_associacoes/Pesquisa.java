@@ -371,4 +371,102 @@ public void configuraEstragia(String estrategia) {
 		
 		
 	}
+	
+	/**
+	 * Metodo responsavel por forma o texto a ser escrito no arquivo txt
+	 * @return String com o texto a ser escrito
+	 */
+	public String geraTxt() {
+		return "- Pesquisa: " + this.codigo + " - " + this.descricao + " - " + this.campoInteresse + "\r\n " +
+				"   - Pesquisadores:" + "\r\n " +
+					retornaPesquisadores() + "\r\n " +
+				"   - Problema:" + "\r\n " +
+					retornaProblemas() + "\r\n " +
+				"   - Objetivos:" + "\r\n " +
+					retornaObjetivos() + "\r\n " +
+				"   - Atividades:" + "\r\n " +
+					retornaAtividades();
+							
+	}
+	
+	/**
+	 * Metodo responsavel por retorna a String com os pesquisadores e suas informa��es
+	 * @return uma String com lista de pesquisadores e seus atributos
+	 */
+	private String retornaPesquisadores() {
+		String texto = " ";
+		    for(Pesquisador x : this.pesquisadoresDaPesquisa.values()) {
+		    	if(x.getFuncao().equals("estudante")) {
+		    		texto += "     - " + x.getNome() + "(" + x.getFuncao() + ")" + " - " + x.getBiografia() + " - " + x.getEmail() + " - " + x.getFotoURL() + "\r\n "; 		
+		    	}
+		    	else {
+		    		texto += "     - " + x.getNome() + "(" + x.getFuncao() + ")" + " - " + x.getBiografia() + " - " + x.getEmail() + " - " + x.getFotoURL() + " - " +
+		    	x.retornaTxt() + "\r\n ";
+		    		}
+		    	}
+				return texto;
+		    }
+	
+	/**
+	 * Metodo responsavel por retorna a String com os objetivos
+	 * @return uma String com lista de objetivos
+	 */
+	private String retornaAtividades() {
+		String texto = "";
+	    for(Atividade x : this.atividadesDaPesquisa.values()) {
+	    	texto +=	x.retornaTxt()  + "\r\n ";
+	    }
+	    return texto;
+		
+	}
+	
+	/**
+	 * Metodo responsavel por retorna a String com os objetivos
+	 * @return uma String com lista de objetivos
+	 */
+	private String retornaObjetivos() {
+		String texto = "";
+		for(Objetivo x : this.listaObjetivos) {
+	    	texto += x.retornaTxt() + "\r\n ";
+	    }
+	    return texto;
+	}
+	
+	/**
+	 * Metodo responsavel por retorna a String com problemas
+	 * @return uma String com lista de problemas
+	 */
+	private String retornaProblemas() {
+		String texto = " ";
+		for(Problema x : this.listaProblema) {
+	    	texto += x.retornaTxt();
+	    }
+	    return texto;
+	}
+
+	/**
+	 * Metodo que permite o retorno dos resultados em ordem
+	 * @return string contendo os resultados
+	 */
+	public String geraTxtResultadoss() {
+		return "- Pesquisa:" + this.codigo + " - " + this.descricao + " - " + this.campoInteresse + "\r\n " +
+				"    - Resultados:" + "\r\n " +
+				"       - " + this.descricao + "\r\n " +
+				retornaItens();
+				
+				
+	}
+	
+	/**
+	 * Metodo respons�vel por retornar as informa��es dos Items
+	 * @return string com as informacoes dos items
+	 */
+	private String retornaItens() {
+		String texto = " ";
+	    for(Atividade x : this.atividadesDaPesquisa.values()) {
+	    	return x.retornaItensRealizados();
+	    }
+	    return "";
+		
+	}
 }

@@ -26,8 +26,6 @@ public abstract class Pesquisador {
     }
 
 
-
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -68,4 +66,6 @@ public abstract class Pesquisador {
     public String getFotoURL() {
         return this.fotoURL;
     }
+    
+    public abstract String retornaTxt();
 }
