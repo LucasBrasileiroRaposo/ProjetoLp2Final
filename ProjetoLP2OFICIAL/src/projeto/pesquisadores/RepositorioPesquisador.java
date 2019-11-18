@@ -1,11 +1,13 @@
 package projeto.pesquisadores;
 
 import Util.Validadora;
+import projeto.busca.Busca;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RepositorioPesquisador {
+public class RepositorioPesquisador implements Busca {
     private Map<String, Pesquisador> mapaDePesquisadores;
 
     /**
@@ -252,5 +254,29 @@ public class RepositorioPesquisador {
             }
             return saida.substring(0,saida.length() - 3);
         }
+    }
+    @Override
+    public String busca(String termo) {
+        Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+        String msg = "";
+        for(Pesquisador pesquisador : this.mapaDePesquisadores.values()){
+            if(pesquisador.getBiografia().contains(termo)) {
+                msg += pesquisador.getEmail() +": "+pesquisador.getBiografia() + " | ";
+            }
+        }
+        return msg;
+    }
+
+
+    @Override
+    public int contaResultadosBusca(String termo) {
+        Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+        int cont = 0;
+        for(String palavra: busca(termo).split(" | ")){
+            if(termo.contains(palavra)) {
+                cont += 1;
+            }
+        }
+        return cont;
     }
 }

@@ -5,18 +5,20 @@ package projeto.pesquisa_e_associacoes;
  */
 import Util.Validadora;
 import projeto.atividades.Atividade;
+import projeto.busca.Busca;
 import projeto.objetivos_e_problemas.Objetivo;
-import projeto.pesquisa_e_associacoes.ObjetivoComparator;
 import projeto.objetivos_e_problemas.Problema;
-import projeto.pesquisa_e_associacoes.Pesquisa;
 import projeto.pesquisadores.Pesquisador;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class RepositorioPesquisa {
+public class RepositorioPesquisa implements Busca{
     /**
      * pesquisas Mapa responsável por associar um objeto pesquisa ao seu código
      * gerado
@@ -25,6 +27,7 @@ public class RepositorioPesquisa {
 
     public RepositorioPesquisa() {
         this.pesquisas = new HashMap<>();
+        
     }
 
     /**
@@ -216,7 +219,7 @@ public class RepositorioPesquisa {
 	/**
      * Metodo que associa um problema a uma pesquisa. Uma pesquisa so pode ter um problema associado. Se tentar associar um problema a uma pesquisa que ja tem problema, dara erro.
      * @param codigo codigo que identifica a pesquisa
-     * @param problema objeto problema que quer se associar a pesquisa
+     * @param objetivo objeto problema que quer se associar a pesquisa
      * @return true se houver a associacao e false se nao houver.
      */
 	
@@ -259,81 +262,10 @@ public class RepositorioPesquisa {
 		}
 	}
 	
-	/**
-	 * Metodo que lista as pesquisas de acordo com o parametro que é passado. Se a ordem for por pesquisa, a listagem sera das pesquisas
-	 * de Maior ID para as que tem menor ID. Se a ordem for por problema, a listagem sera das pesquisas de maior ID que tem  
-	 * problema associado para o de menor ID, depois sera das pesquisas de Maior ID para as de menor das pesquisas que nao tem problema
-	 * associado.
-	 * Se a ordem for por objetivo, a listagem sera das pesquisas que tem mais objetivos associados para as de menos. Se for igual ou nao
-	 * tiver nenhum objetivo associado dentro da pesquisa, a ordenacao sera das pesquisas de maior ID para as de menor ID.
-	 * @param ordem a ordem de ordenacao desejada
-	 * @return representacao em String dos dados da pesquisa, seu codigo, sua descricao e campo de interesse.
-	 */
 
-	public String listaPesquisas(String ordem) {
-		
-		Validadora.verificaValorNullVazio(ordem, "Valor invalido da ordem");
-		if(!(ordem.toUpperCase().equals("PROBLEMA")) && !(ordem.toUpperCase().equals("OBJETIVOS")) && !(ordem.toUpperCase().equals("PESQUISA"))) {
-			throw new IllegalArgumentException("Valor invalido da ordem");
-		}
-		
-		List<Pesquisa> listaPesquisas = new ArrayList();
-		listaPesquisas.addAll(this.pesquisas.values());
-		String listar = "";
-		
-		if (ordem.toUpperCase().equals("PESQUISA")) {
-			
-			Collections.sort (listaPesquisas);
-			
-			for(Pesquisa pesquisa: listaPesquisas) {
-				listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
-			}
-			listar = listar.substring(0, listar.length()-3);
-			return listar;
-		}
-		else if (ordem.toUpperCase().equals("PROBLEMA")) {
-			
-			
-			Collections.sort (listaPesquisas);
-			
-			for(Pesquisa pesquisa: listaPesquisas) {
-				if(pesquisa.getListaProblema().size() == 1) {
-					listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
-				}
-			}
-			for(Pesquisa pesquisa: listaPesquisas) {
-				if (pesquisa.getListaProblema().size() == 0) {
-					listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
-				}
-				
-			}
-			listar = listar.substring(0, listar.length() -3);
-			return listar;
-			
-		} else {  /**
-		*            ordem == "OBJETIVO";
-		*/
-			
-			ObjetivoComparator objetivoComparator = new ObjetivoComparator();
-			
-			Collections.sort (listaPesquisas, objetivoComparator );
-			for(Pesquisa pesquisa: listaPesquisas) {
-				if(pesquisa.getListaObjetivos().size() != 0) {
-				listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
-				}
-			}
-			
-			  Collections.sort(listaPesquisas);
-			 
-			for (Pesquisa pesquisa: listaPesquisas) {
-				if(pesquisa.getListaObjetivos().size() == 0) {
-					listar += pesquisa.getCodigo() + pesquisa.toString() + " | ";
-				}
-			}
-			listar = listar.substring(0, listar.length()-3);
-			return listar;
-			
-		}
+
+	public HashMap<String, Pesquisa> getMapaPesquisas() {
+		return this.pesquisas;
 	}
 	
 	
@@ -392,5 +324,83 @@ public class RepositorioPesquisa {
 			return this.pesquisas.get(codigoPesquisa).removeAtividade(codigoAtividade);
 		}
 	
+	}
+	@Override
+	public String busca(String termo){
+		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+		String msg = "";
+		for(Pesquisa p : this.pesquisas.values()){
+			if(p.getDescricao().contains(termo)) {
+				msg += p.getCodigo() +": "+p.getDescricao() + " | ";
+			}
+			if(p.getCampoInteresse().contains(termo)){
+				msg += p.getCodigo() + ": "+p.getCampoInteresse()+ " | ";
+			}
+		}
+		return msg;
+	}
+	@Override
+	public int contaResultadosBusca(String termo){
+		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+		int cont = 0;
+		for(String palavra: busca(termo).split(" \\| ")){
+			if(termo.contains(palavra)) {
+				cont += 1;
+			}
+		}
+		return cont;
+	}
+	
+	/**
+	 * Metodo responsavel por criar um arquivo e escrever informa��es da pesquisa no arquivo
+	 * @param codigoPesquisa codigo da pesquisa em quest�o
+	 * @return arquivo txt contendo informa��es da pesquisa
+	 */
+	public boolean geraTxt(String codigoPesquisa) {
+		Validadora.verificaValorNullVazio(codigoPesquisa, "Pesquisa nao pode ser nula ou vazia.");
+        if (!this.pesquisas.containsKey(codigoPesquisa)) {
+            throw new IllegalArgumentException("Pesquisa nao encontrada.");
+        }
+        else {
+		Pesquisa pesquisa = this.pesquisas.get(codigoPesquisa);
+		try {
+			String nomeArquivo = codigoPesquisa + ".txt";
+			FileWriter arq = new FileWriter("D:\\Desktop/ProjetoOficial/ProjetoLp2Final-master/ProjetoLP2OFICIAL/easyaccept/" + nomeArquivo);
+			PrintWriter gravarArq = new PrintWriter(arq);
+			gravarArq.println(pesquisa.geraTxt());
+			gravarArq.close();
+			return true;
+		}catch(IOException e) {
+			System.out.println(e.getMessage());
+			return false;
+			}
+        }
+		
+	}
+
+	/**
+	 * Metodo responsavel por criar um arquivo e escrever resultados da pesquisa no arquivo
+	 * @param codigoPesquisa codigo da pesquisa em quest�o
+	 * @return arquivo txt contendo resultados
+	 */
+	public boolean geraTxtResultados(String codigoPesquisa) {
+		Validadora.verificaValorNullVazio(codigoPesquisa, "Pesquisa nao pode ser nula ou vazia.");
+        if (!this.pesquisas.containsKey(codigoPesquisa)) {
+            throw new IllegalArgumentException("Pesquisa nao encontrada.");
+        }
+        else {
+		Pesquisa pesquisa = this.pesquisas.get(codigoPesquisa);
+		try {
+			String nomeArquivo = codigoPesquisa + "-" + "Resultados.txt";
+			FileWriter arq2 = new FileWriter("D:\\Desktop/Resultados.txt");
+			PrintWriter gravarArq = new PrintWriter(arq2);
+			gravarArq.println(pesquisa.geraTxtResultadoss());
+			gravarArq.close();
+			return true;
+		}catch(IOException e) {
+			System.out.println(e.getMessage());
+			return false;
+			}
+        }
 	}
 }

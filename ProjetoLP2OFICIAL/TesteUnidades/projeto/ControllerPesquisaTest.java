@@ -2,16 +2,23 @@ package projeto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import projeto.atividades.Atividade;
+import projeto.atividades.RepositorioAtividade;
+import projeto.pesquisa_e_associacoes.ControllerPesquisa;
 import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerPesquisaTest {
-    private RepositorioPesquisa controllerPesquisa;
+    private ControllerPesquisa controllerPesquisa;
+    private RepositorioPesquisa repositorioPesquisa;
+    private RepositorioAtividade repositorioAtividade;
 
     @BeforeEach
     public void setup() {
-        this.controllerPesquisa = new RepositorioPesquisa();
+        this.repositorioPesquisa = new RepositorioPesquisa();
+        this.controllerPesquisa = new ControllerPesquisa(this.repositorioPesquisa);
+        this.repositorioAtividade = new RepositorioAtividade();
     }
 
     @Test
@@ -21,25 +28,25 @@ class ControllerPesquisaTest {
         try {
             this.controllerPesquisa.cadastraPesquisa("  ", "Computacao");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
             this.controllerPesquisa.cadastraPesquisa("", "Computacao");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
             this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", " ");
             fail("Formato do campo de interesse invalido.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
             this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", "");
             fail("Formato do campo de interesse invalido.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
@@ -84,12 +91,12 @@ class ControllerPesquisaTest {
         try {
             this.controllerPesquisa.encerraPesquisa("COM2", "    ");
             fail("Motivo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
             this.controllerPesquisa.encerraPesquisa("COM2", "");
             fail("Motivo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
@@ -176,22 +183,22 @@ class ControllerPesquisaTest {
         try {
             this.controllerPesquisa.alteraPesquisa("COM1", "DESCRICAO", "");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
             this.controllerPesquisa.alteraPesquisa("COM1", "DESCRICAO", "    ");
             fail("Descricao nao pode ser nula ou vazia.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
             this.controllerPesquisa.alteraPesquisa("COM1", "CAMPO", "    ");
             fail("Formato do campo de interesse invalido.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
             this.controllerPesquisa.alteraPesquisa("COM1", "CAMPO", "");
             fail("Formato do campo de interesse invalido.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
@@ -243,12 +250,12 @@ class ControllerPesquisaTest {
         try {
             this.controllerPesquisa.verificaSeAtiva("");
             fail("Codigo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
         }
         try {
             this.controllerPesquisa.verificaSeAtiva("   ");
             fail("Codigo nao pode ser nulo ou vazio.");
-        } catch (NullPointerException e) {
+        } catch (IllegalArgumentException e) {
 
         }
         try {
@@ -258,5 +265,56 @@ class ControllerPesquisaTest {
         }
     }
 
+    @Test
+    void listaPesquisas() {
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao agropecuaria", "Computacao, agro");
+    }
+
+
+
+
+
+    @Test
+    void adicionaAtividade() {
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao agropecuaria", "Computacao, agro");
+        Atividade atividade = new Atividade("tomar uma cana pós projeto","ALTO","pois so volto morto para casa");
+        Atividade atividade2 = new Atividade("qualquer coisa homi","MEDIO","pode dar errado");
+        assertTrue(this.controllerPesquisa.adicionaAtividade("COM1",atividade));
+        assertFalse(this.controllerPesquisa.adicionaAtividade("COM1",atividade));
+        try{
+            this.controllerPesquisa.adicionaAtividade("COM2",atividade2);
+            fail("Pesquisa nao encontrada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.encerraPesquisa("COM1","acabouu");
+        try{
+            this.controllerPesquisa.adicionaAtividade("COM1",atividade2);
+            fail("Pesquisa desativada.");
+        }catch (IllegalArgumentException e){
+        }
+    }
+
+    @Test
+    void removeAtividade(){
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao agropecuaria", "Computacao, agro");
+        Atividade atividade = new Atividade("tomar uma cana pós projeto","ALTO","pois so volto morto para casa");
+        this.controllerPesquisa.adicionaAtividade("COM1",atividade);
+        try{
+            this.controllerPesquisa.removeAtividade("COM2","A1");
+            fail("Pesquisa nao encontrada.");
+        }catch (IllegalArgumentException e){
+        }
+        assertTrue(this.controllerPesquisa.removeAtividade("COM1","A1"));
+        this.controllerPesquisa.encerraPesquisa("COM1","acabouu");
+        try{
+            this.controllerPesquisa.removeAtividade("COM2","A1");
+            fail("Pesquisa desativada.");
+        }catch (IllegalArgumentException e){
+        }
+    }
+    @Test
+    void associaProble(){
+        
+    }
 
 }

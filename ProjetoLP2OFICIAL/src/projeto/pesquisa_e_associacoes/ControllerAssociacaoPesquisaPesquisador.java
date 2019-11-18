@@ -6,12 +6,12 @@ import projeto.pesquisadores.RepositorioPesquisador;
 
 public class ControllerAssociacaoPesquisaPesquisador {
 
-    private RepositorioPesquisa repositorioPesquisa;
+    private ControllerPesquisa controllerPesquisa;
 
     private RepositorioPesquisador repositorioPesquisador;
 
-    public ControllerAssociacaoPesquisaPesquisador(RepositorioPesquisa repositorioPesquisa, RepositorioPesquisador repositorioPesquisador){
-        this.repositorioPesquisa = repositorioPesquisa;
+    public ControllerAssociacaoPesquisaPesquisador(ControllerPesquisa controllerPesquisa, RepositorioPesquisador repositorioPesquisador){
+        this.controllerPesquisa = controllerPesquisa;
         this.repositorioPesquisador = repositorioPesquisador;
     }
 
@@ -21,11 +21,12 @@ public class ControllerAssociacaoPesquisaPesquisador {
 
         Pesquisador pesquisador = this.repositorioPesquisador.pegaPesquisador(emailPesquisador);
 
-        return this.repositorioPesquisa.associaPesquisador(idPesquisa, pesquisador);
+        return this.controllerPesquisa.associaPesquisador(idPesquisa, pesquisador);
     }
     public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador) {
         Validadora.verificaValorNullVazio(idPesquisa,"Campo idPesquisa nao pode ser nulo ou vazio.");
         Validadora.verificaValorNullVazio(emailPesquisador,"Campo emailPesquisador nao pode ser nulo ou vazio.");
-        return this.repositorioPesquisa.desassociaPesquisador(idPesquisa,emailPesquisador) ;
+        return this.controllerPesquisa.desassociaPesquisador(idPesquisa,emailPesquisador) ;
     }
+    
 }

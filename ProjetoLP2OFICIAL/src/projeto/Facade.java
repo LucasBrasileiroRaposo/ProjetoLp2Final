@@ -1,19 +1,21 @@
-package projeto;
+ package projeto;
+
 
 import easyaccept.EasyAccept;
 import projeto.atividades.RepositorioAtividade;
 import projeto.objetivos_e_problemas.RepositorioObjetivos;
 import projeto.objetivos_e_problemas.RepositorioProblemas;
-import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaAtividade;
-import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaObjetivoProblema;
-import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
 import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
+import projeto.pesquisa_e_associacoes.ControllerPesquisa;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaObjetivoProblema;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaAtividade;
+import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
 import projeto.pesquisadores.RepositorioPesquisador;
+import projeto.busca.ControllerBusca;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-public class Facade {
+ public class Facade {
 
     private RepositorioAtividade repositorioAtividades;
 
@@ -31,11 +33,14 @@ public class Facade {
 
     private ControllerAssociacaoPesquisaPesquisador controllerAssociacaoPesquisaPesquisador;
 
+    private ControllerPesquisa controllerPesquisa;
+
+    private ControllerBusca controllerBusca;
+
+
 
     public static void main(String[] args){
-        args = new String[]{"projeto.Facade",  "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
-        		"TestesAceitacao/use_case_4.txt",
-        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt","TestesAceitacao/use_case_9.txt" };
+        args = new String[]{"projeto.Facade", "TestesAceitacao/use_case_12CARREGAR.txt"};
         EasyAccept.main(args);
     }
 
@@ -43,37 +48,40 @@ public class Facade {
         this.repositorioAtividades = new RepositorioAtividade();
         this.repositorioPesquisadores = new RepositorioPesquisador();
         this.repositorioPesquisa = new RepositorioPesquisa();
+        this.controllerPesquisa = new ControllerPesquisa(this.repositorioPesquisa);
         this.repositorioObjetivos = new RepositorioObjetivos();
         this.repositorioProblemas = new RepositorioProblemas();
-        this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.repositorioPesquisa,this.repositorioPesquisadores);
-        this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.repositorioPesquisa,this.repositorioAtividades);
-        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.repositorioPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
+        this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.controllerPesquisa,this.repositorioPesquisadores);
+        this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.controllerPesquisa,this.repositorioAtividades);
+        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.controllerPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
+        this.controllerBusca = new ControllerBusca(this.repositorioPesquisa,this.repositorioPesquisadores,this.repositorioProblemas,this.repositorioObjetivos,this.repositorioAtividades);
+
     }
 
     /** Parte 1
      */
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
-        return this.repositorioPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
+        return this.controllerPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
     }
 
     public void encerraPesquisa(String codigo, String motivo) {
-        this.repositorioPesquisa.encerraPesquisa(codigo, motivo);
+        this.controllerPesquisa.encerraPesquisa(codigo, motivo);
     }
 
     public void ativaPesquisa(String codigo) {
-                repositorioPesquisa.ativaPesquisa(codigo);
+        this.controllerPesquisa.ativaPesquisa(codigo);
     }
 
     public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo) {
-        repositorioPesquisa.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
+        this.controllerPesquisa.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
 
     public String exibePesquisa(String codigo) {
-                return repositorioPesquisa.exibePesquisa(codigo);
+                return controllerPesquisa.exibePesquisa(codigo);
     }
 
     public boolean pesquisaEhAtiva(String codigo) {
-                return repositorioPesquisa.verificaSeAtiva(codigo);
+                return controllerPesquisa.verificaSeAtiva(codigo);
     }
 
     /** Parte 2
@@ -177,7 +185,7 @@ public class Facade {
     
     public String listaPesquisas(String ordem) {
     	
-    	return this.repositorioPesquisa.listaPesquisas(ordem);
+    	return this.controllerPesquisa.listaPesquisas(ordem);
     }
 
     /** Parte 6
@@ -199,6 +207,7 @@ public class Facade {
     }
     public String listaPesquisadores(String tipo){return this.repositorioPesquisadores.listaPesquisadores(tipo);}
 
+    
     /** Parte 7
      */
     
@@ -226,64 +235,106 @@ public class Facade {
     public int getDuracao(String codigoAtividade) {
     	return this.controllerAssociacaoPesquisaAtividade.getDuracao(codigoAtividade);
     }
-
-    /** Parte 8
+    /**Parte 8
+     *
      */
-
-
-
+    public String busca(String termo){
+        return controllerBusca.busca(termo);
+    }
+    public String busca(String termo,int numeroDoResultado){
+        return controllerBusca.busca(termo,numeroDoResultado);
+    }
+    public int contaResultadosBusca(String termo){
+        return controllerBusca.contaResultadosBusca(termo);
+    }
 
     /** Parte 9
      */
-    public void defineProximaAtividade(String idPrecedente, String idSubsequente){
-        this.repositorioAtividades.defineProximaAtividade(idPrecedente,idSubsequente);
-    }
-    public void tiraProximaAtividade(String idPrecedente){
 
+    public void defineProximaAtividade(String idPrecedente, String idSubsquente){
+        this.repositorioAtividades.defineProximaAtividade(idPrecedente,idSubsquente);
+    }
+
+    public void tiraProximaAtividade(String idPrecedente){
+        this.repositorioAtividades.tiraProximaAtividade(idPrecedente);
     }
     public int contaProximos(String idPrecedente){
-        return 0;
+        return this.repositorioAtividades.contaProximos(idPrecedente);
     }
     public String pegaProximo(String idAtividade, int enesimaAtividade){
-        return "";
+        return this.repositorioAtividades.pegaProximo(idAtividade,enesimaAtividade);
     }
     public String pegaMaiorRiscoAtividades(String idAtividade){
-        return "";
+        return this.repositorioAtividades.pegaMaiorRiscoAtividades(idAtividade);
     }
-
-    /** Parte 10
+    
+    /**
+     * Parte 10
      */
-    public void configuraEstrategia(String estrategia){
-
+    
+    public void configuraEstrategia(String estrategia) {
+ 	   
+ 	   this.controllerPesquisa.configuraEstrategia(estrategia);
+ 	   
     }
-    public String proximaAtividade(String codigoPesquisa){
-        return "";
+    
+    public String proximaAtividade(String codigoPesquisa) {
+ 	    return this.controllerPesquisa.proximaAtividade(codigoPesquisa);
     }
-
-
-
-
+    
+    /**
+     * Parte 11
+     */
+    
+    public void gravarResumo(String codigoPesquisa) {
+    	this.repositorioPesquisa.geraTxt(codigoPesquisa);
+    }
+    public void gravarResultados(String codigoPesquisa) {
+    	this.repositorioPesquisa.geraTxtResultados(codigoPesquisa);
+    }
 
     /** Parte 12
-     * @throws IOException
      */
-    public void salva() throws IOException {
+    public void carregar() throws IOException {
+        final String dataFile = "objetos.dat";
+        ObjectInputStream in = null;
+
+        try {
+            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(dataFile)));
+            this.repositorioAtividades = (RepositorioAtividade) in.readObject();
+            this.controllerPesquisa = (ControllerPesquisa) in.readObject();
+            this.repositorioPesquisadores = (RepositorioPesquisador) in.readObject();
+            this.repositorioObjetivos = (RepositorioObjetivos) in.readObject();
+            this.repositorioProblemas = (RepositorioProblemas) in.readObject();
+            this.controllerAssociacaoPesquisaAtividade = (ControllerAssociacaoPesquisaAtividade)in.readObject();
+            this.controllerAssociacaoPesquisaObjetivoProblema = (ControllerAssociacaoPesquisaObjetivoProblema) in.readObject();
+            this.controllerAssociacaoPesquisaPesquisador = (ControllerAssociacaoPesquisaPesquisador) in.readObject();
+            this.controllerBusca = (ControllerBusca) in.readObject();
+        }catch (Exception e) {}
+        finally {
+            if (in != null)
+                in.close();
+        }
+    }
+
+    public void salva() throws IOException{
         final String dataFile = "objetos.dat";
         ObjectOutputStream out = null;
 
-        try{
-
-
+        try {
+            out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(dataFile)));
+            out.writeObject(this.controllerPesquisa);
+            out.writeObject(this.controllerBusca);
+            out.writeObject(this.controllerAssociacaoPesquisaPesquisador);
+            out.writeObject(this.controllerAssociacaoPesquisaAtividade);
+            out.writeObject(this.controllerAssociacaoPesquisaObjetivoProblema);
+            out.writeObject(this.repositorioAtividades);
+            out.writeObject(this.repositorioObjetivos);
+            out.writeObject(this.repositorioPesquisadores);
+            out.writeObject(this.repositorioProblemas);
         }finally {
-
+            out.close();;
         }
+
     }
-    public void carrega() throws  IOException{
-        try{
-
-        }finally {
-
-        }
-    }
-
 }

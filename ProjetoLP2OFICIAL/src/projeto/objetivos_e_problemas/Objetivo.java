@@ -4,7 +4,7 @@ package projeto.objetivos_e_problemas;
  * @author Matheus Bezerra Andrade
  *
  */
-public class Objetivo {
+public class Objetivo implements Comparable<Objetivo>{
 	/**
 	 * Tipo do objetivo. O tipo só pode ser Geral ou Especifico.
 	 */
@@ -72,6 +72,7 @@ public class Objetivo {
 	
 	public boolean getAssociado() {
 		return this.associado;
+		
 	}
 	
 	/**
@@ -83,6 +84,52 @@ public class Objetivo {
 		
 	}
 
+	public String getDescricao() {
+		return this.descricao;
+	}
 
+	public String getCodigo() {
+		return codigo;
+	}
+
+
+	@Override
+	public int compareTo(Objetivo objetivo) {
+		return objetivo.getCodigo().compareTo(this.codigo);
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Objetivo other = (Objetivo) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
+	}
+	
+	/**
+	 * Metodo respons�vel por retorna representa��o textual para o arquivo txt
+	 * @return String com informacoes do objetivo
+	 */
+	public String retornaTxt() {
+		return "      - " + this.codigo + " - " + this.descricao + " - "+ this.valor;
+	}
+	
+	
 
 }
