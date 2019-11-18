@@ -103,11 +103,6 @@ public class Validadora {
         }
     }
 
-    public static void validaAtividadeChecaOpçoesNivelderisco(String valor, String msg) {
-        if (!valor.equals("BAIXO") && !valor.equals("MEDIO") && !valor.equals("ALTO")) {
-            throw new IllegalArgumentException(msg);
-        }
-    }
 
         public static void verificaSeNumeroNegativo ( int valorNumerico, String msg){
             if (valorNumerico <= 0) {
@@ -149,7 +144,7 @@ public class Validadora {
     }
     
     public static void verificaEstrategia(String estrategia,String msg){
-        if (!estrategia.equals("MENOS_PENDENCIAS") && !estrategia.equals("MAIOR_RISCO") && !!estrategia.equals("MAIS_ANTIGA") && !estrategia.equals("MAIOR_DURACAO")){
+        if (!estrategia.equals("MENOS_PENDENCIAS") && !estrategia.equals("MAIOR_RISCO") && !estrategia.equals("MAIS_ANTIGA") && !estrategia.equals("MAIOR_DURACAO")){
             throw new IllegalArgumentException(msg);
         }
     }

@@ -8,6 +8,6 @@ public class MenosPendenciasComparator  implements Comparator<Atividade> {
 	@Override
 	public int compare(Atividade atividade1, Atividade atividade2) {
 		
-		return  atividade1.getContadorDeItensPendentes() - atividade2.getContadorDeItensPendentes();
+		return  atividade1.contaItensPendentes() - atividade2.contaItensPendentes();
 	}
 }

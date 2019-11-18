@@ -72,7 +72,7 @@ public class Pesquisa implements Comparable<Pesquisa>{
         this.codigo = codigo;
         this.atividadesDaPesquisa = new LinkedHashMap<>();
         this.estrategia = "MAIS_ANTIGA";
-        }
+    }
 
 
     
@@ -285,10 +285,8 @@ public class Pesquisa implements Comparable<Pesquisa>{
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
-
-
-
-	public void configuraEstragia(String estrategia) {
+	
+public void configuraEstragia(String estrategia) {
 		
 		if (estrategia.equals("MENOS_PENDENCIAS")){
             this.estrategia = "MENOS_PENDENCIAS";
@@ -305,37 +303,163 @@ public class Pesquisa implements Comparable<Pesquisa>{
 
 
 	public String proximaAtividade() {
-		List<Atividade> listaAtividades = new ArrayList();
+		List<Atividade> listaAtividades = new ArrayList<>();
 		listaAtividades.addAll(this.atividadesDaPesquisa.values());
 		
 		if(this.estrategia.equals("MAIS_ANTIGA")) {
 			
-			for(Atividade atividade: listaAtividades) {
-				System.out.println(atividade.contaItensPendentes());
-				if(atividade.contaItensPendentes() != 0) {
+			
+			for(Atividade atividade: this.atividadesDaPesquisa.values()) {
+				
+				if(atividade.contaItensPendentes() > 0) {
 					return atividade.getCodigo();
+					
 				}
 				
 			}
-			return "Pesquisa sem atividades com pendencias.";
+			throw new IllegalArgumentException( "Pesquisa sem atividades com pendencias.");
 		}
 		else if(this.estrategia.equals("MENOS_PENDENCIAS")) {
 			MenosPendenciasComparator menosPendenciasComparator = new MenosPendenciasComparator();
 			Collections.sort(listaAtividades, menosPendenciasComparator);
 			
 			for(Atividade atividade: listaAtividades) {
-				System.out.println(atividade.contaItensPendentes());
-				if(atividade.contaItensPendentes() != 0) {
+				
+				if(atividade.contaItensPendentes() > 0) {
 					return atividade.getCodigo();
 					
-				}
+				}	
 				
 			}
-			return "Pesquisa sem atividades com pendencias.";
-			
-			
+			throw new IllegalArgumentException( "Pesquisa sem atividades com pendencias.");
 			
 		}
-		return "calma...";
+		else if(this.estrategia.equals("MAIOR_RISCO")) {
+			MaiorRiscoComparator maiorRiscoComparator = new MaiorRiscoComparator();
+			Collections.sort(listaAtividades, maiorRiscoComparator);
+			
+			for(Atividade atividade: listaAtividades) {
+				
+				if(atividade.contaItensPendentes() > 0) {
+					return atividade.getCodigo();
+					
+				}	
+				
+			}
+			throw new IllegalArgumentException( "Pesquisa sem atividades com pendencias.");
+		
+	}
+		/**
+		          if(this.estrategia.equals("MAIOR_DURACAO")) {
+		/*
+		 * 
+		 */
+		else  { 
+			MaiorDuracaoComparator maiorDuracaoComparator = new MaiorDuracaoComparator();
+			Collections.sort(listaAtividades, maiorDuracaoComparator);
+			
+			for(Atividade atividade: listaAtividades) {
+				
+				if(atividade.contaItensPendentes() > 0) {
+					return atividade.getCodigo();
+					
+				}	
+				
+			}
+			throw new IllegalArgumentException( "Pesquisa sem atividades com pendencias.");
+		}
+		
+		
+	}
+	
+	/**
+	 * Metodo responsavel por forma o texto a ser escrito no arquivo txt
+	 * @return String com o texto a ser escrito
+	 */
+	public String geraTxt() {
+		return "- Pesquisa: " + this.codigo + " - " + this.descricao + " - " + this.campoInteresse + "\r\n " +
+				"   - Pesquisadores:" + "\r\n " +
+					retornaPesquisadores() + "\r\n " +
+				"   - Problema:" + "\r\n " +
+					retornaProblemas() + "\r\n " +
+				"   - Objetivos:" + "\r\n " +
+					retornaObjetivos() + "\r\n " +
+				"   - Atividades:" + "\r\n " +
+					retornaAtividades();
+							
+	}
+	
+	/**
+	 * Metodo responsavel por retorna a String com os pesquisadores e suas informa��es
+	 * @return uma String com lista de pesquisadores e seus atributos
+	 */
+	private String retornaPesquisadores() {
+		String texto = " ";
+		    for(Pesquisador x : this.pesquisadoresDaPesquisa.values()) {
+		    		texto += "     - " + x.getNome() + "(" + x.getFuncao() + ")" + " - " + x.getBiografia() + " - " + x.getEmail() + " - " + x.getFotoURL() + " - "; 		
+		    	}
+				return texto;
+		    }
+	
+	/**
+	 * Metodo responsavel por retorna a String com os objetivos
+	 * @return uma String com lista de objetivos
+	 */
+	private String retornaAtividades() {
+	    for(Atividade x : this.atividadesDaPesquisa.values()) {
+	    	return	x.retornaTxt();
+	    }
+	    return "";
+		
+	}
+	
+	/**
+	 * Metodo responsavel por retorna a String com os objetivos
+	 * @return uma String com lista de objetivos
+	 */
+	private String retornaObjetivos() {
+		String texto = " ";
+		for(Objetivo x : this.listaObjetivos) {
+	    	texto += x.retornaTxt();
+	    }
+	    return texto;
+	}
+	
+	/**
+	 * Metodo responsavel por retorna a String com problemas
+	 * @return uma String com lista de problemas
+	 */
+	private String retornaProblemas() {
+		String texto = " ";
+		for(Problema x : this.listaProblema) {
+	    	texto += x.retornaTxt();
+	    }
+	    return texto;
+	}
+
+	/**
+	 * Metodo que permite o retorno dos resultados em ordem
+	 * @return string contendo os resultados
+	 */
+	public String geraTxtResultadoss() {
+		return "- Pesquisa:" + this.codigo + " - " + this.descricao + " - " + this.campoInteresse + "\r\n " +
+				"    - Resultados:" + "\r\n " +
+				"       - " + this.descricao + "\r\n " +
+				retornaItens();
+				
+				
+	}
+	
+	/**
+	 * Metodo respons�vel por retornar as informa��es dos Items
+	 * @return string com as informacoes dos items
+	 */
+	private String retornaItens() {
+		String texto = " ";
+	    for(Atividade x : this.atividadesDaPesquisa.values()) {
+	    	return x.retornaItensRealizados();
+	    }
+	    return "";
+		
 	}
 }

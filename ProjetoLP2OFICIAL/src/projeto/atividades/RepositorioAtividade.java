@@ -42,7 +42,7 @@ public class RepositorioAtividade implements Busca{
     public String cadastraAtividade(String descricaoAtividade, String nivelRisco, String descricaoRisco) {
         Validadora.verificaValorNullVazio(descricaoAtividade, "Campo Descricao nao pode ser nulo ou vazio.");
         Validadora.verificaValorNullVazio(nivelRisco, "Campo nivelRisco nao pode ser nulo ou vazio.");
-        Validadora.validaAtividadeChecaOpçoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
+        Validadora.validaAtividadeChecaOpcoesNivelderisco(nivelRisco, "Valor invalido do nivel do risco.");
         Validadora.verificaValorNullVazio(descricaoRisco, "Campo descricaoRisco nao pode ser nulo ou vazio.");
 
         Atividade atividade = new Atividade(descricaoAtividade, nivelRisco, descricaoRisco);
@@ -227,5 +227,56 @@ public class RepositorioAtividade implements Busca{
             }
         }
         return cont;
+    }
+
+    public void defineProximaAtividade(String idPrecedente, String idSubsquente) {
+        Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(idSubsquente,"Atividade nao pode ser nulo ou vazio.");
+        if (!this.atividades.containsKey(idPrecedente) || !this.atividades.containsKey(idSubsquente)){
+            throw new IllegalArgumentException("Atividade nao encontrada.");
+        }
+        Atividade atividade1 = this.atividades.get(idPrecedente);
+        Atividade atividade2 = this.atividades.get(idSubsquente);
+        if(atividade1.apontaPara(atividade2)){
+            atividade2.criaPrecedente(atividade1);
+        }else{
+            throw new IllegalArgumentException("Atividade ja possui uma subsequente.");
+        }
+    }
+
+    public void tiraProximaAtividade(String idPrecedente) {
+        Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
+        if(!this.atividades.containsKey(idPrecedente)){
+            throw  new IllegalArgumentException("Atividade nao encontrada.");
+        }
+        this.atividades.get(idPrecedente).tiraSubsquente();
+    }
+
+    public int contaProximos(String idPrecedente) {
+        Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
+        if(!this.atividades.containsKey(idPrecedente)){
+            throw  new IllegalArgumentException("Atividade nao encontrada.");
+        }
+        return this.atividades.get(idPrecedente).contaProximos();
+    }
+
+    public String pegaProximo(String idAtividade, int enesimaAtividade) {
+        Validadora.verificaValorNullVazio(idAtividade,"Atividade nao pode ser nulo ou vazio.");
+        if (enesimaAtividade < 1){
+            throw new IllegalArgumentException("EnesimaAtividade nao pode ser negativa ou zero.");
+        } else if(!this.atividades.containsKey(idAtividade)){
+            throw  new IllegalArgumentException("Atividade nao encontrada.");
+        }
+        return this.atividades.get(idAtividade).pegaProximo(enesimaAtividade);
+    }
+
+    public String pegaMaiorRiscoAtividades(String idAtividade) {
+        Validadora.verificaValorNullVazio(idAtividade,"Atividade nao pode ser nulo ou vazio.");
+        if(!this.atividades.containsKey(idAtividade)){
+            throw  new IllegalArgumentException("Atividade nao encontrada.");
+        }else if(this.atividades.get(idAtividade).getProximaAtiviade() == null){
+            throw new IllegalArgumentException("Nao existe proxima atividade.");
+        }
+        return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades(this.atividades.get(idAtividade));
     }
 }

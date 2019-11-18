@@ -28,6 +28,10 @@ public class Item {
     public String getEstadoItem(){
         return this.estadoItem;
     }
+    
+    public String getNomeItem() {
+    	return this.nomeItem;
+    }
 
     /** Quando chamado retorna a representacao textual do Item.
      *
