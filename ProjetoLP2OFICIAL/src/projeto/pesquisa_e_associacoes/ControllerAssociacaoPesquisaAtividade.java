@@ -6,13 +6,13 @@ import projeto.atividades.RepositorioAtividade;
 
 public class ControllerAssociacaoPesquisaAtividade {
 
-    private RepositorioPesquisa repositorioPesquisa;
+    private ControllerPesquisa controllerPesquisa;
 
     private RepositorioAtividade repositorioAtividade;
 
-    public ControllerAssociacaoPesquisaAtividade(RepositorioPesquisa repositorioPesquisa, RepositorioAtividade repositorioAtividade) {
+    public ControllerAssociacaoPesquisaAtividade(ControllerPesquisa controllerPesquisa, RepositorioAtividade repositorioAtividade) {
         this.repositorioAtividade = repositorioAtividade;
-        this.repositorioPesquisa = repositorioPesquisa;
+        this.controllerPesquisa = controllerPesquisa;
     }
     
 
@@ -21,7 +21,7 @@ public class ControllerAssociacaoPesquisaAtividade {
 		Validadora.verificaValorNullVazio(codigoAtividade, "Campo codigoAtividade nao pode ser nulo ou vazio.");
     	
 		Atividade atividade = this.repositorioAtividade.retornaAtividade(codigoAtividade);
-    	return this.repositorioPesquisa.adicionaAtividade(codigoPesquisa, atividade);
+    	return this.controllerPesquisa.adicionaAtividade(codigoPesquisa, atividade);
 	}
 
 	public boolean desassociaAtividade(String codigoPesquisa, String codigoAtividade) {
@@ -31,7 +31,7 @@ public class ControllerAssociacaoPesquisaAtividade {
 			throw new IllegalArgumentException("Atividade nao encontrada");
 		}
 		else{
-			return this.repositorioPesquisa.removeAtividade(codigoPesquisa, codigoAtividade);
+			return this.controllerPesquisa.removeAtividade(codigoPesquisa, codigoAtividade);
 		}
 	}
 

@@ -1,6 +1,5 @@
 package projeto.pesquisa_e_associacoes;
 
-import Util.Validadora;
 import projeto.atividades.Atividade;
 import projeto.objetivos_e_problemas.Objetivo;
 import projeto.pesquisa_e_associacoes.Pesquisa;
@@ -153,7 +152,6 @@ public class Pesquisa implements Comparable<Pesquisa>{
 			return false;
 			
 		}
-		
 		throw new IllegalArgumentException("Pesquisa ja associada a um problema.");
 	}
 
@@ -263,7 +261,7 @@ public class Pesquisa implements Comparable<Pesquisa>{
     		return false;
     	}else {
     		this.atividadesDaPesquisa.put(atividade.getCodigo(), atividade);
-    		atividade.controlaDestinoAtividade(true);
+    		this.atividadesDaPesquisa.get(atividade.getCodigo()).controlaDestinoAtividade(true);
     		return true;
     	 }
 	}
@@ -273,7 +271,7 @@ public class Pesquisa implements Comparable<Pesquisa>{
     	}
     	else {
     		this.atividadesDaPesquisa.get(codigoAtividade).controlaDestinoAtividade(false);
-    		atividadesDaPesquisa.remove(codigoAtividade);
+    		this.atividadesDaPesquisa.remove(codigoAtividade);
     		return true;
     	}
     	

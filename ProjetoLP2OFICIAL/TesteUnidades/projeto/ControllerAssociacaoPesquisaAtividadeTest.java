@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import projeto.atividades.Atividade;
 import projeto.atividades.RepositorioAtividade;
 import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaAtividade;
+import projeto.pesquisa_e_associacoes.ControllerPesquisa;
 import projeto.pesquisa_e_associacoes.Pesquisa;
 import projeto.pesquisa_e_associacoes.RepositorioPesquisa;
 
@@ -14,6 +15,7 @@ class ControllerAssociacaoPesquisaAtividadeTest {
     Atividade a1;
     RepositorioPesquisa Rp1;
     RepositorioAtividade Ra1;
+    ControllerPesquisa cp1;
     ControllerAssociacaoPesquisaAtividade CAPA;
     String descricaoPesquisa,descricaoAtividade,campoDeInteresse,nivelRisco,descricaoRisco,codigoAtividade;
     @BeforeEach
@@ -22,9 +24,9 @@ class ControllerAssociacaoPesquisaAtividadeTest {
         a1 = new Atividade("Atividade de Campo","MEDIO", "Aventuras Macabras");
         Rp1 = new RepositorioPesquisa();
         Ra1 = new RepositorioAtividade();
-        Rp1.cadastraPesquisa("Pesquisa de Campo","Natureza");
-        Ra1.cadastraAtividade("Atividade de Campo","MEDIO","Aventuras Macabras");
-        CAPA = new ControllerAssociacaoPesquisaAtividade(Rp1,Ra1);
+        cp1 = new ControllerPesquisa(Rp1);
+
+        CAPA = new ControllerAssociacaoPesquisaAtividade(cp1,Ra1);
         descricaoPesquisa = "Pesquisa de Campo";
         descricaoAtividade = "Atividade de Campo";
         campoDeInteresse = "Natureza";
@@ -63,8 +65,11 @@ class ControllerAssociacaoPesquisaAtividadeTest {
                 CAPA.executaAtividade(Rp1.cadastraPesquisa("Pesquisa de Campo","Natureza"),0,1));
         assertThrows(NullPointerException.class, ()->
                 CAPA.executaAtividade(Rp1.cadastraPesquisa("Pesquisa de Campo","Natureza"),1,0));
-        CAPA.associaAtividade(Rp1.cadastraPesquisa(descricaoPesquisa,campoDeInteresse),Ra1.cadastraAtividade(descricaoAtividade,nivelRisco,descricaoRisco));
-        assertTrue(CAPA.executaAtividade(Ra1.cadastraAtividade("Atividade de Campo","MEDIO","Aventuras Macabras"),1,1));
+        Rp1.cadastraPesquisa("Pesquisa sobre baleias jubartes","Baleias");
+        Ra1.cadastraAtividade("caçar baleias","ALTO","risco do ibama pegar");
+        Ra1.cadastraItem("A1","primeiro passo de muitos");
+        this.CAPA.associaAtividade("BAL1","A1");
+        assertTrue(CAPA.executaAtividade("A1",1,1));
     }
 
     @org.junit.jupiter.api.Test

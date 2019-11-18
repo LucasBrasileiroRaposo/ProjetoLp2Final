@@ -41,7 +41,7 @@ class ControllerAssociacaoPesquisaObjetivoProblemaTest {
         assertThrows(IllegalArgumentException.class, ()->
                 CAPOP.associaProblema("FLO2","PRO1"));
         assertThrows(IllegalArgumentException.class, ()->
-                    CAPOP.associaProblema("FLO2","PRO@"));
+                CAPOP.associaProblema("FLO2","PRO@"));
         assertThrows(IllegalArgumentException.class, () ->
                 CAPOP.associaProblema("joau","jureg"));
 

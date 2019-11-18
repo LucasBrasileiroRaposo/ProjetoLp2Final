@@ -1,8 +1,6 @@
 package projeto.atividades;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /** Classe que representa uma atividade
  */
@@ -19,7 +17,6 @@ public class Atividade implements Comparable<Atividade> {
      * Mapa com todos os itens dessa atividade;
      */
     private Map<Integer, Item> itens;
-    
 
     /**
      * Nivel de risco da atividade;
@@ -32,16 +29,6 @@ public class Atividade implements Comparable<Atividade> {
     private String descricaoDeRisco;
 
     /**
-     * Contador de itens realizado;
-     */
-    private int contadorDeItensRealizados;
-
-    /**
-     * Contador de itens pendentes;
-     */
-    private int contadorDeItensPendentes;
-
-    /**
      * Contador de itens;
      */
     private int contadorDeItens;
@@ -50,12 +37,22 @@ public class Atividade implements Comparable<Atividade> {
      * Duracao da atividade;
      */
     private int duracaoAtividade;
-    
-    private String codigoIdentificador;
-    
+
+    /** Contador de pesquisas que essa atividade esta associada;
+     */
     private int controlaPesquisasAtividade;
 
+    /** Codigo identidicador da atividade;
+     */
     private String codigo;
+
+    /** Proxima pesquisa que é sugerida de ser executada pos a atual;
+     */
+    private Atividade atividade;
+
+    /** Lista de atividades que esta atividade atual aponta,precede;
+     */
+    private List<Atividade> listadeOrdemAtividades;
 
     /**
      * Constrou um objeto do tipo Atividade, com descricao, nivel de risco da atividade e a descricao desse risco;
@@ -69,11 +66,10 @@ public class Atividade implements Comparable<Atividade> {
         this.nivelDeRisco = nivelDeRisco;
         this.descricaoDeRisco = descricaoDeRisco;
         this.itens = new LinkedHashMap<>();
-        this.contadorDeItensRealizados = 0;
-        this.contadorDeItensPendentes = 0;
         this.contadorDeItens = 1;
         this.controlaPesquisasAtividade = 0;
         this.resultadosItens = new HashMap<>();
+        this.listadeOrdemAtividades = new ArrayList<>();
     }
 
     /**
@@ -107,14 +103,17 @@ public class Atividade implements Comparable<Atividade> {
      * @return o numero de itens com status PENDENTE;
      */
     public int contaItensPendentes() {
-    	this.contadorDeItensPendentes = 0;
+        /**
+         * Contador de itens pendentes;
+         */
+        int contadorDeItensPendentes = 0;
     
         for (Item i : this.itens.values()) {
             if (i.getEstadoItem().equals("PENDENTE")) {
-                this.contadorDeItensPendentes++;
+                contadorDeItensPendentes++;
             }
         }
-        return this.contadorDeItensPendentes;
+        return contadorDeItensPendentes;
     }
 
     /**
@@ -123,24 +122,34 @@ public class Atividade implements Comparable<Atividade> {
      * @return o numero de itens que costam com o status REALIZADO.
      */
     public int contaItensRealizados() {
-    	this.contadorDeItensRealizados = 0;
+        /**
+         * Contador de itens realizado;
+         */
+        int contadorDeItensRealizados = 0;
         for (Item j : this.itens.values()) {
             if (j.getEstadoItem().equals("REALIZADO")) {
-                this.contadorDeItensRealizados++;
+                contadorDeItensRealizados++;
             }
         }
-        return this.contadorDeItensRealizados;
+        return contadorDeItensRealizados;
     }
 
+    /** Metodo que vai ajudar a detectar se a atividade esta sendo utilizada em uma pesquisa ou nao;
+     * @param valor recebe True, caso esteja sendo adicionada em uma pesquisa, ou False caso esteja sendo desassociada;
+     */
 	public void controlaDestinoAtividade(boolean valor){
         if(valor){
-	    this.controlaPesquisasAtividade += 1;
-    }else{
+	        this.controlaPesquisasAtividade += 1;
+         }else if (!valor){
             this.controlaPesquisasAtividade -=1;
         }
     }
 
-
+    /** Metodo que executa uma atividade, no caso, altera o estado do item para concluido se a operacao for realizada com sucesso e ainda eh setada uma duracao para ela.
+     * @param item inteiro que representa o id do item que deve ser executado;
+     * @param duracao inteiro, que representa a duracao em segundos da execucao de tal item;
+     * @return true, caso a operação tive sido realizada com sucesso.
+     */
 	public boolean executaAtividade(int item, int duracao) {
 		if(!this.itens.containsKey(item)) {
 			throw new IllegalArgumentException("Item nao encontrado.");
@@ -157,10 +166,14 @@ public class Atividade implements Comparable<Atividade> {
 	}
 	}
 
+    /** Quando chamado retorna o numero de pesquisas que a atividade esta associada.
+     * @return int, o numero de pesquisas que a atividade esta associada.
+     */
 	public int getControlaPesquisasAtividade(){
 	    return this.controlaPesquisasAtividade;
     }
-	
+
+
 	public boolean veriricaResultado(int codigoResultado) {
 		if(!this.resultadosItens.containsKey(codigoResultado)) {
 			return false;
@@ -204,13 +217,7 @@ public class Atividade implements Comparable<Atividade> {
 		return this.duracaoAtividade;
 	}
 	
-	public void setDuracaoAtividade(int duracaoAtividade) {
-		this.duracaoAtividade = duracaoAtividade;
-	}
-	
-	public int retornaDuracao(int codigoItem) {
-		return this.itens.get(codigoItem).getDuracao();
-	}
+
     public String getDescricao() {
         return this.descricao;
     }
@@ -230,8 +237,97 @@ public class Atividade implements Comparable<Atividade> {
     public int compareTo(Atividade atividade) {
         return atividade.getCodigo().compareTo(this.codigo);
     }
-	
-	
+
+
+    public String getNivelDeRisco() {
+        return nivelDeRisco;
+    }
+
+    public void criaPrecedente(Atividade atividade1) {
+        this.listadeOrdemAtividades.add(atividade1);
+    }
+
+    public boolean apontaPara(Atividade atividade2) {
+	    if(this.atividade != null){
+	        return false;
+        }else{
+	        for(Atividade a: this.listadeOrdemAtividades){
+                if (a.equals(atividade)){
+                    throw new IllegalArgumentException("Criacao de loops negada.");
+                }
+	            a.checaAnterior(atividade2);
+            }
+            this.atividade = atividade2;
+	        return true;
+        }
+    }
+
+    private void checaAnterior(Atividade atividade) {
+        for (Atividade a: this.listadeOrdemAtividades){
+            if (a.equals(atividade)){
+                throw new IllegalArgumentException("Criacao de loops negada.");
+            }
+            a.checaAnterior(atividade);
+        }
+    }
+
+    public void tiraSubsquente() {
+	    if(this.atividade != null){
+	        this.atividade.removePrecedente(this);
+	        this.atividade = null;
+	    }
+
+    }
+
+    private void removePrecedente(Atividade atividade) {
+	    this.listadeOrdemAtividades.remove(atividade);
+    }
+
+    public int contaProximos() {
+	    if(this.atividade == null){
+	        return 0;
+        }else{
+	        return  1 + this.atividade.contaProximos();
+        }
+    }
+
+    public String pegaProximo(int enesimaAtividade) {
+	    if (this.atividade == null){
+	        throw new IllegalArgumentException("Atividade inexistente.");
+        }
+	    if (enesimaAtividade == 1){
+	        return this.atividade.getCodigo();
+        }else {
+	        return this.atividade.pegaProximo(enesimaAtividade - 1);
+        }
+
+    }
+
+    public String pegaMaiorRiscoAtividades(Atividade atividadeEscolhida) {
+	    if (this.atividade == null){
+	        return this.getCodigo();
+        }else if (atividadeEscolhida.getNivelDeRisco().equals(this.atividade.getNivelDeRisco())){
+            return this.atividade.pegaMaiorRiscoAtividades(atividade);
+        }else if (atividadeEscolhida.getNivelDeRisco().equals("BAIXO") && this.atividade.getNivelDeRisco().equals("MEDIO")) {
+            return this.atividade.pegaMaiorRiscoAtividades(atividade);
+        }else if(this.atividade.getNivelDeRisco().equals("ALTO")) {
+            return this.atividade.pegaMaiorRiscoAtividades(atividade);
+        }else{
+	        return this.atividade.pegaMaiorRiscoAtividades(atividadeEscolhida);
+        }
+    }
+
+    public Atividade getProximaAtiviade() {
+	    return this.atividade;
+    }
+
+    public void setDuracaoAtividade(int duracaoAtividade) {
+        this.duracaoAtividade = duracaoAtividade;
+    }
+
+    public int retornaDuracao(int codigoItem) {
+        return this.itens.get(codigoItem).getDuracao();
+    }
 }
 	
 	
