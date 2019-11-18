@@ -151,4 +151,30 @@ public class ControllerPesquisa {
     public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador) {
         return this.repositorioPesquisa.desassociaPesquisador(idPesquisa, emailPesquisador);
     }
+    
+    public void configuraEstrategia(String estrategia) {
+	       Validadora.verificaValorNullVazio(estrategia,"Estrategia nao pode ser nula ou vazia.");
+	       Validadora.verificaEstrategia(estrategia, "Valor invalido da estrategia");
+	       for( Pesquisa p : this.repositorioPesquisa.getMapaPesquisas().values()){
+	           p.configuraEstragia(estrategia);
+	           
+	       }
+	   }
+
+public String proximaAtividade(String codigoPesquisa) {
+	Validadora.verificaValorNullVazio(codigoPesquisa,"Pesquisa nao pode ser nula ou vazia.");
+	
+	if(this.repositorioPesquisa.getMapaPesquisas().containsKey(codigoPesquisa)) {
+		Pesquisa pesquisa = this.repositorioPesquisa.getMapaPesquisas().get(codigoPesquisa);
+		if(pesquisa.getStatus()) {
+			return pesquisa.proximaAtividade();
+		} 
+		
+		throw new IllegalArgumentException("Pesquisa desativada.");
+		
+	}
+	
+	throw new IllegalArgumentException("Pesquisa nao encontrada.");
+	
+}
 }

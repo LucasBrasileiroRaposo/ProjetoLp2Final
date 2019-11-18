@@ -81,5 +81,13 @@ public class Problema implements Comparable<Problema>{
 			return false;
 		return true;
 	}
+	
+	/**
+	 * Metodo respons�vel por retorna representa��o textual para o arquivo txt
+	 * @return String com informacoes de Problema
+	 */
+	public String retornaTxt() {
+		return "      - " + this.codigo +" - " + this.descricao + " - " + this.viabilidade;
+	}
 }
 

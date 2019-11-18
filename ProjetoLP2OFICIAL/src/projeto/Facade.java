@@ -1,4 +1,4 @@
-package projeto;
+ package projeto;
 
 
 import easyaccept.EasyAccept;
@@ -40,7 +40,9 @@ public class Facade {
     public static void main(String[] args){
         args = new String[]{"projeto.Facade", "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
         		"TestesAceitacao/use_case_4.txt",
-        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt","TestesAceitacao/use_case_8.txt","TestesAceitacao/use_case_9.txt"};
+        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt",
+        		"TestesAceitacao/use_case_8.txt","TestesAceitacao/use_case_9.txt",
+        		"TestesAceitacao/use_case_10.txt", "TestesAceitacao/use_case_11.txt"};
         EasyAccept.main(args);
     }
 
@@ -53,7 +55,7 @@ public class Facade {
         this.repositorioProblemas = new RepositorioProblemas();
         this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.controllerPesquisa,this.repositorioPesquisadores);
         this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.controllerPesquisa,this.repositorioAtividades);
-        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.repositorioPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
+        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.controllerPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
         this.controllerBusca = new ControllerBusca(this.repositorioPesquisa,this.repositorioPesquisadores,this.repositorioProblemas,this.repositorioObjetivos,this.repositorioAtividades);
 
     }
@@ -267,5 +269,29 @@ public class Facade {
     public String pegaMaiorRiscoAtividades(String idAtividade){
         return this.repositorioAtividades.pegaMaiorRiscoAtividades(idAtividade);
     }
-
+    
+    /**
+     * Parte 10
+     */
+    
+    public void configuraEstrategia(String estrategia) {
+ 	   
+ 	   this.controllerPesquisa.configuraEstrategia(estrategia);
+ 	   
+    }
+    
+    public String proximaAtividade(String codigoPesquisa) {
+ 	    return this.controllerPesquisa.proximaAtividade(codigoPesquisa);
+    }
+    
+    /**
+     * Parte 11
+     */
+    
+    public void gravarResumo(String codigoPesquisa) {
+    	this.repositorioPesquisa.geraTxt(codigoPesquisa);
+    }
+    public void gravarResultados(String codigoPesquisa) {
+    	this.repositorioPesquisa.geraTxtResultados(codigoPesquisa);
+    }
 }

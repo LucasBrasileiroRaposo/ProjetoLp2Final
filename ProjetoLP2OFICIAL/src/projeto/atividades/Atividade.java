@@ -328,6 +328,34 @@ public class Atividade implements Comparable<Atividade> {
     public int retornaDuracao(int codigoItem) {
         return this.itens.get(codigoItem).getDuracao();
     }
+    
+    /**
+     * Metodo responsavel por retornar texto com as informacoes referentes aos itens
+     * @return string com as informacoes do itens
+     */
+    public String retornaTxt() {
+    	String saida = "     - " + this.descricao + " (" + this.nivelDeRisco + " - " + this.descricaoDeRisco + ") | ";
+        for (Item i : this.itens.values()) {
+            saida += "        - " + i.toString() + "\r\n ";
+        }
+        return saida.substring(0, saida.length() - 3);
+    }
+    
+    /**
+	 * Metodo respons�vel por retorna representa��o textual para o arquivo txt
+	 * @return String com informacoes de Itens
+	 */
+    public String retornaItensRealizados() {
+    	String saida = "";
+    	 for (Item i : this.itens.values()) {
+    		 if(i.getEstadoItem().contentEquals("REALIZADO")) {
+             saida += "         - " + i.getNomeItem() + " - " + i.getDuracao() + "\r\n ";}
+         }
+    	 for(String i : this.resultadosItens.values()) {
+    		 saida += "         - " + i;
+    	 }
+    	 return saida;
+     }
 }
 	
 	
