@@ -4,15 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import projeto.objetivos_e_problemas.RepositorioObjetivos;
 
 class ControllerObjetivosTest {
 	
-	private ControllerObjetivos controllerObjetivos;
+	private RepositorioObjetivos controllerObjetivos;
 	
 	@BeforeEach
 	void setup() {
 		
-		this.controllerObjetivos = new ControllerObjetivos();
+		this.controllerObjetivos = new RepositorioObjetivos();
 		
 		this.controllerObjetivos.cadastraObjetivo("GERAL", "Preservar a Amazonia", 5, 4);
 		this.controllerObjetivos.cadastraObjetivo("Especifico", "Salvar as Andorinhas", 2 , 3);
