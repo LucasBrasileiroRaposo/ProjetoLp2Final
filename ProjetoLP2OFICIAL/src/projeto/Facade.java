@@ -54,6 +54,7 @@ import java.io.IOException;
                                                  "TestesAceitacao/use_case_9.txt",
         		                                 "TestesAceitacao/use_case_10.txt",
                                                  "TestesAceitacao/use_case_11.txt",*/
+                                                  "TestesAceitacao/use_case_12SALVAR.txt",
                                                   "TestesAceitacao/use_case_12CARREGAR.txt"};
         EasyAccept.main(args);
     }
@@ -67,7 +68,7 @@ import java.io.IOException;
         this.repositorioProblemas = new RepositorioProblemas();
         this.controllerAssociacaoPesquisaPesquisador = new ControllerAssociacaoPesquisaPesquisador(this.controllerPesquisa,this.repositorioPesquisadores);
         this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.controllerPesquisa,this.repositorioAtividades);
-        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.controllerPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
+        this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.repositorioPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
         this.controllerBusca = new ControllerBusca(this.repositorioPesquisa,this.repositorioPesquisadores,this.repositorioProblemas,this.repositorioObjetivos,this.repositorioAtividades);
         this.controllerDados = new controllerDados(this.repositorioAtividades,this.repositorioObjetivos,this.repositorioProblemas,this.repositorioPesquisa,this.repositorioPesquisadores);
     }

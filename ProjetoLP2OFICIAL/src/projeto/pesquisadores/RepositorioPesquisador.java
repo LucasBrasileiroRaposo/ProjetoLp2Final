@@ -289,7 +289,6 @@ public class RepositorioPesquisador implements Busca {
     public List OrdenaListaPesquisador() {
         List listaPesquisadorOrndenada = new ArrayList();
         listaPesquisadorOrndenada.addAll(this.mapaDePesquisadores.values());
-        Collections.sort(listaPesquisadorOrndenada);
         return listaPesquisadorOrndenada;
     }
 
@@ -314,12 +313,8 @@ public class RepositorioPesquisador implements Busca {
                 FileInputStream inPesquisador = new FileInputStream("Pesquisador");
                 ObjectInputStream objPesquisador = new ObjectInputStream(inPesquisador);
 
-                Pesquisador pesq1 = (Pesquisador) objPesquisador.readObject();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+                Pesquisador p1 = (Pesquisador) objPesquisador.readObject();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
