@@ -3,12 +3,14 @@ package projeto.atividades;
 
 import Util.Validadora;
 import projeto.busca.Busca;
+import java.io.Serializable;
 
+import java.io.*;
 import java.util.*;
 
 /** Classe que permite a comunicacao entre a Facade e a classe Atividade.
  */
-public class RepositorioAtividade implements Busca{
+public class RepositorioAtividade implements Busca,Serializable {
 
     /**
      * Mapa de das atividades.
@@ -19,7 +21,7 @@ public class RepositorioAtividade implements Busca{
      * Contador de atividades cadastradas.
      */
     private int contadorDeAtividades;
-    
+
 
     /**
      * Inicializa o controlador das atividades, com o mapa das atividades e o contador.
@@ -135,82 +137,76 @@ public class RepositorioAtividade implements Busca{
             return this.atividades.get(codigo).contaItensRealizados();
         }
     }
-    
+
     public Atividade retornaAtividade(String codigoAtividade) {
-    	if(!this.atividades.containsKey(codigoAtividade)) {
-    		throw new IllegalArgumentException("Atividade nao encontrada");
-    	}
-    	else {
-		return this.atividades.get(codigoAtividade);
-    }
+        if (!this.atividades.containsKey(codigoAtividade)) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        } else {
+            return this.atividades.get(codigoAtividade);
+        }
     }
 
-	public boolean atividadeExiste(String codigoAtividade) {
-		return this.atividades.containsKey(codigoAtividade);
-	}
+    public boolean atividadeExiste(String codigoAtividade) {
+        return this.atividades.containsKey(codigoAtividade);
+    }
 
-	public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
-	    if(this.atividades.get(codigoAtividade).getControlaPesquisasAtividade() == 0) {
+    public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
+        if (this.atividades.get(codigoAtividade).getControlaPesquisasAtividade() == 0) {
             throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
-        }else if(item < 1) {
-			throw new NullPointerException("Item nao pode ser nulo ou negativo.");
-		}
-		else if(duracao < 1) {
-			throw new NullPointerException("Duracao nao pode ser nula ou negativa.");
-		}
-		else {
-			return this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
-		}
-	}
+        } else if (item < 1) {
+            throw new NullPointerException("Item nao pode ser nulo ou negativo.");
+        } else if (duracao < 1) {
+            throw new NullPointerException("Duracao nao pode ser nula ou negativa.");
+        } else {
+            return this.atividades.get(codigoAtividade).executaAtividade(item, duracao);
+        }
+    }
 
-	public boolean removeResultado(String codigoAtividade, int numeroResultado) {
-		if(!(this.atividades.containsKey(codigoAtividade))) {
-			throw new IllegalArgumentException("Atividade nao encontrada");
-		}
-		else if(!this.atividades.get(codigoAtividade).veriricaResultado(numeroResultado)) {
-			throw new NullPointerException("Resultado nao encontrado.");
-		}
-		else {
-			return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
-		}
-	}
+    public boolean removeResultado(String codigoAtividade, int numeroResultado) {
+        if (!(this.atividades.containsKey(codigoAtividade))) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        } else if (!this.atividades.get(codigoAtividade).veriricaResultado(numeroResultado)) {
+            throw new NullPointerException("Resultado nao encontrado.");
+        } else {
+            return this.atividades.get(codigoAtividade).removeResultado(numeroResultado);
+        }
+    }
 
-	public int cadastraResultado(String codigoAtividade, String resultado) {
-		int i = 0;
-    	i = this.atividades.get(codigoAtividade).cadastraResultado(resultado);
-    	return i;
-	}
+    public int cadastraResultado(String codigoAtividade, String resultado) {
+        int i = 0;
+        i = this.atividades.get(codigoAtividade).cadastraResultado(resultado);
+        return i;
+    }
 
-	public String exibeResultados(String codigoAtividade) {
-		if(!(this.atividades.containsKey(codigoAtividade))) {
-			throw new IllegalArgumentException("Atividade nao encontrada");
-		}
-		else {
-		return this.atividades.get(codigoAtividade).exibeResultados();
-		}
-	}
+    public String exibeResultados(String codigoAtividade) {
+        if (!(this.atividades.containsKey(codigoAtividade))) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        } else {
+            return this.atividades.get(codigoAtividade).exibeResultados();
+        }
+    }
 
-	public int getDuracao(String codigoAtividade) {
-		if(!(this.atividades.containsKey(codigoAtividade))) {
-			throw new IllegalArgumentException("Atividade nao encontrada");
-		}
-		else {
-			return this.atividades.get(codigoAtividade).getDuracaoAtividade();
-		}
-	}
+    public int getDuracao(String codigoAtividade) {
+        if (!(this.atividades.containsKey(codigoAtividade))) {
+            throw new IllegalArgumentException("Atividade nao encontrada");
+        } else {
+            return this.atividades.get(codigoAtividade).getDuracaoAtividade();
+        }
+    }
+
     @Override
-    public String busca(String termo){
-        Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+    public String busca(String termo) {
+        Validadora.verificaValorNullVazio(termo, "Campo termo nao pode ser nulo ou vazio.");
         String msg = "";
         List<Atividade> listaDeAtividades = new ArrayList<>();
         listaDeAtividades.addAll(this.atividades.values());
         Collections.sort(listaDeAtividades);
-        for(Atividade a : listaDeAtividades){
-            if(a.getDescricao().contains(termo)) {
-                msg += a.getCodigo() +": "+a.getDescricao() + " | ";
+        for (Atividade a : listaDeAtividades) {
+            if (a.getDescricao().contains(termo)) {
+                msg += a.getCodigo() + ": " + a.getDescricao() + " | ";
             }
-            if(a.getDescricaoDeRisco().contains(termo)){
-                msg += a.getCodigo() + ": "+a.getDescricaoDeRisco()+ " | ";
+            if (a.getDescricaoDeRisco().contains(termo)) {
+                msg += a.getCodigo() + ": " + a.getDescricaoDeRisco() + " | ";
             }
         }
         return msg;
@@ -218,11 +214,11 @@ public class RepositorioAtividade implements Busca{
 
     @Override
     public int contaResultadosBusca(String termo) {
-        Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(termo, "Campo termo nao pode ser nulo ou vazio.");
         int cont = 0;
 
-        for(String palavra: busca(termo).split(" | ")){
-            if(termo.contains(palavra)) {
+        for (String palavra : busca(termo).split(" | ")) {
+            if (termo.contains(palavra)) {
                 cont += 1;
             }
         }
@@ -230,53 +226,91 @@ public class RepositorioAtividade implements Busca{
     }
 
     public void defineProximaAtividade(String idPrecedente, String idSubsquente) {
-        Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
-        Validadora.verificaValorNullVazio(idSubsquente,"Atividade nao pode ser nulo ou vazio.");
-        if (!this.atividades.containsKey(idPrecedente) || !this.atividades.containsKey(idSubsquente)){
+        Validadora.verificaValorNullVazio(idPrecedente, "Atividade nao pode ser nulo ou vazio.");
+        Validadora.verificaValorNullVazio(idSubsquente, "Atividade nao pode ser nulo ou vazio.");
+        if (!this.atividades.containsKey(idPrecedente) || !this.atividades.containsKey(idSubsquente)) {
             throw new IllegalArgumentException("Atividade nao encontrada.");
         }
         Atividade atividade1 = this.atividades.get(idPrecedente);
         Atividade atividade2 = this.atividades.get(idSubsquente);
-        if(atividade1.apontaPara(atividade2)){
+        if (atividade1.apontaPara(atividade2)) {
             atividade2.criaPrecedente(atividade1);
-        }else{
+        } else {
             throw new IllegalArgumentException("Atividade ja possui uma subsequente.");
         }
     }
 
     public void tiraProximaAtividade(String idPrecedente) {
-        Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
-        if(!this.atividades.containsKey(idPrecedente)){
-            throw  new IllegalArgumentException("Atividade nao encontrada.");
+        Validadora.verificaValorNullVazio(idPrecedente, "Atividade nao pode ser nulo ou vazio.");
+        if (!this.atividades.containsKey(idPrecedente)) {
+            throw new IllegalArgumentException("Atividade nao encontrada.");
         }
         this.atividades.get(idPrecedente).tiraSubsquente();
     }
 
     public int contaProximos(String idPrecedente) {
-        Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
-        if(!this.atividades.containsKey(idPrecedente)){
-            throw  new IllegalArgumentException("Atividade nao encontrada.");
+        Validadora.verificaValorNullVazio(idPrecedente, "Atividade nao pode ser nulo ou vazio.");
+        if (!this.atividades.containsKey(idPrecedente)) {
+            throw new IllegalArgumentException("Atividade nao encontrada.");
         }
         return this.atividades.get(idPrecedente).contaProximos();
     }
 
     public String pegaProximo(String idAtividade, int enesimaAtividade) {
-        Validadora.verificaValorNullVazio(idAtividade,"Atividade nao pode ser nulo ou vazio.");
-        if (enesimaAtividade < 1){
+        Validadora.verificaValorNullVazio(idAtividade, "Atividade nao pode ser nulo ou vazio.");
+        if (enesimaAtividade < 1) {
             throw new IllegalArgumentException("EnesimaAtividade nao pode ser negativa ou zero.");
-        } else if(!this.atividades.containsKey(idAtividade)){
-            throw  new IllegalArgumentException("Atividade nao encontrada.");
+        } else if (!this.atividades.containsKey(idAtividade)) {
+            throw new IllegalArgumentException("Atividade nao encontrada.");
         }
         return this.atividades.get(idAtividade).pegaProximo(enesimaAtividade);
     }
 
     public String pegaMaiorRiscoAtividades(String idAtividade) {
-        Validadora.verificaValorNullVazio(idAtividade,"Atividade nao pode ser nulo ou vazio.");
-        if(!this.atividades.containsKey(idAtividade)){
-            throw  new IllegalArgumentException("Atividade nao encontrada.");
-        }else if(this.atividades.get(idAtividade).getProximaAtiviade() == null){
+        Validadora.verificaValorNullVazio(idAtividade, "Atividade nao pode ser nulo ou vazio.");
+        if (!this.atividades.containsKey(idAtividade)) {
+            throw new IllegalArgumentException("Atividade nao encontrada.");
+        } else if (this.atividades.get(idAtividade).getProximaAtiviade() == null) {
             throw new IllegalArgumentException("Nao existe proxima atividade.");
         }
         return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades(this.atividades.get(idAtividade));
     }
+    public List OrdenaLista(){
+        List listaAtividadesOrndenada = new ArrayList();
+        listaAtividadesOrndenada.addAll(this.atividades.values());
+        Collections.sort(listaAtividadesOrndenada);
+        return  listaAtividadesOrndenada;
+    }
+
+    public void salva() throws IOException{
+        try{
+        FileOutputStream out = new FileOutputStream("Atividades");
+        ObjectOutputStream objOut = new ObjectOutputStream(out);
+
+        for(Object a: OrdenaLista()){
+        objOut.writeObject(a);
+        objOut.close();
+        }
+
+        }catch (FileNotFoundException e ){
+            System.out.println("Arquivo não encontrado.");
+        }catch (IOException e){
+            System.out.println("Arquivo inexistente");
+        }
+    }
+    public void carrega() throws IOException{
+        if(new File("Atividades").canRead() == true){
+            try{
+                FileInputStream inAtividade = new FileInputStream("Atividades");
+                ObjectInputStream objInAtividade = new ObjectInputStream(inAtividade);
+
+                Atividade a1 = (Atividade) objInAtividade.readObject();
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+            }catch (ClassNotFoundException e){
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace(); }
+    }
+}
 }
