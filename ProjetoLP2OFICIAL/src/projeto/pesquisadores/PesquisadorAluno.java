@@ -1,25 +1,23 @@
 package projeto.pesquisadores;
 
-import projeto.pesquisadores.Pesquisador;
-
-public class PesquisadorAluno extends Pesquisador {
+public class PesquisadorAluno implements Especialidade{
 
     private Integer semestreIngresso;
     private double iea;
 
-    /**
-     * Construtor de pesquisadores responsável por armazenar os dados.
-     *
-     * @param nome      nome do pesquisador
-     * @param funcao    função do pesquisador
-     * @param biografia biografia do pesquisador
-     * @param email     email do pesquisador
-     * @param fotoURL   link URL da foto do pesquisador
-     */
-    public PesquisadorAluno(String nome, String funcao, String biografia, String email, String fotoURL, Integer semestreIngresso,double iea) {
-        super(nome, funcao, biografia, email, fotoURL);
+    public PesquisadorAluno(int semestreIngresso, double iea){
         this.iea = iea;
         this.semestreIngresso = semestreIngresso;
+    }
+
+    @Override
+    public void alteraPesquisador(String atributo, String novoValor) {
+        if(atributo.equals("IEA")){
+            setIea(Double.parseDouble(novoValor));
+        }else if(atributo.equals("SEMESTRE")){
+            setSemestreIngresso(Integer.parseInt(novoValor));
+        }
+
     }
 
     /**
@@ -28,11 +26,12 @@ public class PesquisadorAluno extends Pesquisador {
      */
     @Override
     public String toString() {
-        return this.nome+" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL + " - " + this.semestreIngresso + "o SEMESTRE"  +  " - " + this.iea;
+        return " - " + this.semestreIngresso + "o SEMESTRE"  +  " - " + this.iea;
     }
     public void setSemestreIngresso(Integer semestreIngresso){
         this.semestreIngresso = semestreIngresso;
     }
+
     public void setIea(double iea){
         this.iea = iea;
     }

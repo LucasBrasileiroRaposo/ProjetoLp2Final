@@ -3,7 +3,6 @@ package projeto.pesquisa_e_associacoes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import projeto.pesquisadores.Pesquisador;
-import projeto.pesquisadores.PesquisadorSimples;
 import projeto.pesquisadores.RepositorioPesquisador;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,7 +17,7 @@ class ControllerAssociacaoPesquisaPesquisadorTest {
     @BeforeEach
     void setUp(){
         this.p1 = new Pesquisa("Pesquisa Florestal","Floresta","FLO1");
-        this.pesquisador = new PesquisadorSimples("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto.com");
+        this.pesquisador = new Pesquisador("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto.com");
         this.repositorioPesquisa = new RepositorioPesquisa();
         this.repositorioPesquisador = new RepositorioPesquisador();
         this.controllerPesquisa = new ControllerPesquisa(repositorioPesquisa);

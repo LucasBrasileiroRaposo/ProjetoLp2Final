@@ -1,9 +1,6 @@
 package Util;
 
 
-import projeto.pesquisadores.Pesquisador;
-import projeto.pesquisadores.PesquisadorSimples;
-
 public class Validadora {
     public static void verificaValorNullVazio(String valor, String msg) {
         if (valor == null) {

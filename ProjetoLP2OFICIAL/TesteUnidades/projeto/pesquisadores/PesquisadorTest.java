@@ -13,8 +13,8 @@ class PesquisadoresTest {
     @BeforeEach
     void criaPesquisador() {
 
-        p1 = new PesquisadorSimples("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto.com");
-        p2 = new PesquisadorSimples("Tey", "Professor", "Estudante pesquisador", "Teyn@hotmail.com", "http:www.foto.com");
+        p1 = new Pesquisador("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto.com");
+        p2 = new Pesquisador("Tey", "Professor", "Estudante pesquisador", "Teyn@hotmail.com", "http:www.foto.com");
     }
 
     @Test

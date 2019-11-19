@@ -13,9 +13,9 @@ class RepositorioPesquisadorTest {
     @BeforeEach
     void CriaPesquisador() {
 
-        p1 = new PesquisadorSimples("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto1.com");
-        p2 = new PesquisadorSimples("Kaio", "Externo", "Externo pesquisador", "kaio@hotmail.com", "http://www.foto2.com");
-        p3 = new PesquisadorSimples("Gaudencio", "Professor", "Professor pesquisador", "gaudencio@hotmail.com", "http://www.foto3.com");
+        p1 = new Pesquisador("4Lan", "Estudante", "Estudante pesquisador", "4lan@hotmail.com", "http://www.foto1.com");
+        p2 = new Pesquisador("Kaio", "Externo", "Externo pesquisador", "kaio@hotmail.com", "http://www.foto2.com");
+        p3 = new Pesquisador("Gaudencio", "Professor", "Professor pesquisador", "gaudencio@hotmail.com", "http://www.foto3.com");
         cp = new RepositorioPesquisador();
         cp.cadastraPesquisador("Tey","Estudante","Estudante pesquisador","tey@hotmail.com","http://www.foto1.com");
         cp.cadastraPesquisador("Frodo", "Externo", "Externo pesquisador", "frodo@hotmail.com", "http://www.foto2.com");

@@ -1,6 +1,9 @@
 package projeto.pesquisadores;
-public abstract class Pesquisador {
+
+public class Pesquisador {
+
     protected String nome;
+    protected Especialidade especialidade;
     protected String funcao;
     protected String biografia;
     protected String email;
@@ -18,14 +21,30 @@ public abstract class Pesquisador {
     public Pesquisador(String nome, String funcao, String biografia, String email, String fotoURL){
         this.nome = nome;
         this.biografia = biografia;
-        this.funcao = funcao;
         this.email = email;
         this.fotoURL = fotoURL;
         this.status = "ATIVADO";
+        this.funcao = funcao;
 
     }
+    /**
+     * Representação de um pesquisador
+     * @return retorna a representação do pesquisador
+     */
+    public String toString() {
+        return this.nome +" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL
+                + ((this.especialidade != null) ? this.especialidade.toString() : "");
+    }
 
-
+    public void alteraPesquisador(String atributo, String novoValor){
+        this.especialidade.alteraPesquisador(atributo,novoValor);
+    }
+    public void setEspecialidade(Especialidade especialidade){
+        this.especialidade = especialidade;
+    }
+    public Especialidade getEspecialidade(){
+        return this.especialidade;
+    }
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -66,6 +85,6 @@ public abstract class Pesquisador {
     public String getFotoURL() {
         return this.fotoURL;
     }
-    
-    public abstract String toString();
+
+
 }

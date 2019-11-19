@@ -6,7 +6,6 @@ import projeto.atividades.Atividade;
 import projeto.objetivos_e_problemas.Objetivo;
 import projeto.objetivos_e_problemas.Problema;
 import projeto.pesquisadores.Pesquisador;
-import projeto.pesquisadores.PesquisadorSimples;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +22,7 @@ class PesquisaTest {
         p2 = new Pesquisa("Pesquisa de Quintal","Casa","CAS1");
         problema = new Problema("Problema Social",2,"PRO1");
         o1 = new Objetivo("GERAL","oi",1,2,"O1");
-        pesquisador = new PesquisadorSimples("4lan","Estudante","Pesquisador Estudante","4lan@gmail.com","https://foto.com");
+        pesquisador = new Pesquisador("4lan","Estudante","Pesquisador Estudante","4lan@gmail.com","https://foto.com");
         a1 = new Atividade("De campo","MEDIO","gorilas");
         a2 = new Atividade("De campo","MEDIO","gorilas");
 

@@ -34,7 +34,7 @@ public class RepositorioPesquisador implements Busca {
         Validadora.verificaValorNullVazio(foto, "Campo fotoURL nao pode ser nulo ou vazio.");
         Validadora.validaFoto(foto,"Formato de foto invalido.");
 
-        Pesquisador P = new PesquisadorSimples(nome, funcao, biografia, email, foto);
+        Pesquisador P = new Pesquisador(nome, funcao, biografia, email, foto);
         this.mapaDePesquisadores.put(email, P);
     }
 
@@ -71,22 +71,22 @@ public class RepositorioPesquisador implements Busca {
             Validadora.validaFoto(novoValor,"Formato de foto invalido.");
             mapaDePesquisadores.get(email).setFotoURL(novoValor);
         }else{
-            if (this.mapaDePesquisadores.get(email) instanceof PesquisadorAluno){
+            if (this.mapaDePesquisadores.get(email).getEspecialidade() instanceof PesquisadorAluno){
                 if(atributo.equals("IEA")){
-                    ((PesquisadorAluno) this.mapaDePesquisadores.get(email)).setIea(Double.parseDouble(novoValor));
+                    this.mapaDePesquisadores.get(email).alteraPesquisador("IEA",novoValor);
                 }else if(atributo.equals("SEMESTRE")){
-                    ((PesquisadorAluno) this.mapaDePesquisadores.get(email)).setSemestreIngresso(Integer.parseInt(novoValor));
+                    this.mapaDePesquisadores.get(email).alteraPesquisador("SEMESTRE",novoValor);
                 }
-            }else if (this.mapaDePesquisadores.get(email)instanceof PesquisadorProfessor){
+            }else if (this.mapaDePesquisadores.get(email).getEspecialidade()instanceof PesquisadorProfessor){
                 if (atributo.equals("UNIDADE")){
                     Validadora.verificaValorNullVazio(novoValor,"");
-                    ((PesquisadorProfessor) this.mapaDePesquisadores.get(email)).setUnidade(novoValor);
+                    this.mapaDePesquisadores.get(email).alteraPesquisador("UNIDADE",novoValor);
                 }else if(atributo.equals("FORMACAO")){
                     Validadora.verificaValorNullVazio(novoValor,"");
-                    ((PesquisadorProfessor) this.mapaDePesquisadores.get(email)).setFormacao(novoValor);
+                    this.mapaDePesquisadores.get(email).alteraPesquisador("FORMACAO",novoValor);
                 }else if(atributo.equals("DATA")){
                     Validadora.verificaFormatoData(novoValor,"");
-                    ((PesquisadorProfessor) this.mapaDePesquisadores.get(email)).setData(novoValor);
+                    this.mapaDePesquisadores.get(email).alteraPesquisador("DATA",novoValor);
                 }
             }else{
                 Validadora.validaAtributo(atributo,"Atributo invalido.");
@@ -194,13 +194,9 @@ public class RepositorioPesquisador implements Busca {
             if(!this.mapaDePesquisadores.get(email).getFuncao().equals("professor")){
                 throw new IllegalArgumentException("Pesquisador nao compativel com a especialidade.");
             }
-            String nomePesquisador = this.mapaDePesquisadores.get(email).getNome();
-            String funcaoPesquisador = this.mapaDePesquisadores.get(email).getFuncao();
-            String biografiaPesquisador = this.mapaDePesquisadores.get(email).getBiografia();
-            String fotoURLPesquisador = this.mapaDePesquisadores.get(email).getFotoURL();
-            this.mapaDePesquisadores.remove(email);
-            Pesquisador pesquisador = new PesquisadorProfessor(nomePesquisador,funcaoPesquisador,biografiaPesquisador,email,fotoURLPesquisador,formacao,unidade,data);
-            this.mapaDePesquisadores.put(email,pesquisador);
+            Especialidade pesquisadorProfessor = new PesquisadorProfessor(formacao,unidade,data);
+            this.mapaDePesquisadores.get(email).setEspecialidade(pesquisadorProfessor);
+
         }
     }
 
@@ -222,13 +218,9 @@ public class RepositorioPesquisador implements Busca {
             if(!this.mapaDePesquisadores.get(email).getFuncao().equals("estudante")){
                 throw new IllegalArgumentException("Pesquisador nao compativel com a especialidade.");
             }
-            String nomePesquisador = this.mapaDePesquisadores.get(email).getNome();
-            String funcaoPesquisador = this.mapaDePesquisadores.get(email).getFuncao();
-            String biografiaPesquisador = this.mapaDePesquisadores.get(email).getBiografia();
-            String fotoURLPesquisador = this.mapaDePesquisadores.get(email).getFotoURL();
-            this.mapaDePesquisadores.remove(email);
-            Pesquisador pesquisadorAluno = new PesquisadorAluno(nomePesquisador,funcaoPesquisador,biografiaPesquisador,email,fotoURLPesquisador,semestre,iea);
-            this.mapaDePesquisadores.put(email,pesquisadorAluno);
+            Especialidade pesquisadorAluno = new PesquisadorAluno(semestre,iea);
+            this.mapaDePesquisadores.get(email).setEspecialidade(pesquisadorAluno);
+
         }
     }
 
