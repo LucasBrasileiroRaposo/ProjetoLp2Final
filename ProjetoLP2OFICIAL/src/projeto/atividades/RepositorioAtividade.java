@@ -282,35 +282,29 @@ public class RepositorioAtividade implements Busca,Serializable {
         return  listaAtividadesOrndenada;
     }
 
-    public void salva() throws IOException{
+    public void salvar(){
         try{
-        FileOutputStream out = new FileOutputStream("Atividades");
-        ObjectOutputStream objOut = new ObjectOutputStream(out);
+        ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Atividades"));
 
         for(Object a: OrdenaLista()){
         objOut.writeObject(a);
-        objOut.close();
         }
+            objOut.close();
 
-        }catch (FileNotFoundException e ){
-            System.out.println("Arquivo não encontrado.");
-        }catch (IOException e){
-            System.out.println("Arquivo inexistente");
-        }
+        }catch (Exception e){
+            e.printStackTrace();}
     }
-    public void carrega() throws IOException{
+         public void carregar(){
         if(new File("Atividades").canRead() == true){
             try{
                 FileInputStream inAtividade = new FileInputStream("Atividades");
                 ObjectInputStream objInAtividade = new ObjectInputStream(inAtividade);
 
                 Atividade a1 = (Atividade) objInAtividade.readObject();
-            }catch (FileNotFoundException e){
+            }catch (Exception e){
                 e.printStackTrace();
-            }catch (ClassNotFoundException e){
-                e.printStackTrace();
-            }catch (IOException e){
-                e.printStackTrace(); }
+            }
     }
 }
 }
+

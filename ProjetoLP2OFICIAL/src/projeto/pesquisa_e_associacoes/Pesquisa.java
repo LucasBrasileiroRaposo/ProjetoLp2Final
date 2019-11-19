@@ -7,6 +7,7 @@ import projeto.objetivos_e_problemas.Problema;
 import projeto.pesquisadores.Pesquisador;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.Map;
  * Classe responsável por representar um objeto Pesquisa.
  */
 
-public class Pesquisa implements Comparable<Pesquisa>{
+public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 	
 	/**
 	 * descricao da pesquisa.

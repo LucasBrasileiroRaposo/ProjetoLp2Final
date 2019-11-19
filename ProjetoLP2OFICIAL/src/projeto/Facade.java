@@ -13,7 +13,10 @@ import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
 import projeto.pesquisadores.RepositorioPesquisador;
 import projeto.busca.ControllerBusca;
 
-public class Facade {
+import javax.imageio.IIOException;
+import java.io.IOException;
+
+ public class Facade {
 
     private RepositorioAtividade repositorioAtividades;
 
@@ -35,14 +38,23 @@ public class Facade {
 
     private ControllerBusca controllerBusca;
 
+    private controllerDados controllerDados;
+
 
 
     public static void main(String[] args){
-        args = new String[]{"projeto.Facade", "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
-        		"TestesAceitacao/use_case_4.txt",
-        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt",
-        		"TestesAceitacao/use_case_8.txt","TestesAceitacao/use_case_9.txt",
-        		"TestesAceitacao/use_case_10.txt", "TestesAceitacao/use_case_11.txt"};
+        args = new String[]{"projeto.Facade",/**"TestesAceitacao/use_case_1.txt",
+                                                 "TestesAceitacao/use_case_2.txt",
+                                                 "TestesAceitacao/use_case_3.txt",
+        		                                 "TestesAceitacao/use_case_4.txt",
+                                                 "TestesAceitacao/use_case_5.txt",
+                                                 "TestesAceitacao/use_case_6.txt",
+                                                 "TestesAceitacao/use_case_7.txt",
+                                                 "TestesAceitacao/use_case_8.txt",
+                                                 "TestesAceitacao/use_case_9.txt",
+        		                                 "TestesAceitacao/use_case_10.txt",
+                                                 "TestesAceitacao/use_case_11.txt",*/
+                                                  "TestesAceitacao/use_case_12CARREGAR.txt"};
         EasyAccept.main(args);
     }
 
@@ -57,7 +69,7 @@ public class Facade {
         this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.controllerPesquisa,this.repositorioAtividades);
         this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.controllerPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
         this.controllerBusca = new ControllerBusca(this.repositorioPesquisa,this.repositorioPesquisadores,this.repositorioProblemas,this.repositorioObjetivos,this.repositorioAtividades);
-
+        this.controllerDados = new controllerDados(this.repositorioAtividades,this.repositorioObjetivos,this.repositorioProblemas,this.repositorioPesquisa,this.repositorioPesquisadores);
     }
 
     /** Parte 1
@@ -294,4 +306,8 @@ public class Facade {
     public void gravarResultados(String codigoPesquisa) {
     	this.repositorioPesquisa.geraTxtResultados(codigoPesquisa);
     }
+
+    public void salvar()throws IOException { this.controllerDados.salvar();}
+
+    public void carregar(){ this.controllerDados.carregar();}
 }

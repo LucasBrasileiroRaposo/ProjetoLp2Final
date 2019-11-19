@@ -1,6 +1,7 @@
 package projeto.objetivos_e_problemas;
 
 	
+import java.io.*;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,7 +16,7 @@ import projeto.objetivos_e_problemas.Problema;
 	 * @author Matheus Bezerra Andrade
 	 *
 	 */
-	public class RepositorioProblemas implements Busca{
+	public class RepositorioProblemas implements Busca, Serializable {
 		/**
 		 * Mapa que contem os problemas. A sua chave eh formada por "P"+ o numero da posicao da insercao no mapa.
 		 */
@@ -133,4 +134,36 @@ import projeto.objetivos_e_problemas.Problema;
 			}
 		}
 		return cont;
-	}}
+	}
+	public List OrdenaListaProblemas(){
+		List listaProblemasOrndenada = new ArrayList();
+		listaProblemasOrndenada.addAll(this.mapaProblemas.values());
+		Collections.sort(listaProblemasOrndenada);
+		return  listaProblemasOrndenada;
+	}
+	public void salvar() {
+		try{
+
+			ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Problemas"));
+
+			for(Object o: OrdenaListaProblemas()){
+				objOut.writeObject(o);
+			}
+            objOut.close();
+
+		}catch (Exception e){
+            e.printStackTrace();
+		}
+	}
+	public void carregar(){
+		if(new File("Problemas").canRead() == true){
+			try{
+				FileInputStream inProblemas = new FileInputStream("Problemas");
+				ObjectInputStream objProblemas = new ObjectInputStream(inProblemas);
+
+				Problema prob1 = (Problema) objProblemas.readObject();
+			}catch (Exception e){
+                e.printStackTrace(); }
+		}
+	}
+	}

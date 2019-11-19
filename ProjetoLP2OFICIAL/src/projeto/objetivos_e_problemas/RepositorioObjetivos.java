@@ -1,21 +1,22 @@
 package projeto.objetivos_e_problemas;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+
+
 import projeto.busca.Busca;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import Util.Validadora;
-import projeto.objetivos_e_problemas.Objetivo;
-
 /**
  *  Classe responsavel por controlar as operacoes dos objetivos, alem de cadastrar, remover e exibir os objetivos.
  * @author Matheus Bezerra Andrade
  *
  */
-public class RepositorioObjetivos implements Busca {
+public class RepositorioObjetivos implements Busca,Serializable {
 	/**
 	 * Mapa de objetivos que tem a chave formada por "O" + numero da posicao de cadastro no mapa.
 	 */
@@ -137,5 +138,36 @@ public class RepositorioObjetivos implements Busca {
 			}
 		}
 		return cont;
+	}
+	public List OrdenaListaObjetivos(){
+		List listaObjetivosOrndenada = new ArrayList();
+		listaObjetivosOrndenada.addAll(this.mapaObjetivos.values());
+		Collections.sort(listaObjetivosOrndenada);
+		return  listaObjetivosOrndenada;
+	}
+	public void salvar(){
+		try{
+
+			ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Objetivos"));
+
+			for(Object o: OrdenaListaObjetivos()){
+				objOut.writeObject(o);
+			}
+			objOut.close();
+
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	public void carregar() {
+		if(new File("Objetivos").canRead() == true){
+			try{
+				FileInputStream inObjetivos = new FileInputStream("Objetivos");
+				ObjectInputStream objObjetivos = new ObjectInputStream(inObjetivos);
+
+				Objetivo o1 = (Objetivo) objObjetivos.readObject();
+			}catch (Exception e){
+				e.printStackTrace();}
+		}
 	}
 }

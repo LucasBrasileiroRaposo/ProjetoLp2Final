@@ -1,5 +1,8 @@
 package projeto.pesquisadores;
-public abstract class Pesquisador {
+
+import java.io.Serializable;
+
+public abstract class Pesquisador implements Serializable {
     protected String nome;
     protected String funcao;
     protected String biografia;

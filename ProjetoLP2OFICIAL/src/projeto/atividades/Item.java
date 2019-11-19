@@ -1,8 +1,10 @@
 package projeto.atividades;
 
+import java.io.Serializable;
+
 /** Classe que representa um item.
  */
-public class Item {
+public class Item implements Serializable {
 
 	private int duracao;
     /** String que representa o status/estado do item.
