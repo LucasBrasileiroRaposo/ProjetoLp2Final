@@ -87,7 +87,7 @@ public class Problema implements Comparable<Problema>{
 	 * @return String com informacoes de Problema
 	 */
 	public String retornaTxt() {
-		return "      - " + this.codigo +" - " + this.descricao + " - " + this.viabilidade;
+		return "    - " + this.codigo +" - " + this.descricao + " - " + this.viabilidade;
 	}
 }
 

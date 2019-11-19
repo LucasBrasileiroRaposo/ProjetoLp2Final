@@ -12,13 +12,17 @@ public class Item {
     /** String que representa o nome do item.
      */
     private String nomeItem;
+    
+    private int codigoItem;
 
     /** Constroi um objeto do tipo Item, recebendo o nome dele e ja estabelece seu estado como PENDENTE.
      * @param item String, que representa como o item eh nomeado pelo usuário.
      */
-    public Item(String item){
+    public Item(String item, int codigoItem){
         this.nomeItem = item;
         this.estadoItem = "PENDENTE";
+        this.codigoItem = codigoItem;
+        
     }
 
     /** Quando chamado retorna o estado do item.
@@ -52,4 +56,11 @@ public class Item {
 		this.duracao = duracao;
 		
 	}
+    public int getCodigoItem() {
+    	return this.codigoItem;
+    }
+    
+    public String retornaTxt() {
+    	return this.estadoItem + " - " + "ITEM"+ this.codigoItem;
+    }
 }

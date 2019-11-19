@@ -127,7 +127,7 @@ public class Objetivo implements Comparable<Objetivo>{
 	 * @return String com informacoes do objetivo
 	 */
 	public String retornaTxt() {
-		return "      - " + this.codigo + " - " + this.descricao + " - "+ this.valor;
+		return "     - " + this.codigo + " - " + this.tipo + " - " + this.descricao + " - "+ this.valor;
 	}
 	
 	

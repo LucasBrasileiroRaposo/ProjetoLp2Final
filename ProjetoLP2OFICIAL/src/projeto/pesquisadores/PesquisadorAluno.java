@@ -36,4 +36,6 @@ public class PesquisadorAluno extends Pesquisador {
     public void setIea(double iea){
         this.iea = iea;
     }
+
+	
 }

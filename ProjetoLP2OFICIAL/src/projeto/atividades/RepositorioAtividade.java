@@ -3,14 +3,12 @@ package projeto.atividades;
 
 import Util.Validadora;
 import projeto.busca.Busca;
-import java.io.Serializable;
 
-import java.io.*;
 import java.util.*;
 
 /** Classe que permite a comunicacao entre a Facade e a classe Atividade.
  */
-public class RepositorioAtividade implements Busca,Serializable {
+public class RepositorioAtividade implements Busca{
 
     /**
      * Mapa de das atividades.
@@ -21,7 +19,7 @@ public class RepositorioAtividade implements Busca,Serializable {
      * Contador de atividades cadastradas.
      */
     private int contadorDeAtividades;
-
+    
 
     /**
      * Inicializa o controlador das atividades, com o mapa das atividades e o contador.
@@ -280,13 +278,5 @@ public class RepositorioAtividade implements Busca,Serializable {
             throw new IllegalArgumentException("Nao existe proxima atividade.");
         }
         return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades(this.atividades.get(idAtividade));
-    }
-    public void lerDados() throws IOException{
-        final String dataFile = "objetos.dat";
-        ObjectInputStream in = null;
-        try{
-            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(dataFile)));
-            
-        }
     }
 }

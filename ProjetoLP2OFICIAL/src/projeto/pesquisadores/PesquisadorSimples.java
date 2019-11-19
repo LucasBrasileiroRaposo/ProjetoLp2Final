@@ -24,4 +24,6 @@ public class PesquisadorSimples extends Pesquisador {
     public String toString() {
         return this.nome +" ("+this.funcao+") - "+this.biografia+" - "+this.email+" - "+this.fotoURL;
     }
+
+	
 }
