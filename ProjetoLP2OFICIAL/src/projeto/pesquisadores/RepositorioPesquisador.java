@@ -4,10 +4,13 @@ import Util.Validadora;
 import projeto.busca.Busca;
 
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class RepositorioPesquisador implements Busca {
+public class RepositorioPesquisador implements Busca, Serializable {
     private Map<String, Pesquisador> mapaDePesquisadores;
 
     /**
@@ -270,5 +273,38 @@ public class RepositorioPesquisador implements Busca {
             }
         }
         return cont;
+    }
+    public List OrdenaListaPesquisador() {
+        List listaPesquisadorOrndenada = new ArrayList();
+        listaPesquisadorOrndenada.addAll(this.mapaDePesquisadores.values());
+        return listaPesquisadorOrndenada;
+    }
+
+    public void salvar() {
+        try {
+
+            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Pesquisador"));
+
+            for (Object o : OrdenaListaPesquisador()) {
+                objOut.writeObject(o);
+            }
+            objOut.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void carregar()  {
+        if (new File("Pesquisador").canRead() == true) {
+            try {
+                FileInputStream inPesquisador = new FileInputStream("Pesquisador");
+                ObjectInputStream objPesquisador = new ObjectInputStream(inPesquisador);
+
+                Pesquisador p1 = (Pesquisador) objPesquisador.readObject();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -39,15 +39,15 @@ class ControllerPesquisaTest {
 
         }
         try {
-            this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", " ");
+            this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", null);
             fail("Formato do campo de interesse invalido.");
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
 
         }
         try {
-            this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", "");
+            this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao na saude", null);
             fail("Formato do campo de interesse invalido.");
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
 
         }
         try {
@@ -191,14 +191,14 @@ class ControllerPesquisaTest {
         } catch (IllegalArgumentException e) {
         }
         try {
-            this.controllerPesquisa.alteraPesquisa("COM1", "CAMPO", "    ");
+            this.controllerPesquisa.alteraPesquisa("COM1", "CAMPO", null);
             fail("Formato do campo de interesse invalido.");
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
         }
         try {
-            this.controllerPesquisa.alteraPesquisa("COM1", "CAMPO", "");
+            this.controllerPesquisa.alteraPesquisa("COM2", "CAMPO", null);
             fail("Formato do campo de interesse invalido.");
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
 
         }
         try {
@@ -297,7 +297,7 @@ class ControllerPesquisaTest {
             fail("Pesquisa nao encontrada.");
         }catch (IllegalArgumentException e){
         }
-        assertTrue(this.controllerPesquisa.removeAtividade("COM1","A1"));
+        assertFalse(this.controllerPesquisa.removeAtividade("COM1","A1"));
         this.controllerPesquisa.encerraPesquisa("COM1","acabouu");
         try{
             this.controllerPesquisa.removeAtividade("COM2","A1");

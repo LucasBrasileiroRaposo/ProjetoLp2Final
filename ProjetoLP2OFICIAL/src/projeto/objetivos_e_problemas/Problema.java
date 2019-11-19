@@ -1,10 +1,13 @@
 package projeto.objetivos_e_problemas;
+
+import java.io.Serializable;
+
 /**
  * Classe que representa um Problema.
  * @author Matheus Bezerra Andrade
  *
  */
-public class Problema implements Comparable<Problema>{
+public class Problema implements Comparable<Problema>, Serializable {
 	/**
 	 * Codigo do problema. O qual eh formado por "P" + numero da posicao em que foi guardado no mapa.
 	 */

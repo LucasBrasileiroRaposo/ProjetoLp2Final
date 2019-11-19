@@ -13,7 +13,9 @@ import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
 import projeto.pesquisadores.RepositorioPesquisador;
 import projeto.busca.ControllerBusca;
 
-public class Facade {
+import java.io.IOException;
+
+ public class Facade {
 
     private RepositorioAtividade repositorioAtividades;
 
@@ -35,6 +37,8 @@ public class Facade {
 
     private ControllerBusca controllerBusca;
 
+    private ControllerDados controllerDados;
+
 
 
     public static void main(String[] args){
@@ -42,7 +46,8 @@ public class Facade {
         		"easyaccept/use_case_4.txt",
         		"easyaccept/use_case_5.txt", "easyaccept/use_case_6.txt","easyaccept/use_case_7.txt",
         		"easyaccept/use_case_8.txt","easyaccept/use_case_9.txt",
-        		"easyaccept/use_case_10.txt", "easyaccept/use_case_11.txt"};
+        		"easyaccept/use_case_10.txt", "easyaccept/use_case_11.txt",/**
+                "easyaccept/use_case_12SALVAR.txt","easyaccept/use_case_12CARREGAR.txt"*/};
         EasyAccept.main(args);
     }
 
@@ -57,6 +62,7 @@ public class Facade {
         this.controllerAssociacaoPesquisaAtividade = new ControllerAssociacaoPesquisaAtividade(this.controllerPesquisa,this.repositorioAtividades);
         this.controllerAssociacaoPesquisaObjetivoProblema = new ControllerAssociacaoPesquisaObjetivoProblema(this.controllerPesquisa,this.repositorioObjetivos,this.repositorioProblemas);
         this.controllerBusca = new ControllerBusca(this.repositorioPesquisa,this.repositorioPesquisadores,this.repositorioProblemas,this.repositorioObjetivos,this.repositorioAtividades);
+        this.controllerDados = new ControllerDados(this.repositorioAtividades,this.repositorioObjetivos,this.repositorioProblemas,this.repositorioPesquisa,this.repositorioPesquisadores);
 
     }
 
@@ -294,4 +300,8 @@ public class Facade {
     public void gravarResultados(String codigoPesquisa) {
     	this.repositorioPesquisa.geraTxtResultados(codigoPesquisa);
     }
+
+     public void salvar()throws IOException { this.controllerDados.salvar();}
+
+     public void carregar(){ this.controllerDados.carregar();}
 }

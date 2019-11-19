@@ -4,11 +4,12 @@ package projeto.atividades;
 import Util.Validadora;
 import projeto.busca.Busca;
 
+import java.io.*;
 import java.util.*;
 
 /** Classe que permite a comunicacao entre a Facade e a classe Atividade.
  */
-public class RepositorioAtividade implements Busca{
+public class RepositorioAtividade implements Busca, Serializable {
 
     /**
      * Mapa de das atividades.
@@ -278,5 +279,36 @@ public class RepositorioAtividade implements Busca{
             throw new IllegalArgumentException("Nao existe proxima atividade.");
         }
         return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades(this.atividades.get(idAtividade));
+    }
+    public List OrdenaLista(){
+        List listaAtividadesOrndenada = new ArrayList();
+        listaAtividadesOrndenada.addAll(this.atividades.values());
+        Collections.sort(listaAtividadesOrndenada);
+        return  listaAtividadesOrndenada;
+    }
+
+    public void salvar(){
+        try{
+            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Atividades"));
+
+            for(Object a: OrdenaLista()){
+                objOut.writeObject(a);
+            }
+            objOut.close();
+
+        }catch (Exception e){
+            e.printStackTrace();}
+    }
+    public void carregar(){
+        if(new File("Atividades").canRead() == true){
+            try{
+                FileInputStream inAtividade = new FileInputStream("Atividades");
+                ObjectInputStream objInAtividade = new ObjectInputStream(inAtividade);
+
+                Atividade a1 = (Atividade) objInAtividade.readObject();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

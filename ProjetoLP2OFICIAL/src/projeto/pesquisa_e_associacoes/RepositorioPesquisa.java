@@ -10,15 +10,13 @@ import projeto.objetivos_e_problemas.Objetivo;
 import projeto.objetivos_e_problemas.Problema;
 import projeto.pesquisadores.Pesquisador;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class RepositorioPesquisa implements Busca{
+public class RepositorioPesquisa implements Busca, Serializable {
     /**
      * pesquisas Mapa responsável por associar um objeto pesquisa ao seu código
      * gerado
@@ -400,5 +398,36 @@ public class RepositorioPesquisa implements Busca{
 			e.printStackTrace();
 			}
         }
+	}
+	public List OrdenaListaPesquisas(){
+		List listaPesquisasOrdenada = new ArrayList();
+		listaPesquisasOrdenada.addAll(this.pesquisas.values());
+		Collections.sort(listaPesquisasOrdenada);
+		return  listaPesquisasOrdenada;
+	}
+	public void salvar() {
+		try {
+
+			ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Pesquisas"));
+
+			for (Object p : OrdenaListaPesquisas()) {
+				objOut.writeObject(p);
+			}
+			objOut.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void carregar(){
+		if(new File("Pesquisas").canRead() == true){
+			try{
+				FileInputStream inPesquisas = new FileInputStream("Pesquisas");
+				ObjectInputStream objPesquisas = new ObjectInputStream(inPesquisas);
+
+				Pesquisa p1 = (Pesquisa) objPesquisas.readObject();
+			}catch (Exception e){
+				e.printStackTrace(); }
+		}
 	}
 }

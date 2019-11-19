@@ -1,10 +1,13 @@
 package projeto.objetivos_e_problemas;
+
+import java.io.Serializable;
+
 /**
  * Classe que representa um Objetivo.
  * @author Matheus Bezerra Andrade
  *
  */
-public class Objetivo implements Comparable<Objetivo>{
+public class Objetivo implements Comparable<Objetivo>, Serializable {
 	/**
 	 * Tipo do objetivo. O tipo só pode ser Geral ou Especifico.
 	 */

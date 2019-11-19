@@ -1,11 +1,12 @@
 package projeto.atividades;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Classe que representa uma atividade
  */
-public class Atividade implements Comparable<Atividade> {
+public class Atividade implements Comparable<Atividade>, Serializable {
 
 	/**
 	 * representa a descricao da atividade;
