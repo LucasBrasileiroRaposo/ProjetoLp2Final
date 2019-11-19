@@ -15,10 +15,8 @@ public class Validadora {
     }
 
     public static void validaEntradaCampo(String campoDeInteresse) {
-        if (campoDeInteresse == null) {
+        if (campoDeInteresse == null || campoDeInteresse.trim().equals("")) {
             throw new NullPointerException("Formato do campo de interesse invalido.");
-        }else if(campoDeInteresse.trim().equals("")){
-            throw new IllegalArgumentException("Formato do campo de interesse invalido.");
         } else if (campoDeInteresse.length() > 255) {
             throw new IllegalArgumentException("Formato do campo de interesse invalido.");
         } else if (verificaTopico(campoDeInteresse)) {

@@ -13,9 +13,7 @@ import projeto.pesquisa_e_associacoes.ControllerAssociacaoPesquisaPesquisador;
 import projeto.pesquisadores.RepositorioPesquisador;
 import projeto.busca.ControllerBusca;
 
-import java.io.*;
-
- public class Facade {
+public class Facade {
 
     private RepositorioAtividade repositorioAtividades;
 
@@ -40,7 +38,11 @@ import java.io.*;
 
 
     public static void main(String[] args){
-        args = new String[]{"projeto.Facade", "TestesAceitacao/use_case_12CARREGAR.txt"};
+        args = new String[]{"projeto.Facade", "TestesAceitacao/use_case_1.txt", "TestesAceitacao/use_case_2.txt","TestesAceitacao/use_case_3.txt",
+        		"TestesAceitacao/use_case_4.txt",
+        		"TestesAceitacao/use_case_5.txt", "TestesAceitacao/use_case_6.txt","TestesAceitacao/use_case_7.txt",
+        		"TestesAceitacao/use_case_8.txt","TestesAceitacao/use_case_9.txt",
+        		"TestesAceitacao/use_case_10.txt", "TestesAceitacao/use_case_11.txt"};
         EasyAccept.main(args);
     }
 
@@ -291,50 +293,5 @@ import java.io.*;
     }
     public void gravarResultados(String codigoPesquisa) {
     	this.repositorioPesquisa.geraTxtResultados(codigoPesquisa);
-    }
-
-    /** Parte 12
-     */
-    public void carregar() throws IOException {
-        final String dataFile = "objetos.dat";
-        ObjectInputStream in = null;
-
-        try {
-            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(dataFile)));
-            this.repositorioAtividades = (RepositorioAtividade) in.readObject();
-            this.controllerPesquisa = (ControllerPesquisa) in.readObject();
-            this.repositorioPesquisadores = (RepositorioPesquisador) in.readObject();
-            this.repositorioObjetivos = (RepositorioObjetivos) in.readObject();
-            this.repositorioProblemas = (RepositorioProblemas) in.readObject();
-            this.controllerAssociacaoPesquisaAtividade = (ControllerAssociacaoPesquisaAtividade)in.readObject();
-            this.controllerAssociacaoPesquisaObjetivoProblema = (ControllerAssociacaoPesquisaObjetivoProblema) in.readObject();
-            this.controllerAssociacaoPesquisaPesquisador = (ControllerAssociacaoPesquisaPesquisador) in.readObject();
-            this.controllerBusca = (ControllerBusca) in.readObject();
-        }catch (Exception e) {}
-        finally {
-            if (in != null)
-                in.close();
-        }
-    }
-
-    public void salva() throws IOException{
-        final String dataFile = "objetos.dat";
-        ObjectOutputStream out = null;
-
-        try {
-            out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(dataFile)));
-            out.writeObject(this.controllerPesquisa);
-            out.writeObject(this.controllerBusca);
-            out.writeObject(this.controllerAssociacaoPesquisaPesquisador);
-            out.writeObject(this.controllerAssociacaoPesquisaAtividade);
-            out.writeObject(this.controllerAssociacaoPesquisaObjetivoProblema);
-            out.writeObject(this.repositorioAtividades);
-            out.writeObject(this.repositorioObjetivos);
-            out.writeObject(this.repositorioPesquisadores);
-            out.writeObject(this.repositorioProblemas);
-        }finally {
-            out.close();;
-        }
-
     }
 }
