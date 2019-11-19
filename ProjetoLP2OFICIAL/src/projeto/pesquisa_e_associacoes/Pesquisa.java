@@ -390,21 +390,17 @@ public class Pesquisa implements Comparable<Pesquisa> {
 		for (Pesquisador x : this.pesquisadoresDaPesquisa.values())
 			if (this.pesquisadoresDaPesquisa.size() == contador) {
 				if (x.getFuncao().equals("estudante")) {
-					texto += "    - " + x.getNome() + " (" + x.getFuncao() + ")" + " - " + x.getBiografia() + " - "
-							+ x.getEmail() + " - " + x.getFotoURL();
+					texto += "    - " + x.toString();
 				} else {
-					texto += "    - " + x.getNome() + " (" + x.getFuncao() + ")" + " - " + x.getBiografia() + " - "
-							+ x.getEmail() + " - " + x.getFotoURL() + " - " + x.toString();
+					texto += "    - " + x.toString();
 				}
 
 			} else {
 				if (x.getFuncao().equals("estudante")) {
-					texto += "    - " + x.getNome() + " (" + x.getFuncao() + ")" + " - " + x.getBiografia() + " - "
-							+ x.getEmail() + " - " + x.getFotoURL() + "\r\n ";
+					texto += "    - " + x.toString() + "\r\n ";
 					contador++;
 				} else {
-					texto += "    - " + x.getNome() + " (" + x.getFuncao() + ")" + " - " + x.getBiografia() + " - "
-							+ x.getEmail() + " - " + x.getFotoURL() + " - " + x.toString() + "\r\n ";
+					texto += "    - " + x.toString() + "\r\n ";
 					contador++;
 				}
 			}
@@ -489,7 +485,8 @@ public class Pesquisa implements Comparable<Pesquisa> {
 			if(contador == this.atividadesDaPesquisa.size()) {
 				texto += x.retornaItensRealizadosFinal();
 			}else {
-			texto += x.retornaItensRealizados();
+				texto += x.retornaItensRealizados();
+				contador++;
 		}
 
 	}

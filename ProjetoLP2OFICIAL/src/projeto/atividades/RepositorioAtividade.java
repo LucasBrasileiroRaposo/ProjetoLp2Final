@@ -136,6 +136,11 @@ public class RepositorioAtividade implements Busca{
         }
     }
     
+    /**
+     * Metodo responsável por retornar o objeto atividade 
+     * @param codigoAtividade codigo referente a tividade
+     * @return retorna o objeto atividade
+     */
     public Atividade retornaAtividade(String codigoAtividade) {
     	if(!this.atividades.containsKey(codigoAtividade)) {
     		throw new IllegalArgumentException("Atividade nao encontrada");
@@ -145,10 +150,22 @@ public class RepositorioAtividade implements Busca{
     }
     }
 
+    /**
+     * Metodo que verifica se um uma atividade esta dentro do mapa de atividades
+     * @param codigoAtividade codigo referente a atividade
+     * @return retorna o objeto atividade
+     */
 	public boolean atividadeExiste(String codigoAtividade) {
 		return this.atividades.containsKey(codigoAtividade);
 	}
 
+	/**
+	 * Metodo responsavel por (executar) alterar os valores dos atributos do item de uma pesquisa
+	 * @param codigoAtividade codigo referente a uma atividade
+	 * @param item item de uma atividade
+	 * @param duracao duracao do item de uma atividade
+	 * @return retorna true ou false 
+	 */
 	public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
 	    if(this.atividades.get(codigoAtividade).getControlaPesquisasAtividade() == 0) {
             throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
@@ -163,6 +180,12 @@ public class RepositorioAtividade implements Busca{
 		}
 	}
 
+	/**
+	 * Metodo responsavel por remover um resultado de uma atividade
+	 * @param codigoAtividade codigo refente a uma atividade
+	 * @param numeroResultado numero referente a um resultado
+	 * @return retorna true ou false
+	 */
 	public boolean removeResultado(String codigoAtividade, int numeroResultado) {
 		if(!(this.atividades.containsKey(codigoAtividade))) {
 			throw new IllegalArgumentException("Atividade nao encontrada");
@@ -175,12 +198,23 @@ public class RepositorioAtividade implements Busca{
 		}
 	}
 
+	/**
+	 * Metodo reponsavel por cadastrar um resultado em uma atividade
+	 * @param codigoAtividade codigo referente a uma atividade
+	 * @param resultado resultado a ser cadastrado em uma atividade 
+	 * @return retorna uma inteiro que referente ao resultado
+	 */
 	public int cadastraResultado(String codigoAtividade, String resultado) {
 		int i = 0;
     	i = this.atividades.get(codigoAtividade).cadastraResultado(resultado);
     	return i;
 	}
 
+	/**
+	 * Metodo responsavel por exibir um resultado referente a uma atividade
+	 * @param codigoAtividade codigo referente a atividade
+	 * @return retorna uma string contendo o resultado
+	 */
 	public String exibeResultados(String codigoAtividade) {
 		if(!(this.atividades.containsKey(codigoAtividade))) {
 			throw new IllegalArgumentException("Atividade nao encontrada");
@@ -190,6 +224,11 @@ public class RepositorioAtividade implements Busca{
 		}
 	}
 
+	/**
+	 * Metodo reponsavel por retorna uma duracao
+	 * @param codigoAtividade codigo referente a uma atividade
+	 * @return retorna a duracao (int)
+	 */
 	public int getDuracao(String codigoAtividade) {
 		if(!(this.atividades.containsKey(codigoAtividade))) {
 			throw new IllegalArgumentException("Atividade nao encontrada");
@@ -198,6 +237,8 @@ public class RepositorioAtividade implements Busca{
 			return this.atividades.get(codigoAtividade).getDuracaoAtividade();
 		}
 	}
+	
+	
     @Override
     public String busca(String termo){
         Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");

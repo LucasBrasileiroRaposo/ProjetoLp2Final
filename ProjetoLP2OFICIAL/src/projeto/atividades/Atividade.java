@@ -11,7 +11,9 @@ public class Atividade implements Comparable<Atividade> {
 	 * representa a descricao da atividade;
 	 */
 	private String descricao;
-
+	/**
+	 * Mapa com os resultados de um item
+	 */
 	private HashMap<Integer, String> resultadosItens;
 
 	/**
@@ -191,6 +193,11 @@ public class Atividade implements Comparable<Atividade> {
 		return this.controlaPesquisasAtividade;
 	}
 
+	/**
+	 * Metodo responsavel por verificar se um resultado esta no mapa de resultados dos itens
+	 * @param codigoResultado inteiro referente a um resultado
+	 * @return retorna true ou false
+	 */
 	public boolean veriricaResultado(int codigoResultado) {
 		if (!this.resultadosItens.containsKey(codigoResultado)) {
 			return false;
@@ -199,6 +206,11 @@ public class Atividade implements Comparable<Atividade> {
 		}
 	}
 
+	/**
+	 * Metodo responsavel por remover um resultado de um item
+	 * @param numeroResultado inteiro referente a um resultado
+	 * @return retorna true ou false
+	 */
 	public boolean removeResultado(int numeroResultado) {
 		if (!this.resultadosItens.containsKey(numeroResultado)) {
 			return false;
@@ -209,14 +221,23 @@ public class Atividade implements Comparable<Atividade> {
 
 	}
 
-	int i = 0;
 
+	int i = 0;
+	/**
+	 * Metodo responsavel por colocar um resultado dentro do mapa de resultados dos itens;		
+	 * @param resultado resultado a ser colocado dentro do mapa;
+	 * @return retorna o inteiro que se refere ao resultado;
+	 */
 	public int cadastraResultado(String resultado) {
 		i += 1;
 		this.resultadosItens.put(i, resultado);
 		return i;
 	}
-
+	
+	/**
+	 * Metodo responsavel por retornar os resultados dos itens
+	 * @return retorna uma string com os resultados
+	 */
 	public String exibeResultados() {
 		String saida = "";
 		for (String i : this.resultadosItens.values()) {
@@ -224,7 +245,11 @@ public class Atividade implements Comparable<Atividade> {
 		}
 		return saida.substring(0, saida.length() - 3);
 	}
-
+	
+	/**
+	 * Metodo responsavel por retornar a duracao da atividade
+	 * @return retorna o inteiro da duracao
+	 */
 	public int getDuracaoAtividade() {
 		for (Item i : itens.values()) {
 			this.duracaoAtividade += i.getDuracao();
@@ -232,18 +257,33 @@ public class Atividade implements Comparable<Atividade> {
 		return this.duracaoAtividade;
 	}
 
+	/**
+	 * Metodo responsavel por retornar a descricao da atividade
+	 * @return retorna a descricao
+	 */
 	public String getDescricao() {
 		return this.descricao;
 	}
 
+	/**
+	 * Metodo responsavel por retornar o codigo de uma atividade
+	 * @return retorna o codigo
+	 */
 	public String getCodigo() {
 		return this.codigo;
 	}
-
+	/**
+	 * Metodo responsavel por altera o codigo de uma atividade
+	 * @param codigo
+	 */
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
 
+	/**
+	 * Metodo responsavel por retorna a descricao de risco de uma atividade
+	 * @return retorna a descricao de risco da atividade
+	 */
 	public String getDescricaoDeRisco() {
 		return descricaoDeRisco;
 	}
@@ -346,7 +386,6 @@ public class Atividade implements Comparable<Atividade> {
 
 	/**
 	 * Metodo responsavel por retornar texto com as informacoes referentes aos itens
-	 * 
 	 * @return string com as informacoes do itens
 	 */
 	public String retornaTxt() {
@@ -364,6 +403,10 @@ public class Atividade implements Comparable<Atividade> {
 		return saida;
 	}
 
+	/**
+	 * Metodo responsavel por retornar um texto com as informacoes referente aos itens da ULTIMA atividade
+	 * @return retorna string com as informacoes dos itens de uma atividade
+	 */
 	public String retornaTxtFinal() {
 		int contador = 1;
 		String saida = "     - " + this.descricao + " (" + this.nivelDeRisco + " - " + this.descricaoDeRisco + ")"
@@ -381,8 +424,7 @@ public class Atividade implements Comparable<Atividade> {
 	}
 
 	/**
-	 * Metodo respons�vel por retorna representa��o textual para o arquivo txt
-	 * 
+	 * Metodo responsavel por retornar itens e resultados para representacao textual do arquivo txt
 	 * @return String com informacoes de Itens
 	 */
 	public String retornaItensRealizados() {
@@ -404,22 +446,26 @@ public class Atividade implements Comparable<Atividade> {
 		return saida;
 	}
 
+	/**
+	 * Metodo responsavel por retornar itens e resultados da ULTIMA atividade para representacao textual do arquivo txt
+	 * @return String com informacoes de Itens e resultados
+	 */
 	public String retornaItensRealizadosFinal() {
 		int contadorItens = 1;
 		int contadorResultados = 1;
-		String saida = "- " + this.getDescricao() + "\r\n ";
+		String saida = "- " + this.getDescricao();
 		for (Item i : this.itens.values()) {
 			if (this.itens.size() == contadorItens) {
-				if (i.getEstadoItem().contentEquals("REALIZADO") && this.resultadosItens.size() == 0) {
-					saida += "         - " + "ITEM" + i.getCodigoItem() + " - " + i.getDuracao();
+				if (i.getEstadoItem().equals("REALIZADO") && this.resultadosItens.size() == 0) {
+					saida += "\r\n " + "         - " + "ITEM" + i.getCodigoItem() + " - " + i.getDuracao();
 				}
-				else {
-					saida += "         - " + "ITEM" + i.getCodigoItem() + " - " + i.getDuracao()+ "\r\n";
+				else if(i.getEstadoItem().equals("REALIZADO")) {
+					saida += "\r\n " + "         - " + "ITEM" + i.getCodigoItem() + " - " + i.getDuracao();
 				}
 			}
 				 else {
-					if (i.getEstadoItem().contentEquals("REALIZADO")) {
-						saida += "         - " + "ITEM" + i.getCodigoItem() + " - " + i.getDuracao() + "\r\n ";
+					if (i.getEstadoItem().equals("REALIZADO")) {
+						saida += "\r\n " + "         - " + "ITEM" + i.getCodigoItem() + " - " + i.getDuracao();
 					}
 				}
 				contadorItens++;
@@ -430,7 +476,7 @@ public class Atividade implements Comparable<Atividade> {
 			if (this.resultadosItens.size() == contadorResultados) {
 				saida += "         - " + i;
 			} else {
-				saida += "         - " + i + "\r\n ";
+				saida += "\r\n" + "         - " + i + "\r\n ";
 				contadorResultados++;
 			}
 		}
