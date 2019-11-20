@@ -35,7 +35,7 @@ class PesquisaTest {
 
     @Test
     void associaProblema() {
-        assertTrue(p1.associaProblema(problema));
+        assertTrue(p1.associaProblema(problema));    
         assertTrue(p2.associaProblema(problema));
     }
 
