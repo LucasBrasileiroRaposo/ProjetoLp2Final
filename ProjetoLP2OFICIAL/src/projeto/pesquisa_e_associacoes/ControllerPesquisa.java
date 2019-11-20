@@ -10,14 +10,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/** Classe que conecta a Facade com o repositorio das pesquisas
+ */
 public class ControllerPesquisa {
 
+    /** RepositorioPesquisa que o controller vai operar.
+     */
     private RepositorioPesquisa repositorioPesquisa;
 
+    /** Construtor do controller, que recebe um RepositorioPesquisa como parametro
+     * @param repositorioPesquisa represneta o RepositorioPesquisa no qual o Controller vai operar sob.
+     */
     public ControllerPesquisa(RepositorioPesquisa repositorioPesquisa){
         this.repositorioPesquisa = repositorioPesquisa;
     }
 
+    /** Metodo responsavel que repassa o comando para cadastrar uma pesquisa.
+     *
+     * @param descricao String, que representa a descricao sobre o que é a pesquisa.
+     * @param campoDeInteresse String, que representa o  campo de interesse da pesquisa.
+     * @return o codigo identificador da pesquisa, formado pelas 3 primeiras letra do campo de interrese, maiusculas e o numero de pesquisas desse campo.
+     */
     public String cadastraPesquisa(String descricao, String campoDeInteresse) {
         return this.repositorioPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
     }
@@ -118,6 +131,7 @@ public class ControllerPesquisa {
 
         }
     }
+
 
     public boolean adicionaAtividade(String codigoPesquisa, Atividade atividade) {
         return this.repositorioPesquisa.adicionaAtividade(codigoPesquisa, atividade);

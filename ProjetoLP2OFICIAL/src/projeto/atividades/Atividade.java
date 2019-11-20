@@ -53,7 +53,7 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 	/**
 	 * Proxima pesquisa que é sugerida de ser executada pos a atual;
 	 */
-	private Atividade atividade;
+	private Atividade proximaAtividade;
 
 	/**
 	 * Lista de atividades que esta atividade atual aponta,precede;
@@ -192,6 +192,7 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 		return this.controlaPesquisasAtividade;
 	}
 
+
 	public boolean veriricaResultado(int codigoResultado) {
 		if (!this.resultadosItens.containsKey(codigoResultado)) {
 			return false;
@@ -226,6 +227,10 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 		return saida.substring(0, saida.length() - 3);
 	}
 
+	/** Metodo que soma a duracao de todos os itens e logo esse valor representa a duracao da atividade.
+	 *
+	 * @return int, que representa o tempo ,em segundos, necessario para execucao dessa atividade.
+	 */
 	public int getDuracaoAtividade() {
 		for (Item i : itens.values()) {
 			this.duracaoAtividade += i.getDuracao();
@@ -233,10 +238,16 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 		return this.duracaoAtividade;
 	}
 
+	/** Quando chamado deve retorna uma String.
+	 * @return String, que representa a descricao da atividade.
+	 */
 	public String getDescricao() {
 		return this.descricao;
 	}
 
+	/** Quando chamado retorna uma String.
+	 * @return String, que representa o codigo identificador da atividade.
+	 */
 	public String getCodigo() {
 		return this.codigo;
 	}
@@ -245,6 +256,9 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 		this.codigo = codigo;
 	}
 
+	/** Quando chamado retorna uma String.
+	 * @return String, que representa  a descricaoDeRisco da atividade.
+	 */
 	public String getDescricaoDeRisco() {
 		return descricaoDeRisco;
 	}
@@ -254,29 +268,44 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 		return atividade.getCodigo().compareTo(this.codigo);
 	}
 
+	/** Quando chamado, retorna uma String.
+	 * @return String que representa o nivel de risco da atividade.
+	 */
 	public String getNivelDeRisco() {
 		return nivelDeRisco;
 	}
 
+	/** Quando chamado esse metodo, adiciona em uma lista a atividade que "aponta" para a atividade atual.
+	 * @param atividade1 atividade que aponta para atividade atual.
+	 */
 	public void criaPrecedente(Atividade atividade1) {
 		this.listadeOrdemAtividades.add(atividade1);
 	}
 
+	/**  Esse metodo funciona, para colocar como proximaAtividade a tividade que foi passada como parametro.
+	 *
+	 * @param atividade2 eh a atividade para qual a atividade atual "aponta";
+	 * @return True, caso a operacao tenha sido realizada com sucesso, ou False caso nao.
+	 */
 	public boolean apontaPara(Atividade atividade2) {
-		if (this.atividade != null) {
+		if (this.proximaAtividade != null) {
 			return false;
 		} else {
 			for (Atividade a : this.listadeOrdemAtividades) {
-				if (a.equals(atividade)) {
+				if (a.equals(proximaAtividade)) {
 					throw new IllegalArgumentException("Criacao de loops negada.");
 				}
 				a.checaAnterior(atividade2);
 			}
-			this.atividade = atividade2;
+			this.proximaAtividade = atividade2;
 			return true;
 		}
 	}
 
+	/** Metodo, responsavel por checar se esta ocorrendo um looping na ordem de execucao das atividade, no caso vendo se uma possivel proxima atividade ja esta
+	 * apontando para atividade atual ou nao.
+	 * @param atividade atividade que vai ser checada, se ja aponta para essa atividade ou para alguma de suas precedentes.
+	 */
 	private void checaAnterior(Atividade atividade) {
 		for (Atividade a : this.listadeOrdemAtividades) {
 			if (a.equals(atividade)) {
@@ -286,55 +315,78 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 		}
 	}
 
+	/** Metodo, que vai quebrar uma sequencia, retirando a atividade da sequencia, no caso tornando o atributo proximaAtividade novamente vazio,
+	 *  e acessando a lista de precedentes da Atividade proximaAtividade e removendo a atividade atual dela.
+	 *
+	 */
 	public void tiraSubsquente() {
-		if (this.atividade != null) {
-			this.atividade.removePrecedente(this);
-			this.atividade = null;
+		if (this.proximaAtividade != null) {
+			this.proximaAtividade.removePrecedente(this);
+			this.proximaAtividade = null;
 		}
 
 	}
 
+	/** Metodo que remove uma atividade da lista de atividade que "apontam" para atividade atual.
+	 * @param atividade atividade que deve ser removida da lista de precedentes.
+	 */
 	private void removePrecedente(Atividade atividade) {
 		this.listadeOrdemAtividades.remove(atividade);
 	}
 
+	/** Metodo que conta quantas atividades estão ordenadas para serem executadas depois da atual.
+	 * @return inteiro que representa esse valor.
+	 */
 	public int contaProximos() {
-		if (this.atividade == null) {
+		if (this.proximaAtividade == null) {
 			return 0;
 		} else {
-			return 1 + this.atividade.contaProximos();
+			return 1 + this.proximaAtividade.contaProximos();
 		}
 	}
 
+	/** Metodo que retorna o codigo da atividade que o usuario deseja que seja exibida,quando sua ordem.
+	 *
+	 * @param enesimaAtividade é o valor que representa a atividade, na ordem de execucao, no caso a enesima atividade a ser executada apos a atual.
+	 * @return o codigo dessa determinada atividade ou a mensagem que não existe, caso não exista enesimo fator.
+	 */
 	public String pegaProximo(int enesimaAtividade) {
-		if (this.atividade == null) {
+		if (this.proximaAtividade == null) {
 			throw new IllegalArgumentException("Atividade inexistente.");
 		}
 		if (enesimaAtividade == 1) {
-			return this.atividade.getCodigo();
+			return this.proximaAtividade.getCodigo();
 		} else {
-			return this.atividade.pegaProximo(enesimaAtividade - 1);
+			return this.proximaAtividade.pegaProximo(enesimaAtividade - 1);
 		}
 
 	}
 
+	/** Metodo responsavel por retornar a atividade que possui o maio nivel de risco em uma sequencia.
+	 *
+	 * @param atividadeEscolhida é uma atividade passada como parametro que sera comparada com aproxima, e dependendo do nivel, ou sera substituida por essa
+	 *                           atividade comparada ou manter a atividade antiga passada como parametro.
+	 * @return o codigo da atividade com o maior risco da sequencia.
+	 */
 	public String pegaMaiorRiscoAtividades(Atividade atividadeEscolhida) {
-		if (this.atividade == null) {
-			return this.getCodigo();
-		} else if (atividadeEscolhida.getNivelDeRisco().equals(this.atividade.getNivelDeRisco())) {
-			return this.atividade.pegaMaiorRiscoAtividades(atividade);
-		} else if (atividadeEscolhida.getNivelDeRisco().equals("BAIXO")
-				&& this.atividade.getNivelDeRisco().equals("MEDIO")) {
-			return this.atividade.pegaMaiorRiscoAtividades(atividade);
-		} else if (this.atividade.getNivelDeRisco().equals("ALTO")) {
-			return this.atividade.pegaMaiorRiscoAtividades(atividade);
+		if (this.proximaAtividade == null) {
+			return atividadeEscolhida.getCodigo();
+		} else if (atividadeEscolhida.getNivelDeRisco().equals(this.proximaAtividade.getNivelDeRisco())) {
+			return this.proximaAtividade.pegaMaiorRiscoAtividades(proximaAtividade);
+		} else if (atividadeEscolhida.getNivelDeRisco().equals("BAIXO") && this.proximaAtividade.getNivelDeRisco().equals("MEDIO")) {
+			return this.proximaAtividade.pegaMaiorRiscoAtividades(proximaAtividade);
+		} else if (this.proximaAtividade.getNivelDeRisco().equals("ALTO")) {
+			return this.proximaAtividade.pegaMaiorRiscoAtividades(proximaAtividade);
 		} else {
-			return this.atividade.pegaMaiorRiscoAtividades(atividadeEscolhida);
+			return this.proximaAtividade.pegaMaiorRiscoAtividades(atividadeEscolhida);
 		}
 	}
 
+	/** Metodo que retorna a proximaAtividade em relacao a atividade atual.
+	 * @return um objeto do tipo Atividade, que representa a atividade subsequente a atual.
+	 */
 	public Atividade getProximaAtiviade() {
-		return this.atividade;
+		return this.proximaAtividade;
 	}
 
 	public void setDuracaoAtividade(int duracaoAtividade) {
@@ -382,7 +434,7 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 	}
 
 	/**
-	 * Metodo respons�vel por retorna representa��o textual para o arquivo txt
+	 * Metodo responsavel por retorna representacao textual para o arquivo txt
 	 * 
 	 * @return String com informacoes de Itens
 	 */

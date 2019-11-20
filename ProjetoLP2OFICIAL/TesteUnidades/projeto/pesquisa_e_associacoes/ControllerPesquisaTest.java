@@ -334,6 +334,23 @@ class ControllerPesquisaTest {
 
     @Test
     void desassociaProblema() {
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao agropecuaria", "Computacao, agro");
+        Problema problema = new Problema("fazer testes do projeto",0,"P1");
+        assertTrue(this.controllerPesquisa.associaProblema("COM1",problema));
+        try{
+            this.controllerPesquisa.desassociaProblema("COM240");
+            fail("Pesquisa nao encontrada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.encerraPesquisa("COM1","finalizada");
+        try{
+            this.controllerPesquisa.desassociaProblema("COM1");
+            fail("Pesquisa desativada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.ativaPesquisa("COM1");
+        assertTrue(this.controllerPesquisa.desassociaProblema("COM1"));
+        assertFalse(this.controllerPesquisa.desassociaProblema("COM1"));
     }
 
     @Test

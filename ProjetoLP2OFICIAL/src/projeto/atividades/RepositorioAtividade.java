@@ -136,7 +136,11 @@ public class RepositorioAtividade implements Busca, Serializable {
             return this.atividades.get(codigo).contaItensRealizados();
         }
     }
-    
+
+    /** Quando chamado o metodo deve checa se essa atividade existe no mapa de atividade e caso exista deve retorna-la.
+     * @param codigoAtividade String, que representa a chave identificadora de uma atividade, no mapa das atividades.
+     * @return um objeto do tipo Atividade, que no caso vai ser a atividade selecionada.
+     */
     public Atividade retornaAtividade(String codigoAtividade) {
     	if(!this.atividades.containsKey(codigoAtividade)) {
     		throw new IllegalArgumentException("Atividade nao encontrada");
@@ -146,10 +150,25 @@ public class RepositorioAtividade implements Busca, Serializable {
     }
     }
 
+    /** Metodo responsavel por checar se existe alguma atividade cadastrada com o codigo passado.
+     * @param codigoAtividade String, que representa o codigo identificar da atividade.
+     * @return True ou False, caso exista ou não, respectivamente.
+     */
 	public boolean atividadeExiste(String codigoAtividade) {
 		return this.atividades.containsKey(codigoAtividade);
 	}
 
+    /**
+     * Metodo que executa uma atividade, no caso, altera o estado do item para
+     * concluido se a operacao for realizada com sucesso e ainda eh setada uma
+     * duracao para ela.
+     *
+     * @param codigoAtividade String, que representa o id da atividade que deve ter seu item executado;
+     * @param item    inteiro que representa o id do item que deve ser executado;
+     * @param duracao inteiro, que representa a duracao em segundos da execucao de
+     *                tal item;
+     * @return true, caso a operação tive sido realizada com sucesso.
+     */
 	public boolean executaAtividade(String codigoAtividade, int item, int duracao) {
 	    if(this.atividades.get(codigoAtividade).getControlaPesquisasAtividade() == 0) {
             throw new IllegalArgumentException("Atividade sem associacoes com pesquisas.");
@@ -191,6 +210,10 @@ public class RepositorioAtividade implements Busca, Serializable {
 		}
 	}
 
+    /** Quando chamado deve retornar a duracao da atividade, pedida pelo usuario.
+     * @param codigoAtividade String, que representao o id da atividade, que o usuario deseja que tenha sua duracao retornada.
+     * @return int, que representa a duracao da atividade.
+     */
 	public int getDuracao(String codigoAtividade) {
 		if(!(this.atividades.containsKey(codigoAtividade))) {
 			throw new IllegalArgumentException("Atividade nao encontrada");
@@ -278,7 +301,7 @@ public class RepositorioAtividade implements Busca, Serializable {
         }else if(this.atividades.get(idAtividade).getProximaAtiviade() == null){
             throw new IllegalArgumentException("Nao existe proxima atividade.");
         }
-        return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades(this.atividades.get(idAtividade));
+        return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades(this.atividades.get(idAtividade).getProximaAtiviade());
     }
     public List OrdenaLista(){
         List listaAtividadesOrndenada = new ArrayList();
