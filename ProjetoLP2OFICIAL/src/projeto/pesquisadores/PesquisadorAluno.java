@@ -2,7 +2,12 @@ package projeto.pesquisadores;
 
 public class PesquisadorAluno implements Especialidade{
 
+    /** Semestre de ingresso de aluno na pesquisa
+     */
     private Integer semestreIngresso;
+
+    /** Indice estudantil academico
+     */
     private double iea;
 
     public PesquisadorAluno(int semestreIngresso, double iea){

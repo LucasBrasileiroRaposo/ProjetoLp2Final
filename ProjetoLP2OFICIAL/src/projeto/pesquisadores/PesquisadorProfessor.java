@@ -1,8 +1,17 @@
 package projeto.pesquisadores;
 
 public class PesquisadorProfessor implements Especialidade {
+
+    /** grau de formacao de um pesquisador que é professor
+     */
     private String formacao;
+
+    /** Unidade que o pesquisador trabalha ou estudou
+     */
     private String unidade;
+
+    /** data de algo do professor
+     */
     private String data;
 
     public PesquisadorProfessor(String formacao, String unidade, String data) {

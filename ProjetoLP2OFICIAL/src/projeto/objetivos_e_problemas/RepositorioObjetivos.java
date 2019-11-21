@@ -61,6 +61,7 @@ public class RepositorioObjetivos implements Busca, Serializable {
 	 * @param descricao descricao do objetivo
 	 * @param aderencia aderencia do objetivo
 	 * @param viabilidade viabilidade do objetivo
+	 * @return String com o codigo do objetivo gerado.
 	 */
 	public String cadastraObjetivo(String tipo, String descricao, int aderencia, int viabilidade) {
 		Validadora.verificaValorNullVazio(descricao, "Campo descricao nao pode ser nulo ou vazio.");

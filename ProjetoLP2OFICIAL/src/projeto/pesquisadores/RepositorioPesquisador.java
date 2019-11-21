@@ -270,8 +270,8 @@ public class RepositorioPesquisador implements Busca, Serializable {
 
     /**
      * Método responsável pela contagem de todos os termos encontrados na biografia do Pesquisador
-     * @param termo
-     * @return
+     * @param termo String, representa o termo de busca.
+     * @return int, que representa quantas vezes ele foi achado no sistema
      */
     @Override
     public int contaResultadosBusca(String termo) {

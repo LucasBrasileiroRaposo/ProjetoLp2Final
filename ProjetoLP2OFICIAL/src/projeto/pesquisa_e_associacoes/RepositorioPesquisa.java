@@ -265,18 +265,14 @@ public class RepositorioPesquisa implements Busca, Serializable {
 	public HashMap<String, Pesquisa> getMapaPesquisas() {
 		return this.pesquisas;
 	}
-	
-	
-	/**
-	 * PARTE 6!
-	 */
-	/**
-	 * 
-	 * @param idPesquisa
-	 * @param pesquisador
-	 * @return
-	 */
 
+
+	/** Metodo responsavel por adicionar um objeto Pesquisador em uma pesquisa determinada pelo usuario
+	 *
+	 * @param idPesquisa String, que representa a chave da pesquisa que o usuário deseja que tenha um Pesquisador acessado nele.
+	 * @param pesquisador objeto do tipo Pesquisador, que eh o pesquisador a ser adionado no mapa de pesquisadores de uma pesquisa.
+	 * @return True ou False dependendo se a operacao foi realizada com sucesso ou nao.
+	 */
     public boolean associaPesquisador(String idPesquisa, Pesquisador pesquisador){
         if (!this.pesquisas.containsKey(idPesquisa)){
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
@@ -288,6 +284,12 @@ public class RepositorioPesquisa implements Busca, Serializable {
         }
     }
 
+	/** Metodo responsavel por remover um Objeto Pesquisador de uma pesquisa selecionada pelo usuario.
+	 *
+	 * @param idPesquisa String,que representa a chave da pesquisa que o usuário deseja que tenha um Pesquisador removida dela.
+	 * @param emailPesquisador String, que representa o email do pesquisador que o usuario deseja que seja removido do mapa dos pesquisadores dentro da pesquisa.
+	 * @return True ou False, caso a operação tenha sido realizado com sucesso ou não.
+	 */
     public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador) {
         if (!this.pesquisas.containsKey(idPesquisa)){
             throw new IllegalArgumentException("Pesquisa nao encontrada.");
@@ -299,7 +301,11 @@ public class RepositorioPesquisa implements Busca, Serializable {
             }
         }
     }
-
+	/** Metodo responsavel por adicionar determianda atividade em uma pesquisa.
+	 * @param codigo String,que representa a chave da pesquisa que o usuário deseja que tenha uma Atividade adicionada nela.
+	 * @param atividade objeto do tipo Atividade , que é a atividade a ser associada a pesquisa.
+	 * @return True ou False dependendo do resultado da operação.
+	 */
 	public boolean adicionaAtividade(String codigo, Atividade atividade) {
 		if (!this.pesquisas.containsKey(codigo)) {
 			throw new IllegalArgumentException("Pesquisa nao encontrada.");
@@ -311,7 +317,12 @@ public class RepositorioPesquisa implements Busca, Serializable {
 			return this.pesquisas.get(codigo).cadastraAtividade(atividade);
 		}
 	}
-	
+
+	/** Metodo responsavel por remover uma atividade de uma pesquisa.
+	 * @param codigoPesquisa String,que representa a chave da pesquisa que o usuário deseja que tenha uma Atividade removida dela.
+	 * @param codigoAtividade String, que representa o codigo da atividade que o usuario deseja remover da pesquisa.
+	 * @return True ou False dependendo do resultado da operação.
+	 */
 	public boolean removeAtividade(String codigoPesquisa, String codigoAtividade) {
 		if (!this.pesquisas.containsKey(codigoPesquisa)) {
 			throw new IllegalArgumentException("Pesquisa nao encontrada.");
@@ -363,9 +374,9 @@ public class RepositorioPesquisa implements Busca, Serializable {
 	}
 	
 	/**
-	 * Metodo responsavel por criar um arquivo e escrever informa��es da pesquisa no arquivo
+	 * Metodo responsavel por criar um arquivo e escrever informacoes da pesquisa no arquivo
 	 * @param codigoPesquisa codigo da pesquisa em quest�o
-	 * @return arquivo txt contendo informa��es da pesquisa
+	 *
 	 */
 	public void geraTxt(String codigoPesquisa) {
 		Validadora.verificaValorNullVazio(codigoPesquisa, "Pesquisa nao pode ser nula ou vazia.");
@@ -391,7 +402,7 @@ public class RepositorioPesquisa implements Busca, Serializable {
 	/**
 	 * Metodo responsavel por criar um arquivo e escrever resultados da pesquisa no arquivo
 	 * @param codigoPesquisa codigo da pesquisa em quest�o
-	 * @return arquivo txt contendo resultados
+	 *
 	 */
 	public void geraTxtResultados(String codigoPesquisa) {
 		Validadora.verificaValorNullVazio(codigoPesquisa, "Pesquisa nao pode ser nula ou vazia.");

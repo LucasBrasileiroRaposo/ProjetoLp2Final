@@ -61,6 +61,7 @@ import projeto.objetivos_e_problemas.Problema;
 		 * cadastra um problema no mapa de problemas e incrementa uma unidade no contador de problemas
 		 * @param descricao descricao do problema
 		 * @param viabilidade viabilidade do problema
+		 * @return String, com o codigo do problema gerado.
 		 */
 		public String cadastraProblema(String descricao, int viabilidade) {
 			Validadora.verificaValorNullVazio(descricao, "Campo descricao nao pode ser nulo ou vazio.");

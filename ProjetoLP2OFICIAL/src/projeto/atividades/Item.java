@@ -19,6 +19,7 @@ public class Item implements Serializable {
 
     /** Constroi um objeto do tipo Item, recebendo o nome dele e ja estabelece seu estado como PENDENTE.
      * @param item String, que representa como o item eh nomeado pelo usuário.
+     * @param codigoItem, int, que representa o numero desse item.
      */
     public Item(String item, int codigoItem){
         this.nomeItem = item;

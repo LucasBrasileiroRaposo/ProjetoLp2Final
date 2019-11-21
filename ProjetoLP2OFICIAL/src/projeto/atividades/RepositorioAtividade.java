@@ -183,6 +183,11 @@ public class RepositorioAtividade implements Busca, Serializable {
 		}
 	}
 
+    /** metodo responsavel por remover um resultado de uma atividade.
+     * @param codigoAtividade String, que presenta o codigo da atividade que o usuario deseja que tenha um resultado removido dela;
+     * @param numeroResultado int, que represent ao codigo do resultado a ser removido.
+     * @return true, caso a operação tive sido realizada com sucesso, ou False caso não.
+     */
 	public boolean removeResultado(String codigoAtividade, int numeroResultado) {
 		if(!(this.atividades.containsKey(codigoAtividade))) {
 			throw new IllegalArgumentException("Atividade nao encontrada");
@@ -195,12 +200,20 @@ public class RepositorioAtividade implements Busca, Serializable {
 		}
 	}
 
+    /** metodo responsavel por cadastrar um resultado em uma atividade.
+     * @param codigoAtividade String, que presenta o codigo da atividade que o usuario deseja que tenha um resultado cadastrado nela;
+     * @param resultado String, que representa o resultado a ser adicionado em uma atividade
+     * @return int, que representa o codigo daquele resultado.
+     */
 	public int cadastraResultado(String codigoAtividade, String resultado) {
 		int i = 0;
     	i = this.atividades.get(codigoAtividade).cadastraResultado(resultado);
     	return i;
 	}
-
+    /** Metodo responsavel por retornar todos os resultados cadastrados em uma atividade quando o usuario pedir.
+     * @param codigoAtividade String, que representa o codigo da atividade que o usuario deseja que tenha seus resultados exibidos.
+     * @return String, com todos os resultados cadastrados em uma atividade.
+     */
 	public String exibeResultados(String codigoAtividade) {
 		if(!(this.atividades.containsKey(codigoAtividade))) {
 			throw new IllegalArgumentException("Atividade nao encontrada");
@@ -263,6 +276,10 @@ public class RepositorioAtividade implements Busca, Serializable {
         return cont;
     }
 
+    /** Metodo que define a ordem de execucao das atividade, recebendo o id de uma atividade anterior e o da subsequente a ela.
+     * @param idPrecedente String, que representa o codigo da atividade que vem primeiro.
+     * @param idSubsquente String, que representa o cofigo da atividade que vem depois da passada antes.
+     */
     public void defineProximaAtividade(String idPrecedente, String idSubsquente) {
         Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
         Validadora.verificaValorNullVazio(idSubsquente,"Atividade nao pode ser nulo ou vazio.");
@@ -278,6 +295,9 @@ public class RepositorioAtividade implements Busca, Serializable {
         }
     }
 
+    /** Metodo responsavel por quebrar uma sequencia removendo a atividade que viria depois da que é passada como parametro
+     * @param idPrecedente String, que representa o codigo da atividade que tera sua subsequente removida.
+     */
     public void tiraProximaAtividade(String idPrecedente) {
         Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
         if(!this.atividades.containsKey(idPrecedente)){
@@ -286,6 +306,10 @@ public class RepositorioAtividade implements Busca, Serializable {
         this.atividades.get(idPrecedente).tiraSubsquente();
     }
 
+    /** Metodo responsavel por contar as atividade que vem apos a atividade passada como parametro na sequencia atual.
+     * @param idPrecedente String, que representa o codigo da atividade passada como referencia
+     * @return int, que representa a quantidade de atividades que estão para ser executadas na sequencia.
+     */
     public int contaProximos(String idPrecedente) {
         Validadora.verificaValorNullVazio(idPrecedente,"Atividade nao pode ser nulo ou vazio.");
         if(!this.atividades.containsKey(idPrecedente)){
@@ -294,6 +318,11 @@ public class RepositorioAtividade implements Busca, Serializable {
         return this.atividades.get(idPrecedente).contaProximos();
     }
 
+    /** Metodo que retorna uma enesima atividade de um sequencia, apos uma determinada atividade passada como parametro.
+     * @param idAtividade String, que representa o codigo da atividade passada como referencia.
+     * @param enesimaAtividade int, é o valor que representa a atividade, na ordem de execucao, no caso a enesima atividade a ser executada apos a passada como parametro.
+     * @return o codigo dessa determinada atividade ou a mensagem que não existe, caso não exista enesimo fator.
+     */
     public String pegaProximo(String idAtividade, int enesimaAtividade) {
         Validadora.verificaValorNullVazio(idAtividade,"Atividade nao pode ser nulo ou vazio.");
         if (enesimaAtividade < 1){
@@ -304,6 +333,12 @@ public class RepositorioAtividade implements Busca, Serializable {
         return this.atividades.get(idAtividade).pegaProximo(enesimaAtividade);
     }
 
+    /** Metodo responsavel por retornar a atividade que possui o maio nivel de risco em uma sequencia.
+     *
+     * @param idAtividade é o codigo de uma atividade atividade passada como parametro, que tera seu objeto Ativiade comparado com aproximo, e dependendo do nivel, ou sera substituida por essa
+     *                           atividade comparada ou manter a atividade antiga passada como parametro.
+     * @return o codigo da atividade com o maior risco da sequencia.
+     */
     public String pegaMaiorRiscoAtividades(String idAtividade) {
         Validadora.verificaValorNullVazio(idAtividade,"Atividade nao pode ser nulo ou vazio.");
         if(!this.atividades.containsKey(idAtividade)){

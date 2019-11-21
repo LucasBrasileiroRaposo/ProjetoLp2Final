@@ -1,5 +1,7 @@
 package projeto.pesquisadores;
 
+/** Interface de Especialidade.
+ */
 public interface Especialidade {
 
 

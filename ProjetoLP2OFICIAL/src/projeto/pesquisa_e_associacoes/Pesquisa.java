@@ -61,6 +61,7 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 	 * 
 	 * @param descricao descricao de uma pesquisa
 	 * @param campo     campo de interre de uma pesquisa
+	 * @param codigo String, que representa o codigo gerada para a pesquisa.
 	 */
 
 	public Pesquisa(String descricao, String campo, String codigo) {
@@ -169,7 +170,7 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 	/**
 	 * metodo que desassocia um problema da pesquisa
 	 * 
-	 * @return
+	 * @return True ou false dependendo se a operacao foi realizada com sucesso ou nao.
 	 */
 	public boolean desassociaProblema() {
 
@@ -236,13 +237,10 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 		return listaObjetivos;
 	}
 
-	/**
-	 * PARTE 6!
-	 */
-	/**
-	 * 
-	 * @param pesquisador
-	 * @return
+	/** Metodo que associa um pesquisador ao mapa de pesquisadores de um objeto Pesquisa.
+	 *
+	 * @param pesquisador objeto do tipo Pesquisador que deve ser adicionado no mapa de pesquisadores.
+	 * @return True, caso tenha sido realizada com sucesso ou False caso contrario.
 	 */
 	public boolean associaPesquisador(Pesquisador pesquisador) {
 		if (this.pesquisadoresDaPesquisa.containsKey(pesquisador.getEmail())) {
@@ -253,6 +251,11 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 		}
 	}
 
+	/** Metodo que desassocia um pesquisador ao mapa de pesquisadores de um objeto Pesquisa.
+	 *
+	 * @param emailPesquisador String, que representa o email do pesquisador que deve ser removido de mapa de pesquisadores.
+	 * @return True, caso tenha sido realizada com sucesso ou False caso contrario.
+	 */
 	public boolean desassociaPesquisador(String emailPesquisador) {
 		if (!this.pesquisadoresDaPesquisa.containsKey(emailPesquisador)) {
 			return false;
@@ -262,6 +265,10 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 		}
 	}
 
+	/** Metodo que associa a Atividade no mapa de atividades dentro da Pesquisa.
+	 * @param atividade objeto do tipo Atividade, que é a atividade a ser adicionada na pesquisa.
+	 * @return True, caso tenha sido realizada com sucesso ou False caso contrario.
+	 */
 	public boolean cadastraAtividade(Atividade atividade) {
 		if (this.atividadesDaPesquisa.containsKey(atividade.getCodigo())) {
 			return false;
@@ -272,6 +279,11 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 		}
 	}
 
+	/** Metodo que desassocia uma atividade do mapa de atividades de um objeto Pesquisa.
+	 *
+	 * @param codigoAtividade String, que representa o codigo da atividade que deve ser removida de mapa de atividades.
+	 * @return True, caso tenha sido realizada com sucesso ou False caso contrario.
+	 */
 	public boolean removeAtividade(String codigoAtividade) {
 		if (!atividadesDaPesquisa.containsKey(codigoAtividade)) {
 			return false;
@@ -287,6 +299,10 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 		this.codigo = codigo;
 	}
 
+
+	/** Configura a estrategia de exibicao de atividades de uma pesquisa.
+	 * @param estrategia String, que representa o parametro que deve ser considerado para a organizacao dessa pesquisa.
+	 */
 	public void configuraEstragia(String estrategia) {
 
 		if (estrategia.equals("MENOS_PENDENCIAS")) {
@@ -301,6 +317,10 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 
 	}
 
+	/** Pega a proxima atividade dependendo de qual estrategia de organizacao das atividades o usuario escolheu.
+	 *
+	 * @return String com o codigo da proxima atividade a ser executada seguindo essa ordem sugerida.
+	 */
 	public String proximaAtividade() {
 		List<Atividade> listaAtividades = new ArrayList<>();
 		listaAtividades.addAll(this.atividadesDaPesquisa.values());

@@ -3,13 +3,32 @@ package projeto.pesquisadores;
 import java.io.Serializable;
 
 public class Pesquisador implements Serializable {
-
+    /** nome do pesquisador
+     */
     protected String nome;
+
+    /** especialidade do pesquisador.
+     */
     protected Especialidade especialidade;
+
+    /** funcao do pesquisador
+     */
     protected String funcao;
+
+    /** biografia do pesquisador
+     */
     protected String biografia;
+
+    /** email do pesquisador
+     */
     protected String email;
+
+    /** link para uma foto do pesquisador.
+     */
     protected String fotoURL;
+
+    /** status do  pesquisador.
+     */
     protected String status;
 
     /**

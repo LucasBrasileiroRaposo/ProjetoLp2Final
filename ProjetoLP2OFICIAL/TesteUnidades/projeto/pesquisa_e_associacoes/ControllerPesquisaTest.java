@@ -4,7 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import projeto.atividades.Atividade;
 import projeto.atividades.RepositorioAtividade;
+import projeto.objetivos_e_problemas.Objetivo;
 import projeto.objetivos_e_problemas.Problema;
+import projeto.pesquisadores.Pesquisador;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -355,25 +357,92 @@ class ControllerPesquisaTest {
 
     @Test
     void associaObjetivo() {
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao agropecuaria", "Computacao, agro");
+        Objetivo objetivo = new Objetivo("pedagogico","terminar os testes",1,1,"O1");
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao maritima", "computacao, maritima");
+        assertTrue(this.controllerPesquisa.associaObjetivo("COM1", objetivo));
+        try{
+            this.controllerPesquisa.associaObjetivo("COM240",objetivo);
+            fail("Pesquisa nao encontrada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.encerraPesquisa("COM1","finalizada");
+        try{
+            this.controllerPesquisa.associaObjetivo("COM1",objetivo);
+            fail("Pesquisa desativada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.ativaPesquisa("COM1");
+        try{
+            this.controllerPesquisa.associaObjetivo("COM2",objetivo);
+            fail("Objetivo ja associado a uma pesquisa.");
+        }catch (IllegalArgumentException e){
+        }
+        assertFalse(this.controllerPesquisa.associaObjetivo("COM1",objetivo));
+
     }
 
     @Test
     void dessassociaObjetivo() {
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao agropecuaria", "Computacao, agro");
+        Objetivo objetivo = new Objetivo("pedagogico","terminar os testes",1,1,"O1");
+        Objetivo objetivo1 = new Objetivo("psiquico","pokemon",10,2,"O2");
+        assertTrue(this.controllerPesquisa.associaObjetivo("COM1", objetivo));
+        assertTrue(this.controllerPesquisa.dessassociaObjetivo("COM1",objetivo));
+        try{
+            this.controllerPesquisa.dessassociaObjetivo("COM240",objetivo);
+            fail("Pesquisa nao encontrada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.encerraPesquisa("COM1","finalizada");
+        try{
+            this.controllerPesquisa.dessassociaObjetivo("COM1",objetivo);
+            fail("Pesquisa desativada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.ativaPesquisa("COM1");
+        assertFalse(this.controllerPesquisa.dessassociaObjetivo("COM1",objetivo1));
     }
 
     @Test
     void associaPesquisador() {
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao agropecuaria", "Computacao, agro");
+        Pesquisador pesquisador = new Pesquisador("lucas","estudante","19 anos de nada","meuemail@gmail.com","https//qualquercoisa");
+        assertTrue(this.controllerPesquisa.associaPesquisador("COM1",pesquisador));
+        try{
+            this.controllerPesquisa.associaPesquisador("COM240",pesquisador);
+            fail("Pesquisa nao encontrada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.encerraPesquisa("COM1","finalizada");
+        try{
+            this.controllerPesquisa.associaPesquisador("COM1",pesquisador);
+            fail("Pesquisa desativada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.ativaPesquisa("COM1");
+        assertFalse(this.controllerPesquisa.associaPesquisador("COM1",pesquisador));
     }
 
     @Test
     void desassociaPesquisador() {
+        this.controllerPesquisa.cadastraPesquisa("pesquisa sobre computacao agropecuaria", "Computacao, agro");
+        Pesquisador pesquisador = new Pesquisador("lucas","estudante","19 anos de nada","meuemail@gmail.com","https//qualquercoisa");
+        this.controllerPesquisa.associaPesquisador("COM1",pesquisador);
+        assertTrue(this.controllerPesquisa.desassociaPesquisador("COM1","meuemail@gmail.com"));
+        try{
+            this.controllerPesquisa.desassociaPesquisador("COM240","meuemail@gmail.com");
+            fail("Pesquisa nao encontrada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.encerraPesquisa("COM1","finalizada");
+        try{
+            this.controllerPesquisa.desassociaPesquisador("COM1","meuemail@gmail.com");
+            fail("Pesquisa desativada.");
+        }catch (IllegalArgumentException e){
+        }
+        this.controllerPesquisa.ativaPesquisa("COM1");
+        assertFalse(this.controllerPesquisa.desassociaPesquisador("COM1","meuemail@gmail.com"));
     }
 
-    @Test
-    void configuraEstrategia() {
-    }
-
-    @Test
-    void proximaAtividade() {
-    }
 }

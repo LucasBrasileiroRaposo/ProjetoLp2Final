@@ -193,6 +193,10 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 	}
 
 
+	/** verifica os resultados de uma atividade.
+	 * @param codigoResultado codigo do resultado que deve ser verificado se existe ou nao.
+	 * @return True caso exista e false caso não.
+	 */
 	public boolean veriricaResultado(int codigoResultado) {
 		if (!this.resultadosItens.containsKey(codigoResultado)) {
 			return false;
@@ -201,6 +205,10 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 		}
 	}
 
+	/** metodo responsavel por remover um resultado de uma atividade
+	 * @param numeroResultado int, que represent ao codigo do resultado a ser removido.
+	 * @return true, caso a operação tive sido realizada com sucesso, ou False caso não.
+	 */
 	public boolean removeResultado(int numeroResultado) {
 		if (!this.resultadosItens.containsKey(numeroResultado)) {
 			return false;
@@ -208,17 +216,22 @@ public class Atividade implements Comparable<Atividade>, Serializable {
 			this.resultadosItens.remove(numeroResultado);
 			return true;
 		}
-
 	}
-
 	int i = 0;
 
+	/** metodo responsavel por cadastrar um resultado em uma atividade.
+	 * @param resultado String, que representa o resultado a ser adicionado em uma atividade
+	 * @return int, que representa o codigo daquele resultado.
+	 */
 	public int cadastraResultado(String resultado) {
 		i += 1;
 		this.resultadosItens.put(i, resultado);
 		return i;
 	}
 
+	/** Metodo responsavel por retornar todos os resultados cadastrados em uma atividade quando o usuario pedir.
+	 * @return String, com todos os resultados cadastrados em uma atividade.
+	 */
 	public String exibeResultados() {
 		String saida = "";
 		for (String i : this.resultadosItens.values()) {

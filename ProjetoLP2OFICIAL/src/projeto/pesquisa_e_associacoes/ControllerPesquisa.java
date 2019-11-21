@@ -35,23 +35,52 @@ public class ControllerPesquisa {
         return this.repositorioPesquisa.cadastraPesquisa(descricao, campoDeInteresse);
     }
 
+    /**
+     * Método responsável por alterar o status de uma pesquisa
+     *
+     * @param codigo codigo identificador da pesquisa
+     * @param motivo motivo de encerramento de uma pesquisa
+     */
     public void encerraPesquisa(String codigo, String motivo) {
         this.repositorioPesquisa.encerraPesquisa(codigo, motivo);
     }
 
-
+    /**
+     * Método responsável por alterar o status de uma pesquisa
+     *
+     * @param codigo codigo identificador de uma pesquisa
+     */
     public void ativaPesquisa(String codigo) {
         this.repositorioPesquisa.ativaPesquisa(codigo);
     }
 
+    /**
+     * Método responsável por editar as informações de uma pesquisa
+     *
+     * @param codigo               codigo identificador de uma pesquisa
+     * @param conteudoASerAlterado qual a opcao a ser alterada na pesquisa
+     * @param novoConteudo         novo conteudo a ser inseirdo na pesquisa
+     */
     public void alteraPesquisa(String codigo, String conteudoASerAlterado, String novoConteudo) {
         this.repositorioPesquisa.alteraPesquisa(codigo, conteudoASerAlterado, novoConteudo);
     }
 
+    /**
+     * Método responsável por retornar a representação textual de uma pesquisa
+     *
+     * @param codigo codigo identificador de uma pesquisa
+     * @return toString de uma pesquisa
+     */
     public String exibePesquisa(String codigo) {
         return this.repositorioPesquisa.exibePesquisa(codigo);
     }
 
+    /**
+     * Método responsável por vefirificar se o status de uma pesquisa está "Ativa"
+     *
+     * @param codigo codigo identificador de uma pesquisa
+     * @return retorna um boolean true ou false
+     */
     public boolean verificaSeAtiva(String codigo) {
         return this.repositorioPesquisa.verificaSeAtiva(codigo);
     }
@@ -132,40 +161,88 @@ public class ControllerPesquisa {
         }
     }
 
-
+    /** Metodo responsavel por adicionar determianda atividade em uma pesquisa.
+     * @param codigoPesquisa String,que representa a chave da pesquisa que o usuário deseja que tenha uma Atividade adicionada nela.
+     * @param atividade objeto do tipo Atividade , que é a atividade a ser associada a pesquisa.
+     * @return True ou False dependendo do resultado da operação.
+     */
     public boolean adicionaAtividade(String codigoPesquisa, Atividade atividade) {
         return this.repositorioPesquisa.adicionaAtividade(codigoPesquisa, atividade);
     }
 
+    /** Metodo responsavel por remover uma atividade de uma pesquisa.
+     * @param codigoPesquisa String,que representa a chave da pesquisa que o usuário deseja que tenha uma Atividade removida dela.
+     * @param codigoAtividade String, que representa o codigo da atividade que o usuario deseja remover da pesquisa.
+     * @return True ou False dependendo do resultado da operação.
+     */
     public boolean removeAtividade(String codigoPesquisa, String codigoAtividade) {
         return this.repositorioPesquisa.removeAtividade(codigoPesquisa,codigoAtividade);
     }
 
-
+    /**
+     * Metodo que associa um problema a uma pesquisa. Uma pesquisa so pode ter um problema associado. Se tentar associar um problema a uma pesquisa que ja tem problema, dara erro.
+     * @param idPesquisa codigo que identifica a pesquisa
+     * @param problema objeto problema que quer se associar a pesquisa
+     * @return true se houver a associacao e false se nao houver.
+     */
     public boolean associaProblema(String idPesquisa, Problema problema) {
         return this.repositorioPesquisa.associaProblema(idPesquisa, problema);
     }
 
+    /**
+     * Metodo que desassocia um problema de uma pesquisa.
+     * @param idPesquisa codigo que identifica a pesquisa
+     * @return Se nao houver nenhuma pesquisa ou a pesquisa estiver desativada, dara erro. Se  nao tiver esse problema retornara false
+     * . Se for bem sucedida, retornara true.
+     */
     public boolean desassociaProblema(String idPesquisa) {
         return this.repositorioPesquisa.desassociaProblema(idPesquisa);
     }
 
+    /**
+     * Metodo que associa um objetivo a uma pesquisa.
+     * @param idPesquisa codigo que identifica a pesquisa
+     * @param objetivo objeto Objetivo que quer se associar a pesquisa
+     * @return true se houver a associacao e false se nao houver.
+     */
     public boolean associaObjetivo(String idPesquisa, Objetivo objetivo) {
         return this.repositorioPesquisa.associaObjetivo(idPesquisa,objetivo);
     }
 
+    /**
+     * Metodo que desassocia um objetivo de uma pesquisa.
+     * @param idPesquisa codigo que identifica a pesquisa
+     * @param objetivo Objeto objetivo que sera removido
+     * @return true se for bem sucedido, false se aquele objetivo nao estiver dentro da lista de objetivos da pesquisa. Sera lancada excecao
+     * se a pesquisa estiver desativada ou nao existir.
+     */
     public boolean dessassociaObjetivo(String idPesquisa, Objetivo objetivo) {
         return this.repositorioPesquisa.dessassociaObjetivo(idPesquisa, objetivo);
     }
 
+    /** Metodo responsavel por adicionar um objeto Pesquisador em uma pesquisa determinada pelo usuario
+     *
+     * @param idPesquisa String, que representa a chave da pesquisa que o usuário deseja que tenha um Pesquisador acessado nele.
+     * @param pesquisador objeto do tipo Pesquisador, que eh o pesquisador a ser adionado no mapa de pesquisadores de uma pesquisa.
+     * @return True ou False dependendo se a operacao foi realizada com sucesso ou nao.
+     */
     public boolean associaPesquisador(String idPesquisa, Pesquisador pesquisador) {
         return this.repositorioPesquisa.associaPesquisador(idPesquisa, pesquisador);
     }
 
+    /** Metodo responsavel por remover um Objeto Pesquisador de uma pesquisa selecionada pelo usuario.
+     *
+     * @param idPesquisa String,que representa a chave da pesquisa que o usuário deseja que tenha um Pesquisador removida dela.
+     * @param emailPesquisador String, que representa o email do pesquisador que o usuario deseja que seja removido do mapa dos pesquisadores dentro da pesquisa.
+     * @return True ou False, caso a operação tenha sido realizado com sucesso ou não.
+     */
     public boolean desassociaPesquisador(String idPesquisa, String emailPesquisador) {
         return this.repositorioPesquisa.desassociaPesquisador(idPesquisa, emailPesquisador);
     }
-    
+
+    /** Configura a estrategia de exibicao de atividades de uma pesquisa.
+     * @param estrategia String, que representa o parametro que deve ser considerado para a organizacao dessa pesquisa.
+     */
     public void configuraEstrategia(String estrategia) {
 	       Validadora.verificaValorNullVazio(estrategia,"Estrategia nao pode ser nula ou vazia.");
 	       Validadora.verificaEstrategia(estrategia, "Valor invalido da estrategia");
@@ -173,22 +250,26 @@ public class ControllerPesquisa {
 	           p.configuraEstragia(estrategia);
 	           
 	       }
-	   }
+    }
 
-public String proximaAtividade(String codigoPesquisa) {
-	Validadora.verificaValorNullVazio(codigoPesquisa,"Pesquisa nao pode ser nula ou vazia.");
-	
-	if(this.repositorioPesquisa.getMapaPesquisas().containsKey(codigoPesquisa)) {
-		Pesquisa pesquisa = this.repositorioPesquisa.getMapaPesquisas().get(codigoPesquisa);
-		if(pesquisa.getStatus()) {
-			return pesquisa.proximaAtividade();
-		} 
-		
-		throw new IllegalArgumentException("Pesquisa desativada.");
-		
-	}
-	
-	throw new IllegalArgumentException("Pesquisa nao encontrada.");
-	
-}
+    /** Pega a proxima atividade dependendo de qual estrategia de organizacao das atividades o usuario escolheu.
+     * @param codigoPesquisa String, que representa o codigo da pesquisa que o usuario deseja ver a proxima atividade a ser executada na ordem.
+     * @return String, com o codigo da atividade que vem em seguida nessa ordem, configurada pelo usuario.
+     */
+    public String proximaAtividade(String codigoPesquisa) {
+        Validadora.verificaValorNullVazio(codigoPesquisa,"Pesquisa nao pode ser nula ou vazia.");
+
+        if(this.repositorioPesquisa.getMapaPesquisas().containsKey(codigoPesquisa)) {
+            Pesquisa pesquisa = this.repositorioPesquisa.getMapaPesquisas().get(codigoPesquisa);
+            if(pesquisa.getStatus()) {
+                return pesquisa.proximaAtividade();
+            }
+
+            throw new IllegalArgumentException("Pesquisa desativada.");
+
+        }
+
+        throw new IllegalArgumentException("Pesquisa nao encontrada.");
+
+    }
 }
