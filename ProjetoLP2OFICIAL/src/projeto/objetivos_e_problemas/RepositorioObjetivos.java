@@ -111,6 +111,11 @@ public class RepositorioObjetivos implements Busca, Serializable {
 			throw new IllegalArgumentException("Objetivo nao encontrado");
 		}
 	}
+	/**
+	 * Método responsável por buscar um termo na descrição de um Objetivo.
+	 * @param termo termo a ser buscado.
+	 * @return retorna um conjunto de Strings com o termo contido.
+	 */
 	@Override
 	public String busca(String termo) {
 		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -125,9 +130,13 @@ public class RepositorioObjetivos implements Busca, Serializable {
 		}
 		return msg;
 	}
-	
 
 
+	/**
+	 * Método responsável por contar a quantidade de termos encontrados na descrição de um Objetivo.
+	 * @param termo termo a ser contado.
+	 * @return retorna a quantidade de termos encontrados.
+	 */
 	@Override
 	public int contaResultadosBusca(String termo) {
 		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -139,35 +148,16 @@ public class RepositorioObjetivos implements Busca, Serializable {
 		}
 		return cont;
 	}
+	/**
+	 * Método responsável por ordenar uma lista
+	 * @return retorna lista Ordenada
+	 */
 	public List OrdenaListaObjetivos(){
 		List listaObjetivosOrndenada = new ArrayList();
 		listaObjetivosOrndenada.addAll(this.mapaObjetivos.values());
 		Collections.sort(listaObjetivosOrndenada);
 		return  listaObjetivosOrndenada;
 	}
-	public void salvar(){
-		try{
 
-			ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Objetivos"));
 
-			for(Object o: OrdenaListaObjetivos()){
-				objOut.writeObject(o);
-			}
-			objOut.close();
-
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-	public void carregar() {
-		if(new File("Objetivos").canRead() == true){
-			try{
-				FileInputStream inObjetivos = new FileInputStream("Objetivos");
-				ObjectInputStream objObjetivos = new ObjectInputStream(inObjetivos);
-
-				Objetivo o1 = (Objetivo) objObjetivos.readObject();
-			}catch (Exception e){
-				e.printStackTrace();}
-		}
-	}
 }

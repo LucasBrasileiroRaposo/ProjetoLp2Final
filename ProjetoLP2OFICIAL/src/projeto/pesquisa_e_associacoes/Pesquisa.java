@@ -381,7 +381,7 @@ public class Pesquisa implements Comparable<Pesquisa>, Serializable {
 
 	/**
 	 * Metodo responsavel por retorna a String com os pesquisadores e suas
-	 * informa��es
+	 * informacoes
 	 * 
 	 * @return uma String com lista de pesquisadores e seus atributos
 	 */

@@ -250,6 +250,12 @@ public class RepositorioPesquisador implements Busca, Serializable {
             return saida.substring(0,saida.length() - 3);
         }
     }
+
+    /**
+     * Método responsável por buscar um termo na Biografia do Pesquisador
+     * @param termo termo a ser pesquisado
+     * @return retorna um conjunto de String contido o termo encontrado
+     */
     @Override
     public String busca(String termo) {
         Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -262,7 +268,11 @@ public class RepositorioPesquisador implements Busca, Serializable {
         return msg;
     }
 
-
+    /**
+     * Método responsável pela contagem de todos os termos encontrados na biografia do Pesquisador
+     * @param termo
+     * @return
+     */
     @Override
     public int contaResultadosBusca(String termo) {
         Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -274,37 +284,15 @@ public class RepositorioPesquisador implements Busca, Serializable {
         }
         return cont;
     }
+
+    /**
+     * Método responsável por Ordenar uma lista
+     * @return retorna lista ordenada
+     */
     public List OrdenaListaPesquisador() {
         List listaPesquisadorOrndenada = new ArrayList();
         listaPesquisadorOrndenada.addAll(this.mapaDePesquisadores.values());
         return listaPesquisadorOrndenada;
     }
 
-    public void salvar() {
-        try {
-
-            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Pesquisador"));
-
-            for (Object o : OrdenaListaPesquisador()) {
-                objOut.writeObject(o);
-            }
-            objOut.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void carregar()  {
-        if (new File("Pesquisador").canRead() == true) {
-            try {
-                FileInputStream inPesquisador = new FileInputStream("Pesquisador");
-                ObjectInputStream objPesquisador = new ObjectInputStream(inPesquisador);
-
-                Pesquisador p1 = (Pesquisador) objPesquisador.readObject();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

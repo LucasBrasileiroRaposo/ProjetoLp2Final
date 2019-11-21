@@ -11,6 +11,9 @@ import projeto.pesquisadores.RepositorioPesquisador;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe responsável por controlar o sistema de busca de todo o sistema
+ */
 public class ControllerBusca {
     RepositorioPesquisa repositorioPesquisa= new RepositorioPesquisa();
     RepositorioPesquisador repositorioPesquisador = new RepositorioPesquisador();
@@ -19,6 +22,14 @@ public class ControllerBusca {
     RepositorioAtividade repositorioAtividade = new RepositorioAtividade();
     List<String> mensagemFinal = new ArrayList<>();
 
+    /**
+     * Construtor da classe ControllerBusca, onde irá inicializar os repositórios
+     * @param repositorioPesquisa Repositório de Pesquisa
+     * @param repositorioPesquisador Repositório de pesquisador
+     * @param repositorioProblemas repositório de problemas
+     * @param repositorioObjetivos repositório de Objetivos
+     * @param repositorioAtividade repositório de Atividade
+     */
     public ControllerBusca(RepositorioPesquisa repositorioPesquisa, RepositorioPesquisador repositorioPesquisador, RepositorioProblemas repositorioProblemas, RepositorioObjetivos repositorioObjetivos,
                            RepositorioAtividade repositorioAtividade){
         this.repositorioPesquisa = repositorioPesquisa;
@@ -29,6 +40,11 @@ public class ControllerBusca {
 
     }
 
+    /**
+     * Método responsável por receber de todas as classes os termos encontrados pela busca
+     * @param termo termo que deseja procurar no sistema
+     * @return retorna todos os termos encontrados no sistema
+     */
     public String busca(String termo){
         Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
         String resultado = "";
@@ -49,6 +65,13 @@ public class ControllerBusca {
         }
 
     }
+
+    /**
+     * Método responsável por exibir um termo específico encontrado no sistema
+     * @param termo termo a ser procurado
+     * @param numeroDoResultado posição em que o termo se encontra na exibição de todos os termos encontrados
+     * @return retorna o termo encontrado ou null se não existir
+     */
     public String busca(String termo, int numeroDoResultado){
         Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
         Validadora.verificaSeNumeroNegativo(numeroDoResultado,"Numero do resultado nao pode ser negativo");
@@ -63,6 +86,11 @@ public class ControllerBusca {
         return null;
     }
 
+    /**
+     * Conta a quantidade de termos encontrados em todo o sistema
+     * @param termo termo a ser contabilizado
+     * @return retorna a quantidade de vezes que ele apareceu
+     */
     public int contaResultadosBusca(String termo){
         Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
         String msg = busca(termo);

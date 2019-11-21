@@ -222,6 +222,11 @@ public class RepositorioAtividade implements Busca, Serializable {
 			return this.atividades.get(codigoAtividade).getDuracaoAtividade();
 		}
 	}
+    /**
+     * Método responsável por buscar um termo na descrição e na descrição de risco de uma Atividade.
+     * @param termo termo a ser buscado.
+     * @return retorna um conjunto de Strings com o termo contido.
+     */
     @Override
     public String busca(String termo){
         Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -239,7 +244,12 @@ public class RepositorioAtividade implements Busca, Serializable {
         }
         return msg;
     }
-
+    /**
+     * Método responsável por contar a quantidade de termos encontrados na descrição e na descrição de risco de uma
+     * Atividade.
+     * @param termo termo a ser contado.
+     * @return retorna a quantidade de termos encontrados.
+     */
     @Override
     public int contaResultadosBusca(String termo) {
         Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -303,6 +313,10 @@ public class RepositorioAtividade implements Busca, Serializable {
         }
         return this.atividades.get(idAtividade).pegaMaiorRiscoAtividades(this.atividades.get(idAtividade).getProximaAtiviade());
     }
+    /**
+     * Método responsável por ordenar uma lista
+     * @return retorna lista Ordenada
+     */
     public List OrdenaLista(){
         List listaAtividadesOrndenada = new ArrayList();
         listaAtividadesOrndenada.addAll(this.atividades.values());
@@ -310,28 +324,4 @@ public class RepositorioAtividade implements Busca, Serializable {
         return  listaAtividadesOrndenada;
     }
 
-    public void salvar(){
-        try{
-            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Atividades"));
-
-            for(Object a: OrdenaLista()){
-                objOut.writeObject(a);
-            }
-            objOut.close();
-
-        }catch (Exception e){
-            e.printStackTrace();}
-    }
-    public void carregar(){
-        if(new File("Atividades").canRead() == true){
-            try{
-                FileInputStream inAtividade = new FileInputStream("Atividades");
-                ObjectInputStream objInAtividade = new ObjectInputStream(inAtividade);
-
-                Atividade a1 = (Atividade) objInAtividade.readObject();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-    }
 }

@@ -46,8 +46,8 @@ import java.io.IOException;
         		"easyaccept/use_case_4.txt",
         		"easyaccept/use_case_5.txt", "easyaccept/use_case_6.txt","easyaccept/use_case_7.txt",
         		"easyaccept/use_case_8.txt","easyaccept/use_case_9.txt",
-        		"easyaccept/use_case_10.txt", "easyaccept/use_case_11.txt",*/
-                "easyaccept/use_case_12SALVAR.txt","easyaccept/use_case_12CARREGAR.txt"};
+        		"easyaccept/use_case_10.txt", "easyaccept/use_case_11.txt",*//**
+                "easyaccept/use_case_12SALVAR.txt",*/"easyaccept/use_case_12CARREGAR.txt"};
         EasyAccept.main(args);
     }
 
@@ -301,7 +301,10 @@ import java.io.IOException;
     	this.repositorioPesquisa.geraTxtResultados(codigoPesquisa);
     }
 
-     public void salvar()throws IOException { this.controllerDados.salvar();}
+     /**
+      * Parte 12
+      */
+     public void salvar() { this.controllerDados.salvar();}
 
      public void carregar(){ this.controllerDados.carregar();}
 }

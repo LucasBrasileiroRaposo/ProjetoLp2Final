@@ -108,6 +108,11 @@ import projeto.objetivos_e_problemas.Problema;
 				throw new IllegalArgumentException("Problema nao encontrado");
 			}
 		}
+	/**
+	 * Método responsável por buscar um termo na descrição de um problema.
+	 * @param termo termo a ser buscado.
+	 * @return retorna um conjunto de Strings com o termo contido.
+	 */
 	@Override
 	public String busca(String termo) {
 		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -123,7 +128,11 @@ import projeto.objetivos_e_problemas.Problema;
 		return msg;
 	}
 
-
+	/**
+	 * Método responsável por contar a quantidade de termos encontrados na descrição de um Problema
+	 * @param termo termo a ser contado.
+	 * @return retorna a quantidade de termos encontrados.
+	 */
 	@Override
 	public int contaResultadosBusca(String termo) {
 		Validadora.verificaValorNullVazio(termo,"Campo termo nao pode ser nulo ou vazio.");
@@ -135,35 +144,14 @@ import projeto.objetivos_e_problemas.Problema;
 		}
 		return cont;
 	}
+	/**
+	 * Método responsável por ordenar uma lista
+	 * @return retorna lista Ordenada
+	 */
 	public List OrdenaListaProblemas(){
 		List listaProblemasOrndenada = new ArrayList();
 		listaProblemasOrndenada.addAll(this.mapaProblemas.values());
 		Collections.sort(listaProblemasOrndenada);
 		return  listaProblemasOrndenada;
-	}
-	public void salvar() {
-		try{
-
-			ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("Problemas"));
-
-			for(Object o: OrdenaListaProblemas()){
-				objOut.writeObject(o);
-			}
-			objOut.close();
-
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-	public void carregar(){
-		if(new File("Problemas").canRead() == true){
-			try{
-				FileInputStream inProblemas = new FileInputStream("Problemas");
-				ObjectInputStream objProblemas = new ObjectInputStream(inProblemas);
-
-				Problema prob1 = (Problema) objProblemas.readObject();
-			}catch (Exception e){
-				e.printStackTrace(); }
-		}
 	}
 	}
